@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <title>Recycle:: 버려졌던 작품을 재활용</title>
+    <!-- meta tags SEO -->
+    <meta charset="utf-8" />
+    <meta name="subject" content="작품 재활용">
+    <meta name="title" content="Secondhand:: 버려졌던 작품을 재활용">
+    <meta name="author" content="OpenYearRound">
+    <meta name="keywords" content="artwork, 예술품, 공모전, 대학생, 작품재활용, 작품렌트">
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- bootstrap cdn -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
+    <!-- google web font Noto Sans-->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap&subset=korean"
+        rel="stylesheet">
+
+    <!-- load css files -->
+    <link href="../public/stylesheets/register.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="navbar">
+        <div class="logo">
+            <img src="../public/img/logo2.png" />
+        </div>
+        <div class="nav-list">
+          <a href="index.ejs">Home</a>
+          <a href="find.ejs">작품 보기</a>
+          <a href="register.ejs">작품 등록하기</a>
+        </div>
+        <div class="log_png">
+            <a href="#"><img src="../public/img/cart.png" /></a>
+            <a href="#"><img src="../public/img/find.png" /></a>
+            <a href="#"><img src="../public/img/profile.png" /></a>
+        </div>
+    </div>
+
+    <div class="section1">
+            <div class="container">
+                    <div class="section">
+                        <!-- 이미지등록 -->
+                        <div class="imgSection">
+                            <div class="imgSubmit">
+                                <div>
+                                    <h3>이미지 등록</h3>
+                                </div>
+                                <form>
+                                    <div class="chooseBtn">
+                                        <input type="file" id="img" />
+                                    </div>
+                                    <div class="imgPreview">
+                                        <img id="stuff" src="#" alt="your image" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- 기본정보 등록 -->
+                        <div class="imgInformation">
+                            <div>
+                                <form>
+                                    <div>
+                                        <h3>기본 정보</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="rowLeft">
+                                            <label>카테고리</label>
+                                        </div>
+                                        <div class="rowRight">
+                                            <select class="rowInput">
+                                                <option>카테고리 선택</option>
+                                                <option>일러스트</option>
+                                                <option>사진</option>
+                                                <option>회화</option>
+                                                <option>디자인</option>
+                                                <option>캘리그라피</option>
+                                                <option>사운드</option>
+                                                <option>애니메이션</option>
+                                                <option>조소/공예</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="rowLeft">
+                                            <label>거래지역</label>
+                                        </div>
+                                        <div class="rowRight">
+                                            <input class="rowInput inputLen">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="rowLeft">
+                                            <label>상태</label>
+                                        </div>
+                                        <div class="rowRight">
+                                            <select class="rowInput">
+                                                <option>판매</option>
+                                                <option>렌탈</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="rowLeft">
+                                            <label>제목</label>
+                                        </div>
+                                        <div class="rowRight">
+                                            <input class="rowInput inputLen">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="rowLeft">
+                                            <label>가격</label>
+                                        </div>
+                                        <div class="rowRight">
+                                            <input class="rowInput inputLen">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="rowLeft">
+                                            <label>설명</label>
+                                        </div>
+                                        <div class="rowRight">
+                                            <textarea class="txtArea">
+
+                                                    </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="rowLeft">
+                                            <label>연관태그</label>
+                                        </div>
+                                        <div class="rowRight">
+                                            <input class="rowInput inputLen">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <input id="btn" class="row" type="submit" value="물품등록" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+    </div>
+
+
+    <footer>
+        <div class="container">
+            <div class="footer-text">
+                <span id="footer_logo"><img src="../public/img/logo1.png" /></span>
+                <h4>만의 서비스를 체험해보세요</h4>
+            </div>
+
+        </div>
+    </footer>
+
+
+</body>
+<!-- Load  index.js -->
+<script src="../public/javascripts/index.js"></script>
+<script src="../public/javascripts/register.js"></script>
+
+
+</html>
