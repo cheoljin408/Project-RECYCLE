@@ -1,11 +1,188 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html lang="en" dir="ltr">
+
+<head>
+  <title>Recycle:: 버려졌던 작품을 재활용</title>
+  <!-- meta tags SEO -->
+  <meta charset="utf-8" />
+  <meta name="subject" content="작품 재활용">
+  <meta name="title" content="Secondhand:: 버려졌던 작품을 재활용">
+  <meta name="author" content="OpenYearRound">
+  <meta name="keywords" content="artwork, 예술품, 공모전, 대학생, 작품재활용, 작품렌트">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+
+  <!-- jquery cdn -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <!-- bootstrap cdn -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+  <!-- google web font Noto Sans-->
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap&subset=korean" rel="stylesheet">
+
+  <!-- load css files -->
+  <link href="../public/stylesheets/index.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="navbar">
+    <div class="logo">
+      <img src="../public/img/logo2.png" />
+    </div>
+    <div class="nav-list">
+      <a href="index.ejs">Home</a>
+      <a href="find.ejs">작품 보기</a>
+      <a href="register.ejs">작품 등록하기</a>
+    </div>
+    <div class="log_png">
+      <a href="#"><img src="../public/img/cart.png"/></a>
+      <a href="#"><img src="../public/img/find.png"/></a>
+      <a href="#"><img src="../public/img/profile.png"/></a>
+    </div>
+  </div>
+
+  <div class="header">
+    <video autoplay muted loop id="bg">
+      <source src="../public/img/bg1.mp4" type="video/mp4">
+    </video>
+
+    <div class="container">
+      <div class="header-nav">
+        <div class="masthead-brand">
+          <img src="../public/img/logo1.png" />
+        </div>
+      </div>
+
+      <div class="header-text">
+        <h1>버려진 당신의 작품을 <br /> 재활용 해보세요</h1><br />
+        <h5>작품을 렌트하거나 공모전에 제출할 수 있습니다.</h5><br />
+      </div>
+
+      <div class="header-button">
+        <button id="btn1">작품 보기</button>
+        <button id="btn2">작품 등록</button>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="section1">
+    <div class="container">
+      <div class="title">
+        <h2>금주의 작품</h2>
+        <h6>Recycle만의 작품을 <br />감상하고 렌탈해보세요.</h6>
+      </div>
+      <div class="artwork">
+        <div id="artwork_list_1">
+          <a href="#">
+            <div class="artwork_list_block">
+              <img src="https://og-data.s3.amazonaws.com/media/artworks/thumb/A0055/A0055-0178.jpg">
+              <!-- <div class="artwork_list_mask">
+                <div class="artwork_list_mask_block">
+                  <h4>길</h4>
+                  <span>류지선</span>
+                </div>
+              </div> -->
+            </div>
+          </a>
+          <a href="#">
+            <div class="artwork_list_block">
+              <img src="https://og-data.s3.amazonaws.com/media/artworks/thumb/A0055/A0055-0178.jpg">
+              <!-- <div class="artwork_list_mask">
+                <div class="artwork_list_mask_block">
+                  <h4>길</h4>
+                  <span>류지선</span>
+                </div>
+              </div> -->
+            </div>
+          </a>
+          <a href="#">
+            <div class="artwork_list_block">
+              <img src="https://og-data.s3.amazonaws.com/media/artworks/thumb/A0055/A0055-0178.jpg">
+              <!-- <div class="artwork_list_mask">
+                <div class="artwork_list_mask_block">
+                  <h4>길</h4>
+                  <span>류지선</span>
+                </div>
+              </div> -->
+            </div>
+          </a>
+          <a href="#">
+            <div class="artwork_list_block">
+              <img src="https://og-data.s3.amazonaws.com/media/artworks/thumb/A0055/A0055-0178.jpg">
+              <!-- <div class="artwork_list_mask">
+                <div class="artwork_list_mask_block">
+                  <h4>길</h4>
+                  <span>류지선</span>
+                </div>
+              </div> -->
+            </div>
+          </a>
+        </div>
+        <div id="artwork_list_2">
+          <a href="#">
+            <div class="artwork_list_block">
+              <img src="https://og-data.s3.amazonaws.com/media/artworks/big_thumb/A0610/A0610-0024.jpg">
+              <div class="artwork_list_mask">
+                <!-- <div class="artwork_list_mask_block">
+                  <h4>황칠나무 18-2</h4>
+                  <span>박소연</span>
+                </div> -->
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="artwork-button">
+        <button>더 보기</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section2">
+    <div class="cover">
+      <div class="container">
+        <div class="service_text">
+          <h1>Recycle만의 서비스</h1><br />
+          <h6>Recycle에서는 저렴한 가격으로 중고 작품들을 거래할 수 있습니다. <br /><br />
+            당신만의 작품을 Recycle에 등록하여 재활용해보세요.</h6>
+
+          <div class="service_rect">
+            <div class="rect">
+
+            </div>
+            <div class="rect">
+
+            </div>
+            <div class="rect">
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <footer>
+    <div class="container">
+      <div class="footer-text">
+        <span id="footer_logo"><img src="../public/img/logo1.png" /></span>
+        <h4>만의 서비스를 체험해보세요</h4>
+      </div>
+
+    </div>
+  </footer>
+
+
+</body>
+<!-- Load  index.js -->
+<script src="../public/javascripts/index.js"></script>
+
 </html>
