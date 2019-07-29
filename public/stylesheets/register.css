@@ -33,25 +33,29 @@ a {
             position:absolute;
             top:50%;
             left:50%;
-            margin:-365px 0 0 -575px;
+            margin:-280px 0 0 -575px;
         }
 
         .imgInformation {
-            border: 1px solid rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.2);
             border-radius: 3px;
             margin-left:10px;
             width: 600px;
-            height: 700px;
+            height: 800px;
             padding:30px;
+            font-size:20px;
+            background-color: white;
         }
 
         .imgSection {   
             width: 600px;
-            height: 700px;
-            border: 1px solid rgba(0, 0, 0, 0.5);
+            height: 800px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
             border-radius: 3px;
             margin-right:10px;
             padding:30px;
+            font-size:20px;
+            background-color: white;
         }
 
         .imgPreview {
@@ -60,7 +64,7 @@ a {
             margin-top:30px;
             border:1px solid rgba(0, 0, 0, 0.03);
             border-radius: 2px;
-            background-color: rgba(0, 0, 0, 0.07);
+            background-color: rgba(0, 0, 0, 0.03);
         }
 
         #stuff {
@@ -83,9 +87,9 @@ a {
         }
 
         .rowInput {
-            border:1px solid rgba(0, 0, 0, 0.5);
+            border:1px solid rgba(0, 0, 0, 0.3);
             border-radius: 2px;
-            height:25px;
+            height:35px;
         }
 
         .txtArea {
@@ -101,24 +105,26 @@ a {
             width:380px;
         }
 
-        #btn {
+        .btn {
             float:right;
-            margin-right: 5px;
-            width:100px;
-            height:30px;
-            text-align: center;
-            justify-content: center;
+            margin-top:25px;
+            width:130px;
+            height:50px;
+            border:1px solid #53a591;
+            background-color: #53a591;
+            color:white;
         }
 
+
+        /* navigation */
         #navbar {
   padding-left: 100px;
   padding-right: 100px;
   z-index: 1000;
   background-color: white;
   position: fixed;
-  top: -70px;
+  top: 0px;
   width: 100%;
-  transition: top 0.3s;
   box-shadow: 0 .2rem .25rem rgba(0, 0, 0, .09);
 }
 
