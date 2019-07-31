@@ -40,7 +40,17 @@ con.connect(function (err) {
 
 /* GET home page. */
 router.get('/', function (req, res) {
-  res.render('register', { title: 'Express' });
+  res.render('index');
+});
+
+/* GET register page. */
+router.get('/register', function (req, res) {
+  res.render('register');
+});
+
+/* GET find page. */
+router.get('/find', function (req, res) {
+  res.render('find');
 });
 
 router.post('/upload', upload.single('userFile'), function(req, res){
@@ -79,9 +89,14 @@ router.post('/info', (req, res) => {
       throw err;
     }
     else {
+      res.redirect('/register');
       console.log('1 record inserted');
     }
   });
 });
 
+// router.post('/register', (req, res) => {
+
+//   sadfsadfsadf
+// });
 module.exports = router;
