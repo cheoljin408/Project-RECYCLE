@@ -36,7 +36,7 @@ a {
 }
 
 .logo img {
-  width: 240px;
+  width: 150px;
   height: 60px;
 }
 
@@ -128,7 +128,7 @@ button {
   cursor: pointer;
   width: 100px;
   height: 50px;
-  background-color: #53a591;
+  background-color: #7fcacb;
   border-radius: 5px;
   border: 0px;
   font-size: 15px;
@@ -232,14 +232,14 @@ button {
 }
 .rect{
   margin-right: 20px;
-  background-color:#53a591;
+  background-color:#7fcacb;
   width: 200px;
   height: 200px;
 }
 
 /* footer */
 footer {
-  background-color: #53a591;
+  background-color: #7fcacb;
   height: 30vh;
   line-height: 30vh;
 }
