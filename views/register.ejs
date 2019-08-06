@@ -20,6 +20,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
         </script>
+    <!-- jqueryUI -->
+    <link rel="stylesheet" href="/tokenfield/jquery-ui.min.css">
+    <script src="/tokenfield/jquery-ui.min.js"></script>
+    <!-- hashtag -->
+    <link rel="stylesheet" href="/tokenfield/css/bootstrap-tokenfield.min.css">
+    <script src="/tokenfield/bootstrap-tokenfield.min.js"></script>
     <!-- google web font Noto Sans-->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap&subset=korean"
         rel="stylesheet">
@@ -50,17 +56,30 @@
                 <!-- 이미지등록 -->
                 <div class="imgSection">
                     <div class="imgSubmit">
-                        <div>
+                        <div class="imgRegister">
                             <h3>이미지 등록</h3>
                         </div>
-                        <form id="imgForm" action="/upload" method="post" enctype="multipart/form-data">
+                        <!-- <form id="imgForm" action="/upload" method="post" enctype="multipart/form-data">
                             <div class="chooseBtn">
                                 <input class="btnFile" type="file" id="img" name="userFile" />
                             </div>
                             <div class="imgPreview">
                                 <img id="stuff" src="#" alt="your image" />
                             </div>
+                        </form> -->
+                        <form id="imgForm" action="/upload" method="post" enctype="multipart/form-data">
+                            <div class="input-group mb-3">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                        aria-describedby="inputGroupFileAddon01" name="userFile">
+                                    <label class="custom-file-label fileinput" for="inputGroupFile01">파일선택</label>
+                                </div>
+                            </div>
+                            <div class="imgPreview">
+                                <img id="stuff" src="#" alt="your image" />
+                            </div>
                         </form>
+
                     </div>
                 </div>
                 <!-- 기본정보 등록 -->
@@ -76,7 +95,7 @@
                                     <label>카테고리</label>
                                 </div>
                                 <div class="rowRight">
-                                    <select class="rowInput" name="category">
+                                    <select class="form-control" name="category">
                                         <option>카테고리 선택</option>
                                         <option>일러스트</option>
                                         <option>사진</option>
@@ -94,7 +113,7 @@
                                     <label>거래지역</label>
                                 </div>
                                 <div class="rowRight">
-                                    <input class="rowInput inputLen" name="local">
+                                    <input class="inputLen form-control" placeholder="선호 거래 지역" name="local">
                                 </div>
                             </div>
                             <div class="row">
@@ -102,7 +121,7 @@
                                     <label>상태</label>
                                 </div>
                                 <div class="rowRight">
-                                    <select class="rowInput" name="state">
+                                    <select class="form-control" name="state">
                                         <option>판매</option>
                                         <option>렌탈</option>
                                     </select>
@@ -113,7 +132,7 @@
                                     <label>제목</label>
                                 </div>
                                 <div class="rowRight">
-                                    <input class="rowInput inputLen" name="title">
+                                    <input class="inputLen form-control" name="title">
                                 </div>
                             </div>
                             <div class="row">
@@ -121,7 +140,7 @@
                                     <label>가격</label>
                                 </div>
                                 <div class="rowRight">
-                                    <input class="rowInput inputLen" name="price">
+                                    <input class="inputLen form-control" placeholder="10000(가격은 숫자로만 입력)" name="price">
                                 </div>
                             </div>
                             <div class="row">
@@ -129,17 +148,16 @@
                                     <label>설명</label>
                                 </div>
                                 <div class="rowRight">
-                                    <textarea class="txtArea" name="description">
-
-                                    </textarea>
+                                    <div class="input-group"><textarea class="txtArea form-control" placeholder="상품 설명은 2000자까지 가능합니다." name="description"></textarea></div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="rowLeft">
                                     <label>연관태그</label>
                                 </div>
-                                <div class="rowRight">
-                                    <input class="rowInput inputLen">
+                                <!-- <input class="rowInput inputLen form-control" placeholder="연관 태그(예: 아이폰, 케이스)"> -->
+                                <div class="" id="hash">
+                                    <input type="text" class="tokenfield" id="tokenfield" placeholder="선택 사항(예: 아이폰, 케이스)"">
                                 </div>
                             </div>
                             <div>
@@ -191,6 +209,16 @@
                 console.log('error');
             }
         });
+    });
+</script>
+
+<script>
+    $('#tokenfield').tokenfield({
+        autocomplete: {
+            source: [],
+            delay: 100
+        },
+        showAutocompleteOnFocus: true
     });
 </script>
 
