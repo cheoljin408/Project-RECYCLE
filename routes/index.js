@@ -45,12 +45,18 @@ router.get('/', function (req, res) {
 
 /* GET register page. */
 router.get('/register', function (req, res) {
+
   res.render('register');
 });
 
 /* GET find page. */
 router.get('/find', function (req, res) {
   res.render('find');
+});
+
+/* GET signup page. */
+router.get('/signup', function (req, res) {
+  res.render('signup');
 });
 
 router.post('/upload', upload.single('userFile'), function(req, res){
