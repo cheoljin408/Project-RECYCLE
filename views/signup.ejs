@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <title>Recycle:: 버려졌던 작품을 재활용</title>
+    <!-- meta tags SEO -->
+    <meta charset="utf-8" />
+    <meta name="subject" content="작품 재활용">
+    <meta name="title" content="Secondhand:: 버려졌던 작품을 재활용">
+    <meta name="author" content="OpenYearRound">
+    <meta name="keywords" content="artwork, 예술품, 공모전, 대학생, 작품재활용, 작품렌트">
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- bootstrap cdn -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
+    <!-- google web font Noto Sans-->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap&subset=korean"
+        rel="stylesheet">
+
+    <!-- load css files -->
+    <link href="/stylesheets/signup.css" rel="stylesheet">
+
+    <!-- load checkbox css -->
+    <link href="/stylesheets/icheck-material.css" rel="stylesheet">
+
+<body>
+    <div id="navbar">
+        <div class="logo">
+            <img src="/images/logo2.png" />
+        </div>
+        <div class="nav-list">
+            <a href="#">Home</a>
+            <a href="#">작품 보기</a>
+            <a href="#">작품 등록하기</a>
+        </div>
+        <div class="log_png">
+            <a href="#"><img src="/images/cart.png" /></a>
+            <a href="#"><img src="/images/find.png" /></a>
+            <a href="#"><img src="/images/profile.png" /></a>
+        </div>
+    </div>
+
+    <div class="section1">
+        <div class="container">
+            <div class="section">
+                <!-- 회원가입 정보 등록 -->
+                <div class="imgInformation">
+                    <div>
+                        <form action="/signup" method="post">
+                            <div>
+                                <h3>회원가입</h3>
+                            </div>
+                            <div class="row">
+                                <div class="rowLeft">
+                                    <label>아이디</label>
+                                </div>
+                                <div class="rowRight">
+                                    <input class="rowInput inputLen" name="id">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="rowLeft">
+                                    <label>비밀번호</label>
+                                </div>
+                                <div class="rowRight">
+                                    <input id="realpw" type="password" class="rowInput inputLen" name="password">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="rowLeft">
+                                    <label>비밀번호 확인</label>
+                                </div>
+                                <div class="rowRight">
+                                    <input id="checkpw" type="password" class="rowInput inputLen">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="rowLeft">
+                                    <label>주소</label>
+                                </div>
+                                <div class="rowRight">
+                                    <input class="rowInput inputLen" name="address">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="rowLeft">
+                                    <label>이메일</label>
+                                </div>
+                                <div class="rowRight">
+                                    <input class="rowInput inputLen" name="email">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="rowLeft">
+                                    <label>전화번호</label>
+                                </div>
+                                <div class="rowRight">
+                                    <input class="rowInput inputLen" name="phonenumber">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="custom-control custom-checkbox check">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">(필수)Recycle 이용약관 동의</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="custom-control custom-checkbox check">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                    <label class="custom-control-label" for="customCheck2">(필수)개인정보 처리방침 동의</label>
+                                </div>
+                            </div>
+                            <div>
+                                <input id="btnSubmit" class="btn" type="submit" value="가입하기" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="container">
+            <div class="footer-text">
+                <span id="footer_logo"><img src="/images/logo1.png" /></span>
+                <h4>만의 서비스를 체험해보세요</h4>
+            </div>
+
+        </div>
+    </footer>
+
+
+</body>
+<!-- Load  index.js -->
+<script src="/javascripts/register.js"></script>
+<script>
+    var realpw = $('#realpw');
+    var checkpw = $('#checkpw');
+
+    
+</script>
+
+
+</html>

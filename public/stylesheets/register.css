@@ -17,8 +17,11 @@ a {
   text-decoration: none;
   color: inherit;
 }
-
-/* 섹션 1 */
+.form-control:focus {
+  border-color: #94e9eb;
+  box-shadow: 0 0 0 0.2rem rgba(165,249,250,0.3);
+}
+ /* 섹션 1 */
 .section1 {
   margin: 0 auto;
   height: 1200px;
@@ -77,26 +80,20 @@ a {
   margin-top: 30px;
 }
 
-.rowLeft {
-  width: 80px;
-  text-align: right;
-  padding: 3px;
-}
+        .rowRight {
+            margin-left: 30px;
+            box-sizing: border-box;
+        }
 
-.rowRight {
-  margin-left: 30px;
-}
+        .txtArea {
+            width:380px !important;
+            height:150px !important;
+            font-size:17px;
+        }
 
-.rowInput {
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 2px;
-  height: 35px;
-}
-
-.txtArea {
-  width: 380px;
-  height: 150px;
-}
+        .chooseBtn {  
+            margin-top:20px;
+        }
 
 .chooseBtn {
   margin-top: 20px;
@@ -107,23 +104,34 @@ a {
             margin-top:25px;
             width:130px;
             height:50px;
-            border:1px solid #53a591;
-            background-color: #53a591;
+            border:1px solid #7fcacb;
+            background-color: #7fcacb;
             color:white;
         }
 
-.btn {
-  float: right;
-  margin-top: 25px;
-  width: 130px;
-  height: 50px;
-  border: 1px solid #53a591;
-  background-color: #7fcacb;
-  color: white;
-}
+        .fileinput {
+          text-align: left;
+        }
 
-/* navigation */
-#navbar {
+        .imgRegister {
+          margin-bottom: 30px;
+        }
+
+        #hash div:nth-child(1) {
+          margin-left: 30px;
+          width:380px;
+          height:auto;
+          min-height:34px;
+          text-align:left;
+        }
+
+        #hash div:nth-child(1) input:nth-child(3) {
+          width:352px;
+        }
+
+
+        /* navigation */
+        #navbar {
   padding-left: 100px;
   padding-right: 100px;
   z-index: 1000;
