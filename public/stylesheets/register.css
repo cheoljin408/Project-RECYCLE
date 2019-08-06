@@ -18,6 +18,11 @@ a {
   color: inherit;
 }
 
+.form-control:focus {
+  border-color: #94e9eb;
+  box-shadow: 0 0 0 0.2rem rgba(165, 249, 250, 0.3);
+}
+
 /* 섹션 1 */
 .section1 {
   margin: 0 auto;
@@ -37,12 +42,12 @@ a {
   margin: -280px 0 0 -575px;
 }
 
-.imgSection {
-  width: 600px;
-  height: 800px;
+.imgInformation {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 3px;
-  margin-right: 10px;
+  margin-left: 10px;
+  width: 600px;
+  height: 800px;
   padding: 30px;
   font-size: 20px;
   background-color: white;
@@ -85,31 +90,21 @@ a {
 
 .rowRight {
   margin-left: 30px;
-}
-
-.rowInput {
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 2px;
-  height: 35px;
+  box-sizing: border-box;
 }
 
 .txtArea {
-  width: 380px;
-  height: 150px;
+  width: 380px !important;
+  height: 150px !important;
+  font-size: 17px;
 }
 
 .chooseBtn {
   margin-top: 20px;
 }
 
-.btn {
-  float: right;
-  margin-top: 25px;
-  width: 130px;
-  height: 50px;
-  border: 1px solid #53a591;
-  background-color: #53a591;
-  color: white;
+.inputLen {
+  width: 380px;
 }
 
 .btn {
@@ -117,19 +112,38 @@ a {
   margin-top: 25px;
   width: 130px;
   height: 50px;
-  border: 1px solid #53a591;
+  border: 1px solid #7fcacb;
   background-color: #7fcacb;
   color: white;
 }
 
-/* navigation */
+.fileinput {
+  text-align: left;
+}
+
+.imgRegister {
+  margin-bottom: 30px;
+}
+
+#hash div:nth-child(1) {
+  margin-left: 30px;
+  width: 380px;
+  height: auto;
+  min-height: 34px;
+  text-align: left;
+}
+
+#hash div:nth-child(1) input:nth-child(3) {
+  width: 352px;
+}
+/* menu bar */
 #navbar {
   padding-left: 100px;
   padding-right: 100px;
   z-index: 1000;
   background-color: white;
   position: fixed;
-  top: 0px;
+  top: 0;
   width: 100%;
   box-shadow: 0 .2rem .25rem rgba(0, 0, 0, .09);
 }
