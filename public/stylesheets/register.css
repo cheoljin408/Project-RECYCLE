@@ -18,7 +18,7 @@ a {
   color: inherit;
 }
 
- /* 섹션 1 */
+/* 섹션 1 */
 .section1 {
   margin: 0 auto;
   height: 1200px;
@@ -26,28 +26,18 @@ a {
   background-color: #e6e6e6;
   text-align: center;
 }
- .section {
-            display: flex;
-            width:1150px;
-            height:730px;
-            position:absolute;
-            top:50%;
-            left:50%;
-            margin:-280px 0 0 -575px;
-        }
 
-        .imgInformation {
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            border-radius: 3px;
-            margin-left:10px;
-            width: 600px;
-            height: 800px;
-            padding:30px;
-            font-size:20px;
-            background-color: white;
-        }
+.section {
+  display: flex;
+  width: 1150px;
+  height: 730px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -280px 0 0 -575px;
+}
 
-        .imgSection {
+        .imgSection {   
             width: 600px;
             height: 800px;
             border: 1px solid rgba(0, 0, 0, 0.2);
@@ -58,67 +48,82 @@ a {
             background-color: white;
         }
 
-        .imgPreview {
-            width: 500px;
-            height: 600px;
-            margin-top:30px;
-            border:1px solid rgba(0, 0, 0, 0.03);
-            border-radius: 2px;
-            background-color: rgba(0, 0, 0, 0.03);
-        }
+.imgSection {
+  width: 600px;
+  height: 800px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  margin-right: 10px;
+  padding: 30px;
+  font-size: 20px;
+  background-color: white;
+}
 
-        #stuff {
-            width: 90%;
-        }
+.imgPreview {
+  width: 500px;
+  height: 600px;
+  margin-top: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  border-radius: 2px;
+  background-color: rgba(0, 0, 0, 0.03);
+}
 
-        .row {
-            display: flex;
-            margin-top: 30px;
-        }
+#stuff {
+  width: 90%;
+}
 
-        .rowLeft {
-            width:80px;
-            text-align: right;
-            padding:3px;
-        }
+.row {
+  display: flex;
+  margin-top: 30px;
+}
 
-        .rowRight {
-            margin-left: 30px;
-        }
+.rowLeft {
+  width: 80px;
+  text-align: right;
+  padding: 3px;
+}
 
-        .rowInput {
-            border:1px solid rgba(0, 0, 0, 0.3);
-            border-radius: 2px;
-            height:35px;
-        }
+.rowRight {
+  margin-left: 30px;
+}
 
-        .txtArea {
-            width:380px;
-            height:150px;
-        }
+.rowInput {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  height: 35px;
+}
 
-        .chooseBtn {
-            margin-top:20px;
-        }
+.txtArea {
+  width: 380px;
+  height: 150px;
+}
 
-        .inputLen {
-            width:380px;
-        }
+.chooseBtn {
+  margin-top: 20px;
+}
 
         .btn {
             float:right;
             margin-top:25px;
             width:130px;
             height:50px;
-            border:1px solid #7fcacb;
-            background-color: #7fcacb;
+            border:1px solid #53a591;
+            background-color: #53a591;
             color:white;
-
         }
 
+.btn {
+  float: right;
+  margin-top: 25px;
+  width: 130px;
+  height: 50px;
+  border: 1px solid #53a591;
+  background-color: #7fcacb;
+  color: white;
+}
 
-        /* navigation */
-        #navbar {
+/* navigation */
+#navbar {
   padding-left: 100px;
   padding-right: 100px;
   z-index: 1000;
@@ -134,7 +139,7 @@ a {
 }
 
 .logo img {
-  width: 240px;
+  width: 150px;
   height: 60px;
 }
 
@@ -142,11 +147,12 @@ a {
   float: left;
   font-size: 20px;
   font-weight: 500;
+}
 
+.nav-list a {
+  padding: 15px;
 }
-.nav-list a{
-  padding : 15px;
-}
+
 #navbar a {
   float: left;
   display: block;
@@ -159,13 +165,15 @@ a {
   font-weight: 700;
   color: black;
 }
-.log_png{
-  float:right;
+
+.log_png {
+  float: right;
   display: inline;
   padding-right: 35px;
   line-height: 60px;
 }
-.log_png img{
+
+.log_png img {
   width: 32px;
   height: 32px;
   margin-right: 18px;
@@ -177,15 +185,18 @@ footer {
   height: 30vh;
   line-height: 30vh;
 }
-.footer-text{
+
+.footer-text {
   text-align: center;
 }
-.footer-text h4{
+
+.footer-text h4 {
   display: inline;
   font-size: 50px;
-  color : white;
+  color: white;
   vertical-align: middle;
 }
-#footer_logo img{
-  width:300px;
+
+#footer_logo img {
+  width: 300px;
 }

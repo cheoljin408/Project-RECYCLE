@@ -4,9 +4,7 @@
   font-family: 'Noto Sans KR', sans-serif;
 }
 
-*, ::after, ::before {
-  box-sizing: border-box;
-}
+
 
 body {
   font-size: 28px;
@@ -16,6 +14,14 @@ a {
   background: transparent;
   text-decoration: none;
   color: inherit;
+}
+a:hover{
+  color : none!important;
+  text-decoration:none!important;
+}
+button{
+  border:0!important;
+  outline:0!important;
 }
 
 /* 메뉴 바 */
@@ -133,6 +139,7 @@ button {
   border: 0px;
   font-size: 15px;
   color: white;
+  outline: 0 ;
 }
 
 #btn1 {
@@ -189,7 +196,6 @@ button {
 }
 
 .artwork_list_block {
-  z-index:1;
   max-width: 100%;
   vertical-align: top;
   position: relative;
@@ -201,6 +207,28 @@ button {
   max-width: 100%;
   vertical-align: top;
 }
+.artwork_list_mask{
+  display: none;
+  background: rgba(0, 0, 0, 0.4);
+  color : white;
+  width: 100%;
+  height: 100%;
+  padding-top: 20%;
+  transition: all ease 0.4s;
+}
+.artwork_list_mask h4{
+  font-weight: 900;
+}
+.artwork_list_mask span{
+  font-size: 20px;
+}
+.artwork_list_block:hover .artwork_list_mask{
+  display: block;
+  position: absolute;
+  top : 0;
+  transition: all ease 0.4s;
+}
+
 .artwork-button{
   padding-top : 30px;
 }
@@ -232,9 +260,40 @@ button {
 }
 .rect{
   margin-right: 20px;
+  background-color:#9da3a3;
+  width: 220px;
+  height: 220px;
+  cursor: pointer;
+  padding-top: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  transition: 0.5s;
+}
+.rect:hover{
   background-color:#7fcacb;
-  width: 200px;
-  height: 200px;
+  transform: scale(1.04);
+}
+.rect img{
+  float: right;
+  width: 60px;
+  height:60px;
+}
+.rect_mask{
+  float: left;
+  padding-top: 20px;
+}
+#rect_title{
+  color : white;
+  transition: 0.5s;
+}
+#rect_content{
+  color : #9da3a3;
+  transition: 0.5s;
+  font-size: 15px;
+  top: 0px;
+}
+.rect:hover #rect_content{
+  color : white;
 }
 
 /* footer */
