@@ -7,7 +7,7 @@ var router = express.Router();
 var upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads/');
+      cb(null, 'public/images/uploads/');
     },
     filename: function (req, file, cb) {
       cb(null, new Date().valueOf() + file.originalname);
@@ -18,14 +18,9 @@ var upload = multer({
 //MySQL
 var mysql = require('mysql');
 var con = mysql.createConnection({
-  //   host: '15.164.95.4',
-  //   user: 'cheoljin408',
-  //   password: 'cjfwls1226',
-  //   database: 'recycle',
-  //   port: '3306'
-  host: '15.164.95.4',
-  user: 'cheoljin408',
-  password: 'cjfwls1226',
+  host: '54.180.112.25',
+  user: 'lwj',
+  password: '12345678Oyr!',
   port: 3306,
   database: 'recycle'
 });
@@ -54,6 +49,20 @@ router.get('/find', function (req, res) {
   res.render('find');
 });
 
+/* POST find page. */
+router.post('/find', function (req, res) {
+  var sql = "select * from article where category not like '가구'";
+
+  con.query(sql, function(err, result, fields) {
+    if(err) {
+      throw err;
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
+
 /* GET signup page. */
 router.get('/signup', function (req, res) {
   res.render('signup');
@@ -62,8 +71,9 @@ router.get('/signup', function (req, res) {
 router.post('/upload', upload.single('userFile'), function(req, res){
   //res.send('Uploaded! : '+req.file); // object를 리턴함
   console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
+  var postId = req.body.postId;
 
-  var sql = "insert into article (img) values ('"+req.file.path+"')";
+  var sql = `insert into article (category, img, local, state, title, user, price, description) values ('temp', '${req.file.path}', 'temp', 'temp', 'temp', 'temp', 9999, 'temp')`;
 
   con.query(sql, function(err, result) {
     if(err) {
@@ -101,8 +111,5 @@ router.post('/info', (req, res) => {
   });
 });
 
-// router.post('/register', (req, res) => {
 
-//   sadfsadfsadf
-// });
 module.exports = router;
