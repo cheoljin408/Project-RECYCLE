@@ -296,6 +296,54 @@ button {
   color : white;
 }
 
+/*modal*/
+.modal-width {
+  max-width: 400px;
+}
+
+.modal-border-none {
+  border: none;
+}
+
+#loginModalIMG {
+  width: 180px;
+  padding-top: 1.5rem;
+}
+
+#loginModalBody {
+  padding: 1.7rem 4.5rem;
+}
+
+.modal-input-space {
+  margin-bottom: 0.5rem;
+}
+
+#loginModalIDInput:focus, #loginModalPWInput:focus {
+  border-color: #94e9eb;
+  box-shadow: 0 0 0 0.2rem rgba(165, 249, 250, 0.3);
+}
+
+#loginModalBtn {
+  background-color:#94e9eb;
+  border-color:#94e9eb;
+}
+
+.btn-link:hover {
+  text-decoration: none;
+}
+
+#findPWBtn {
+  margin-top: 0.2rem;
+  color: #7a7a7a;
+}
+
+#loginModalJoinBtn {
+  color: #16b8ba;
+  padding-top: 0;
+  border: none;
+}
+
+
 /* footer */
 footer {
   background-color: #7fcacb;
