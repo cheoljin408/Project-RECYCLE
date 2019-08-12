@@ -29,16 +29,19 @@
     <div class="logo">
       <img src="/images/logo2.png" />
     </div>
-    <div class="nav-list">
+    <div class="nav-list" style="cursor:pointer;">
       <a href="/">Home</a>
       <a href="/find">작품 보기</a>
-      <a href="/register">작품 등록하기</a>
+      <a data-toggle="modal" data-target="#loginModal">작품 등록하기</a>
     </div>
-    <div class="log_png">
-      <a href="#"><img src="/images/cart.png" /></a>
-      <a href="#"><img src="/images/find.png" /></a>
-      <a href="#"><img src="/images/profile.png" /></a>
-    </div>
+    <div class="log_png" style="cursor: pointer;">
+        <!--
+        <a href="#"><img src="/images/cart.png" /></a>
+        <a href="#"><img src="/images/find.png" /></a>
+        <a href="#"><img src="/images/profile.png" /></a>
+        -->
+        <a style="font-size:20px; font-weight: 700;" data-toggle="modal" data-target="#loginModal">로그인</a>
+      </div>
   </div>
 
   <div class="header">
@@ -60,7 +63,7 @@
 
       <div class="header-button">
         <a href="/find"><button id="btn1">작품 보기</button></a>
-        <a href="/register"><button id="btn2">작품 등록</button></a>
+        <a data-toggle="modal" data-target="#loginModal"><button id="btn2">작품 등록</button></a>
       </div>
     </div>
 
@@ -198,6 +201,40 @@
 
   </div>
 
+    <!--modal-->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-width" role="document">
+          <div class="modal-content" id="loginModalContent">
+            <div class="modal-header modal-border-none">
+              <div style="width:100%;" class="text-center">
+                <img src="/images/logo2.png" id="loginModalIMG">
+                <h5 class="modal-title" id="loginModalTitle">작품 재활용 시작하기</h5>
+              </div>
+            </div>
+            <div class="modal-body" id="loginModalBody">
+              <form>
+                <div class="form-group modal-input-space">
+                  <input type="text" class="form-control" id="loginModalIDInput" placeholder="아이디">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="loginModalPWInput" placeholder="비밀번호">
+                </div>
+                <button type="button" id="loginModalBtn" class="btn btn-block btn-primary font-weight-bold">이용하기</button>
+                <div style="width:100%;" class="text-center">
+                  <button type="button" id="findPWBtn" class="btn btn-link btn-sm">비밀번호 찾기</button>
+                </div>
+                </button>
+              </form>
+            </div>
+            <div class="modal-footer" style="border-color:rgba(148, 233, 235, 0.5);">
+              <div style="width:100%;" class="text-center">
+                <span style="font-size:0.875rem;">아직 계정이 없으세요?</span>
+                <button type="button" class="btn btn-link btn-sm" id="loginModalJoinBtn">회원가입하기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
   <footer>
     <div class="container">

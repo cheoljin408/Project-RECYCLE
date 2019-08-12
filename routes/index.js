@@ -35,7 +35,12 @@ con.connect(function (err) {
 
 /* GET home page. */
 router.get('/', function (req, res) {
-  res.render('index');
+  if(req.session.displayName){
+    res.render('index_p');
+  }else {
+    res.render('index');
+  }
+  //res.render('index');
 });
 
 /* GET register page. */
