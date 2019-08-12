@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <title>Recycle:: 버려졌던 작품을 재활용</title>
+  <!-- meta tags SEO -->
+  <meta charset="utf-8" />
+  <meta name="subject" content="작품 재활용">
+  <meta name="title" content="Secondhand:: 버려졌던 작품을 재활용">
+  <meta name="author" content="OpenYearRound">
+  <meta name="keywords" content="artwork, 예술품, 공모전, 대학생, 작품재활용, 작품렌트">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+
+  <!-- jquery cdn -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <!-- bootstrap cdn -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+  <!-- google web font Noto Sans-->
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap&subset=korean" rel="stylesheet">
+
+  <!-- load css files -->
+  <link href="/stylesheets/find.css" rel="stylesheet">
+  <!-- pinterest -->
+  <script src="/javascripts/jquery.masonry.min.js"></script>
+  <script src="/javascripts/jquery.imagesloaded.min.js"></script>
+</head>
+
+<body>
+  <div id="navbar">
+    <div class="logo">
+      <img src="/images/logo2.png" />
+    </div>
+    <div class="nav-list">
+      <a href="/">Home</a>
+      <a href="/find">작품 보기</a>
+      <a href="/register">작품 등록하기</a>
+    </div>
+    <div class="log_png">
+      <a href="#"><img src="/images/cart.png" /></a>
+      <a href="#"><img src="/images/find.png" /></a>
+      <a href="#"><img src="/images/profile.png" style="color:red"/></a>
+    </div>
+  </div>
+
+  <div class="section1">
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <div class="container">
+      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active category">
+            <div class="row">
+              <div class="thema row_margin">
+                <h5>테마</h5>
+                <button>일러스트</button>
+                <button>사진</button>
+                <button>회화</button>
+                <button>가구</button>
+                <button>캘리그라피</button>
+                <button>사운드</button>
+                <button>애니메이션</button>
+                <button>조소/공예</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="region row_margin">
+                <h5>지역</h5>
+                <button>서울</button>
+                <button>대구</button>
+                <button>부산</button>
+                <button>울산</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="buy row_margin">
+                <h5>상태</h5>
+                <button>렌트</button>
+                <button>구매</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="price row_margin">
+                <h5>가격</h5>
+                <button>~ 10,000</button>
+                <button>10,000 ~ 50,000</button>
+                <button>50,000 ~ 100,000</button>
+                <button>100,000 ~ 150,000</button>
+                <button>150,000 ~</button>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item tag">
+            <div class="title">
+              <h3>오늘의 태그</h3>
+            </div>
+            <div class="tag_box">
+              <button>#여름</button>
+              <button>#무더위</button>
+              <button>#겨울</button>
+              <button>#카페</button>
+            </div>
+            <div class="tag_box">
+              <button>#감성</button>
+              <button>#비온날</button>
+              <button>#자연</button>
+            </div>
+            <div class="tag_box">
+              <button>#여름</button>
+              <button>#무더위</button>
+              <button>#겨울</button>
+              <button>#카페</button>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+    </div>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+  <div class="section2">
+    <div class="container">
+      <div id="masonry_container">
+        <!-- <div class="paper">
+          <div class="paper-holder">
+            <a><img width="190" src="http://placekitten.com/190/258" /></a>
+          </div>
+          <p class="paper-description">Lorem ipsum dolor sit amet</p>
+          <div class="paper-content">
+            <a class="paper-link" href="#"><img src="http://placekitten.com/30/30" /></a>
+            <p class="paper-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sem mi, egestas a facilisis eget, egestas ut magna.</p>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-text">
+        <span id="footer_logo"><img src="/images/logo1.png" /></span>
+        <h4>만의 서비스를 체험해보세요</h4>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+<script>
+  var html = "";
+  $.ajax({
+    type: 'POST',
+    url: '/find',
+    async: false,
+    success: function(data) {
+      if (data != null) {
+        for (var i = 3; i < 10; i++) {
+          var img = data[i]['img'];
+
+          var plus = `        <div class="paper">
+                        <div class="paper-holder">
+                          <a><img width="190" src="${img}" /></a>
+                        </div>
+                        <p class="paper-description">Lorem ipsum dolor sit amet</p>
+                        <div class="paper-content">
+                          <a class="paper-link" href="#"><img src="http://placekitten.com/30/30" /></a>
+                          <p class="paper-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sem mi, egestas a facilisis eget, egestas ut magna.</p>
+                        </div>
+                      </div>`;
+
+
+
+          html += plus;
+        }
+        document.getElementById('masonry_container').innerHTML = html;
+      }
+    }
+
+  });
+</script>
+<!-- Load  find.js -->
+<script src="/javascripts/find.js"></script>
+
+
+
+</html>

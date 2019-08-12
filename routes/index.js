@@ -46,7 +46,12 @@ router.get('/register', function (req, res) {
 
 /* GET find page. */
 router.get('/find', function (req, res) {
-  res.render('find');
+  if (req.session.displayName){
+    res.render('find_p');
+  }else {
+    res.render('find');
+  }
+  //res.render('find_p');
 });
 
 /* POST find page. */
