@@ -35,12 +35,48 @@ con.connect(function (err) {
 
 //session check
 router.post('/sessionchecker', function (req, res){
-  if (req.session.userid){
+  if (req.session.userID){
     res.send(true);
   }
   else {
     res.send(false);
   }
+});
+
+//login
+router.post('/auth', function (req, res){
+  var userID = req.body.userID;
+  var userPW = req.body.userPW;
+  var sql = `SELECT password FROM member WHERE id = '${userID}'`;
+
+  //console.log('login post');
+  //console.log('**********************************');
+
+  con.query(sql, function(err, result, fields){
+    
+    if (err){
+      console.log(err);
+      throw err;
+    }
+    
+    else if (!result[0]) { // id 존재 X
+      res.send('ID');
+    } 
+    else {
+      //console.log(result[0]['password']);
+      if (result[0]['password'] === userPW){
+        //req.session.userID =  userID;
+        res.send('OK');
+      } else {
+        res.send('PW');
+      }
+    }
+  })
+});
+
+router.post('/login', function(req, res){
+  req.session.userID = req.body.userID;
+  res.redirect('/find');
 });
 
 /* GET home page. */
@@ -66,7 +102,7 @@ router.post('/find', function (req, res) {
     if(err) {
       throw err;
     }
-    console.log(result);
+    //console.log(result);
     res.send(result);
   });
 });

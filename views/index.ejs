@@ -46,7 +46,7 @@
       <a href="/">Home</a>
       <a href="/find">작품 보기</a>
       <a href="/register" class="session-true">작품 등록하기</a>
-      <a class="session-false" data-toggle="modal" data-target="#loginModal">작품 등록하기</a>
+      <a class="session-false" data-toggle="modal" data-target="#loginModal" onclick="resetModa()">작품 등록하기</a>
     </div>
     <div class="log_png" style="cursor: pointer;">
         <div class="session-true">
@@ -54,7 +54,7 @@
           <a href="#"><img src="/images/find.png" /></a>
           <a href="#"><img src="/images/profile.png" /></a>
         </div>
-        <a class="session-false" style="font-size:20px; font-weight: 700;" data-toggle="modal" data-target="#loginModal">로그인</a>
+        <a class="session-false" style="font-size:20px; font-weight: 700;" data-toggle="modal" data-target="#loginModal" onclick="resetModal()">로그인</a>
       </div>
   </div>
 
@@ -78,7 +78,7 @@
       <div class="header-button">
         <a href="/find"><button id="btn1">작품 보기</button></a>
         <a href="/register" class="session-true"><button id="btn2">작품 등록</button></a>
-        <a class="session-false" data-toggle="modal" data-target="#loginModal"><button id="btn2">작품 등록</button></a>
+        <a class="session-false" data-toggle="modal" data-target="#loginModal" onclick="resetModal()"><button id="btn2">작품 등록</button></a>
       </div>
     </div>
 
@@ -227,14 +227,17 @@
               </div>
             </div>
             <div class="modal-body" id="loginModalBody">
-              <form>
+              <!--form-->
+              <form id="loginModalForm" action="/login" method="post">
                 <div class="form-group modal-input-space">
-                  <input type="text" class="form-control" id="loginModalIDInput" placeholder="아이디">
+                  <input type="text" name="userID" class="form-control" id="loginModalIDInput" placeholder="아이디">
                 </div>
-                <div class="form-group">
-                  <input type="text" class="form-control" id="loginModalPWInput" placeholder="비밀번호">
+                <div class="form-group modal-input-space">
+                  <input type="text" name="userPW" class="form-control" id="loginModalPWInput" placeholder="비밀번호">
                 </div>
-                <button type="button" id="loginModalBtn" class="btn btn-block btn-primary font-weight-bold">이용하기</button>
+                <div class="wrong-ID login-error">존재하지 않는 아이디입니다</div>
+                <div class="wrong-PW login-error">잘못된 비밀번호입니다</div>
+                <button type="button" onclick="loginCheck()" id="loginModalBtn" class="btn btn-block btn-primary font-weight-bold" style="margin-top: 0.5rem">이용하기</button>
                 <div style="width:100%;" class="text-center">
                   <button type="button" id="findPWBtn" class="btn btn-link btn-sm">비밀번호 찾기</button>
                 </div>
@@ -265,5 +268,40 @@
 </body>
 <!-- Load  index.js -->
 <script src="/javascripts/index.js"></script>
+
+<script>
+  function resetModal(){
+    $('.wrong-ID').hide();
+    $('.wrong-PW').hide();
+    $('input[name=userID]').val('');
+    $('input[name=userPW]').val('');
+  }
+
+  function loginCheck(){
+    $.ajax({
+    type : 'POST',
+    url : '/auth',
+    data : {
+      userID : $('input[name=userID]').val(),
+      userPW : $('input[name=userPW]').val()
+    },
+    success : function(data){
+      if(data === 'ID') {
+        console.log(data);
+        $('.wrong-ID').show();
+        $('.wrong-PW').hide();
+      }else if (data === 'PW') {
+        console.log(data);
+        $('.wrong-ID').hide();
+        $('.wrong-PW').show();
+      }else if (data === 'OK') {
+        $('.wrong-ID').hide();
+        $('.wrong-PW').hide();
+        $('#loginModalForm').submit();
+      }
+    }
+    })
+  }
+</script>
 
 </html>

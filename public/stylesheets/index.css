@@ -323,6 +323,13 @@ button {
   box-shadow: 0 0 0 0.2rem rgba(165, 249, 250, 0.3);
 }
 
+.login-error {
+  color: red;
+  display: none;
+  font-size: 0.875rem;
+  /*padding-bottom: 5px;*/
+}
+
 #loginModalBtn {
   background-color:#94e9eb;
   border-color:#94e9eb;
@@ -342,6 +349,7 @@ button {
   padding-top: 0;
   border: none;
 }
+
 
 
 /* footer */
