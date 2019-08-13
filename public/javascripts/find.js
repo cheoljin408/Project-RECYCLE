@@ -37,3 +37,5 @@ if (slideCount > 0) {
 	slides[i].style.left = 100 * i + "%";
 	}
 }
+
+

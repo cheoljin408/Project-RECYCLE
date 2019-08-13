@@ -33,30 +33,29 @@ con.connect(function (err) {
   console.log('Connected!');
 });
 
+//session check
+router.post('/sessionchecker', function (req, res){
+  if (req.session.userid){
+    res.send(true);
+  }
+  else {
+    res.send(false);
+  }
+});
+
 /* GET home page. */
 router.get('/', function (req, res) {
-  if(req.session.displayName){
-    res.render('index_p');
-  }else {
-    res.render('index');
-  }
-  //res.render('index');
+  res.render('index');
 });
 
 /* GET register page. */
 router.get('/register', function (req, res) {
-
   res.render('register');
 });
 
 /* GET find page. */
 router.get('/find', function (req, res) {
-  if (req.session.displayName){
-    res.render('find_p');
-  }else {
-    res.render('find');
-  }
-  //res.render('find_p');
+  res.render('find');
 });
 
 /* POST find page. */

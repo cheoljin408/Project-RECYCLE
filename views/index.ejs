@@ -24,6 +24,19 @@
   <link href="/stylesheets/index.css" rel="stylesheet">
 </head>
 
+<!--session check-->
+<script>
+    $.post('/sessionchecker', function(data){
+      if (data){ // session 있을 때
+        $('.session-true').show();
+        $('.session-false').hide();
+      } else { // session 없을 때
+        $('.session-true').hide();
+        $('.session-false').show();
+      }
+    })
+  </script>
+
 <body>
   <div id="navbar">
     <div class="logo">
@@ -32,15 +45,16 @@
     <div class="nav-list" style="cursor:pointer;">
       <a href="/">Home</a>
       <a href="/find">작품 보기</a>
-      <a data-toggle="modal" data-target="#loginModal">작품 등록하기</a>
+      <a href="/register" class="session-true">작품 등록하기</a>
+      <a class="session-false" data-toggle="modal" data-target="#loginModal">작품 등록하기</a>
     </div>
     <div class="log_png" style="cursor: pointer;">
-        <!--
-        <a href="#"><img src="/images/cart.png" /></a>
-        <a href="#"><img src="/images/find.png" /></a>
-        <a href="#"><img src="/images/profile.png" /></a>
-        -->
-        <a style="font-size:20px; font-weight: 700;" data-toggle="modal" data-target="#loginModal">로그인</a>
+        <div class="session-true">
+          <a href="#"><img src="/images/cart.png" /></a>
+          <a href="#"><img src="/images/find.png" /></a>
+          <a href="#"><img src="/images/profile.png" /></a>
+        </div>
+        <a class="session-false" style="font-size:20px; font-weight: 700;" data-toggle="modal" data-target="#loginModal">로그인</a>
       </div>
   </div>
 
@@ -63,7 +77,8 @@
 
       <div class="header-button">
         <a href="/find"><button id="btn1">작품 보기</button></a>
-        <a data-toggle="modal" data-target="#loginModal"><button id="btn2">작품 등록</button></a>
+        <a href="/register" class="session-true"><button id="btn2">작품 등록</button></a>
+        <a class="session-false" data-toggle="modal" data-target="#loginModal"><button id="btn2">작품 등록</button></a>
       </div>
     </div>
 
