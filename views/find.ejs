@@ -54,45 +54,48 @@
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active category">
-            <div class="row">
-              <div class="thema row_margin">
-                <h5>테마</h5>
-                <button>일러스트</button>
-                <button>사진</button>
-                <button>회화</button>
-                <button>가구</button>
-                <button>캘리그라피</button>
-                <button>사운드</button>
-                <button>애니메이션</button>
-                <button>조소/공예</button>
+            <!-- <form method="POST"> -->
+              <div class="row">
+                <div class="thema row_margin">
+                  <h5>테마</h5>
+                  <input type=button id="ill" value="일러스트"/>
+                  <button>사진</button>
+                  <button>회화</button>
+                  <button>가구</button>
+                  <button>캘리그라피</button>
+                  <button>사운드</button>
+                  <button>애니메이션</button>
+                  <button id="ridicule">조소</button>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="region row_margin">
-                <h5>지역</h5>
-                <button>서울</button>
-                <button>대구</button>
-                <button>부산</button>
-                <button>울산</button>
+              <div class="row">
+                <div class="region row_margin">
+                  <h5>지역</h5>
+                  <button>서울</button>
+                  <button>대구</button>
+                  <button>부산</button>
+                  <button>울산</button>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="buy row_margin">
-                <h5>상태</h5>
-                <button>렌트</button>
-                <button>구매</button>
+              <div class="row">
+                <div class="buy row_margin">
+                  <h5>상태</h5>
+                  <button id="rent">렌트</button>
+                  <button id="sell">구매</button>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="price row_margin">
-                <h5>가격</h5>
-                <button>~ 10,000</button>
-                <button>10,000 ~ 50,000</button>
-                <button>50,000 ~ 100,000</button>
-                <button>100,000 ~ 150,000</button>
-                <button>150,000 ~</button>
+              <div class="row">
+                <div class="price row_margin">
+                  <h5>가격</h5>
+                  <button>~ 10,000</button>
+                  <button>10,000 ~ 50,000</button>
+                  <button>50,000 ~ 100,000</button>
+                  <button>100,000 ~ 150,000</button>
+                  <button>150,000 ~</button>
+                </div>
               </div>
-            </div>
+            <!-- </form> -->
+
           </div>
           <div class="carousel-item tag">
             <div class="title">
@@ -117,12 +120,7 @@
             </div>
           </div>
         </div>
-
-
       </div>
-
-
-
     </div>
     <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -166,23 +164,36 @@
     async: false,
     success: function(data) {
       if (data != null) {
-        for (var i = 3; i < 10; i++) {
+        for (var i = 3; i < 20; i++) {
+          var category = data[i]['category'];
+          var local = data[i]['local'];
+          var state = data[i]['state'];
+          var title = data[i]['title'];
+          var user = data[i]['user'];
+          var price = data[i]['price'];
           var img = data[i]['img'];
 
-          var plus = `        <div class="paper">
+
+
+          var plus = `<div class="paper">
                         <div class="paper-holder">
-                          <a><img width="190" src="${img}" /></a>
+                          <a><img width="225" src="${img}" /></a>
                         </div>
-                        <p class="paper-description">Lorem ipsum dolor sit amet</p>
+                        <div class="paper-description">
+                          <p id='title'>${title}</p>
+                          <p id="userId">${user}</p>
+                        </div>
                         <div class="paper-content">
-                          <a class="paper-link" href="#"><img src="http://placekitten.com/30/30" /></a>
-                          <p class="paper-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sem mi, egestas a facilisis eget, egestas ut magna.</p>
+                          <span id="price">${price}원</span>
+                          <span class="paper-state">
+                            <span id="state_${i}" style="display:none">${state}</span>
+                            <span class="state1" id="state1_${i}">렌탈</span>
+                            <span class="state2" id="state2_${i}">구매</span>
+                          </span>
                         </div>
                       </div>`;
-
-
-
           html += plus;
+
         }
         document.getElementById('masonry_container').innerHTML = html;
       }
@@ -190,9 +201,9 @@
 
   });
 </script>
+
 <!-- Load  find.js -->
 <script src="/javascripts/find.js"></script>
-
 
 
 </html>

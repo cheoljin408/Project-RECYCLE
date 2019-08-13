@@ -51,13 +51,19 @@ router.get('/find', function (req, res) {
 
 /* POST find page. */
 router.post('/find', function (req, res) {
-  var sql = "select * from article where category not like '가구'";
+  console.log('요청값 = ' + req.body.state);
+  //
+   var sql = "select * from article";
+   if(req.body.state)
+   {
+     sql +=  ` where state like '${req.body.state}'`;
+   }
+
 
   con.query(sql, function(err, result, fields) {
     if(err) {
       throw err;
     }
-    console.log(result);
     res.send(result);
   });
 });

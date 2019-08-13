@@ -186,6 +186,7 @@
 
 /* 섹션 2 - 종이 스타일 */
 .paper {
+  cursor: pointer;
   width: 265px;
   margin-top: 10px;
   padding: 20px 20px 0;
@@ -193,30 +194,58 @@
   background: #FFFFFF;
   box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
 }
-
+.paper-description {
+  margin: 10px 0;
+  /* font-weight: 700;
+  font-size: 15px; */
+  text-align: left;
+}
+.paper-description p{
+  margin : 0 0 10px;
+}
 .paper-content {
-  margin: 0 -15px;
+  border-top: solid 0.5px #ddd;
+  margin-bottom: 10px;
   margin-top: 10px;
-  padding: 10px 15px;
-  background: #F2F0F0;
+  padding-bottom: 6px;
+  padding-top: 20px;
+  /* background: #F2F0F0; */
   overflow: hidden;
 }
 
-.paper-description {
-  margin: 10px 0;
-}
 
-.paper-link {
-  display: block;
-  float: left;
+.paper-state {
+  float: right;
 }
-
-.paper-text {
-  float: left;
-  width: 150px;
-  margin-left: 10px;
+#title{
+  font-weight: 700;
+  font-size: 15px;
 }
-
+#userId{
+  font-size: 13px;
+}
+#price{
+  font-size: 13px;
+}
+#state{
+  display: none;
+}
+.state1{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  font-size: 15px;
+  padding : 5px;
+  cursor: pointer;
+  margin-right:-2px;
+}
+.state2{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 15px;
+  padding : 5px;
+  margin-left: -2px;
+  cursor: pointer;
+}
 /* footer */
 footer {
   background-color: #7fcacb;

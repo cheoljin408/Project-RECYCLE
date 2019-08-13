@@ -1,5 +1,5 @@
-//var $('.row button').attr(btn_flag) = false;
 
+//category
 $('.row button').click(function() {
   if ($(this).css("color") == "rgb(215, 222, 222)") {
     $(this).css("color", "black");
@@ -9,7 +9,58 @@ $('.row button').click(function() {
     $(this).css("border", "1px #d7dede solid");
   }
 });
+//category request
+$('.buy').children('button').click(function(){
+  var html = "";
+  var state = $('#rent').text();
+  $.ajax({
+    type: 'POST',
+    url: '/find',
+    async: false,
+    data: {
+              state : state
+    },
+    success: function(data) {
+      if (data != null) {
+        for (var i = 3; i < 20; i++) {
+          var category = data[i]['category'];
+          var local = data[i]['local'];
+          var state = data[i]['state'];
+          var title = data[i]['title'];
+          var user = data[i]['user'];
+          var price = data[i]['price'];
+          var img = data[i]['img'];
 
+
+
+          var plus = `<div class="paper">
+                        <div class="paper-holder">
+                          <a><img width="225" src="${img}" /></a>
+                        </div>
+                        <div class="paper-description">
+                          <p id='title'>${title}</p>
+                          <p id="userId">${user}</p>
+                        </div>
+                        <div class="paper-content">
+                          <span id="price">${price}원</span>
+                          <span class="paper-state">
+                            <span id="state_${i}" style="display:none">${state}</span>
+                            <span class="state1" id="state1_${i}">렌탈</span>
+                            <span class="state2" id="state2_${i}">구매</span>
+                          </span>
+                        </div>
+                      </div>`;
+          html += plus;
+
+        }
+        document.getElementById('masonry_container').innerHTML = html;
+      }
+    }
+  });
+});
+
+
+//masonry
 $('#masonry_container').imagesLoaded(function() {
   $('#masonry_container').masonry({
     itemSelector: '.paper',
@@ -18,22 +69,27 @@ $('#masonry_container').imagesLoaded(function() {
   });
 });
 
-// 변수 지정
-var slideWrapper =  document.getElementsByClassName('container'),
-	slideContainer  = document.getElementsByClassName('slider-container'),
-	slides = document.getElementsByClassName('slide'),
-	slideCount = slides.length,
-	currentIndex = 0,
-	topHeight = 0,
-	navPrev = document.getElementById('prev'),
-	navNext =  document.getElementById('next');
-
-//슬라이드의 높이 확인하여 부모의 높이로 지정하기
-
-
-// 슬라이드가 있으면 가로로 배열하기
-if (slideCount > 0) {
-	for (var i = 0; i < slideCount; i++) {
-	slides[i].style.left = 100 * i + "%";
-	}
+//masonry rental vs buy
+for(var i=3;i<20;i++)
+{
+  if ($(`#state_${i}`).text() == "렌탈") {
+    $(`#state1_${i}`).css("background-color","#7fcacb");
+    $(`#state1_${i}`).css("color","white");
+    $(`#state1_${i}`).css("padding","5.5px");
+    $(`#state2_${i}`).css("border-style","solid");
+    $(`#state2_${i}`).css("border-color","#7fcacb");
+    $(`#state2_${i}`).css("border-width","0.5px");
+    $(`#state2_${i}`).css("background-color","white");
+    $(`#state2_${i}`).css("color","#7fcacb");
+  }
+  else{
+    $(`#state1_${i}`).css("background-color","white");
+    $(`#state1_${i}`).css("color","#7fcacb");
+    $(`#state1_${i}`).css("border-style","solid");
+    $(`#state1_${i}`).css("border-color","#7fcacb");
+    $(`#state1_${i}`).css("border-width","0.5px");
+    $(`#state2_${i}`).css("padding","5.5px");
+    $(`#state2_${i}`).css("background-color","#7fcacb");
+    $(`#state2_${i}`).css("color","white");
+  }
 }
