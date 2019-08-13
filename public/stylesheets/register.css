@@ -23,7 +23,7 @@ a {
   box-shadow: 0 0 0 0.2rem rgba(165, 249, 250, 0.3);
 }
 
-/* 섹션 1 */
+/* section 1 */
 .section1 {
   margin: 0 auto;
   height: 1200px;
@@ -136,6 +136,8 @@ a {
 #hash div:nth-child(1) input:nth-child(3) {
   width: 352px;
 }
+
+
 /* menu bar */
 #navbar {
   padding-left: 100px;
