@@ -5,6 +5,7 @@
 
             reader.onload = function(e) {
                 $('#stuff').attr('src', e.target.result);
+                $('#stuff').css({'padding-top': '5px', 'width' : '90%', 'height': 'inherit', 'opacity': '1'});
             }
 
             reader.readAsDataURL(inputGroupFile01.files[0]);
