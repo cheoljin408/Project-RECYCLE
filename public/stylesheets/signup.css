@@ -18,7 +18,7 @@ a {
   color: inherit;
 }
 
-/* ì„¹ì…˜ 1 */
+/* section 1 */
 .section1 {
   margin: 0 auto;
   height: 1200px;
@@ -108,6 +108,9 @@ a {
   height: 50px;
   border: 1px solid #7fcacb;
   background-color: #7fcacb;
+
+
+
   color: white;
 }
 

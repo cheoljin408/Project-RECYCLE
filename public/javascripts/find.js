@@ -1,46 +1,42 @@
-
 //var $('.row button').attr(btn_flag) = false;
 
-$('.row button').click(function () {
+$('.row button').click(function() {
   if ($(this).css("color") == "rgb(215, 222, 222)") {
     $(this).css("color", "black");
     $(this).css("border", "1px black solid");
-  }
-  else {
+  } else {
     $(this).css("color", "#d7dede");
     $(this).css("border", "1px #d7dede solid");
   }
 });
 
-
-// $.post('/find', function (data) {
-//   console.log(data);
-//   console.log(nimg);
-
-//   var img = new Array();
-//   for (var i = 3; i < 10; i++) {
-//     var img = data[i]['img'];
-
-//     var plus = `        <div class="paper">
-//     <div class="paper-holder">
-//       <a><img width="190" src="${img}" /></a>
-//     </div>
-//     <p class="paper-description">Lorem ipsum dolor sit amet</p>
-//     <div class="paper-content">
-//       <a class="paper-link" href="#"><img src="http://placekitten.com/30/30" /></a>
-//       <p class="paper-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sem mi, egestas a facilisis eget, egestas ut magna.</p>
-//     </div>
-//   </div>`;
-
-//     html += plus;
-//   }
-//   document.getElementById('masonry_container').outerHTML = html;  
-//   $('#masonry_container').append(html);
-// });
-$('#masonry_container').imagesLoaded(function () {
+$('#masonry_container').imagesLoaded(function() {
   $('#masonry_container').masonry({
     itemSelector: '.paper',
     columnWidth: 285,
     isAnimated: true
   });
 });
+
+// 변수 지정
+var slideWrapper =  document.getElementsByClassName('container'),
+	slideContainer  = document.getElementsByClassName('slider-container'),
+	slides = document.getElementsByClassName('slide'),
+	slideCount = slides.length,
+	currentIndex = 0,
+	topHeight = 0,
+	navPrev = document.getElementById('prev'),
+	navNext =  document.getElementById('next');
+
+//슬라이드의 높이 확인하여 부모의 높이로 지정하기
+
+
+// 슬라이드가 있으면 가로로 배열하기
+if (slideCount > 0) {
+	for (var i = 0; i < slideCount; i++) {
+	slides[i].style.left = 100 * i + "%";
+	}
+}
+
+
+
