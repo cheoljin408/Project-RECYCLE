@@ -36,9 +36,9 @@
             <img src="/images/logo2.png" />
         </div>
         <div class="nav-list">
-          <a href="/">Home</a>
-          <a href="/find">작품 보기</a>
-          <a href="/register">작품 등록하기</a>
+            <a href="/">Home</a>
+            <a href="/find">작품 보기</a>
+            <a href="/register">작품 등록하기</a>
         </div>
         <div class="log_png">
             <a href="#"><img src="/images/cart.png" /></a>
@@ -46,6 +46,7 @@
             <a href="#"><img src="/images/profile.png" /></a>
         </div>
     </div>
+    
 
     <div class="section1">
         <div class="container">
@@ -53,7 +54,7 @@
                 <!-- 회원가입 정보 등록 -->
                 <div class="imgInformation">
                     <div>
-                        <form action="/signup" method="post">
+                        <!-- <form action="/signup" method="post">
                             <div>
                                 <h3>회원가입</h3>
                             </div>
@@ -120,6 +121,52 @@
                             <div>
                                 <input id="btnSubmit" class="btn" type="submit" value="가입하기" />
                             </div>
+                        </form> -->
+                        <form action="/signup" method="POST">
+                            <div style="text-align: center;">
+                                <h3>회원가입</h3>
+                            </div>
+                            <div class="form-group form-div">
+                                <div class="inputid">
+                                    <label for="inputID">아이디</label>
+                                    <button id="idbtn" type="button" class="btn btn-primary btn-sm btnpw">중복 확인</button>
+                                </div>
+                                <input id="userid" type="text" class="form-control" id="inputID"
+                                    aria-describedby="emailHelp" placeholder="" name="id">
+                                <p id="overlap" style="color:#fa4343; font-size:15px; display: none">아이디가 중복됩니다.</p>
+                                <p id="available" style="color:#4D92E9; font-size:15px; display: none">사용 가능한 아이디 입니다.</p>
+                                <p id="warn" style="color:#fa4343; font-size:15px; display: none">중복확인을 해주세요.</p>
+                            </div>
+                            <div class="form-group form-div">
+                                <label for="inputPassword">비밀번호</label>
+                                <input id="realpw" type="password" class="form-control" id="inputPassword"
+                                    placeholder="" name="pw">
+                            </div>
+                            <div id="pwwarn" class="form-group form-div">
+                                <label for="inputPasswordCon">비밀번호 확인</label>
+                                <input id="pwconfirm" type="password" class="form-control" id="inputPasswordCon"
+                                    placeholder="">
+                                <p id="warnpw" style="color:#fa4343; font-size:15px; display: none">비밀번호가 일치하지 않습니다.</p>
+                            </div>
+                            <div class="form-group form-div">
+                                <label for="inputEmail">이메일</label>
+                                <input type="email" class="form-control" id="inputEmail" placeholder="abc@defghij.com"
+                                    name="email">
+                            </div>
+                            <div class="form-group form-div">
+                                <label for="inputPhone">전화번호</label>
+                                <input type="text" class="form-control" id="inputPhone" placeholder="'-'는 빼고 입력하세요."
+                                    name="phoneNum">
+                            </div>
+                            <div class="custom-control custom-checkbox check form-div">
+                                <input type="checkbox" class="custom-control-input" id="exampleCheck1">
+                                <label class="custom-control-label" for="exampleCheck1">(필수)Recycle 이용약관 동의</label>
+                            </div>
+                            <div class="custom-control custom-checkbox check form-div">
+                                <input type="checkbox" class="custom-control-input" id="exampleCheck2">
+                                <label class="custom-control-label" for="exampleCheck2">(필수)개인정보 처리방침 동의</label>
+                            </div>
+                            <button id="infosubmit" type="submit" class="btn btn-primary">회원가입</button>
                         </form>
                     </div>
                 </div>
@@ -135,18 +182,121 @@
                 <span id="footer_logo"><img src="/images/logo1.png" /></span>
                 <h4>만의 서비스를 체험해보세요</h4>
             </div>
-
         </div>
     </footer>
 
+
+    <!-- Modal -->
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">아이디 중복 확인</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="overlap" style="display: none;">
+                  아이디가 중복되었습니다.
+              </div>
+              <div id="available" style="display: none;">
+                  사용가능한 아이디 입니다.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div> -->
 
 </body>
 <!-- Load  index.js -->
 <script src="/javascripts/register.js"></script>
 <script>
-    var realpw = $('#realpw');
-    var checkpw = $('#checkpw');
+    // $('#pwconfirm').change(function(){
+    //     if($('#realpw').val() != $('#pwconfirm').val())
+    //     {
+    //         $('#warn').css('display', 'block');
+    //     }
+    //     if($('#realpw').val() == $('#pwconfirm').val())
+    //     {
+    //         $('#warn').css('display', 'hidden');
+    //     }
+    // });
+    $('#pwconfirm').change(function () {
+        var p1 = $('#realpw').val();
+        var p2 = $('#pwconfirm').val();
 
+        if (p1 == p2) {
+            $('#warnpw').hide();
+            $('#infosubmit').attr('disabled', false);
+        }
+        else {
+            $('#warnpw').show();
+            $('#infosubmit').attr('disabled', true);
+        }
+    });
+    // $('#idbtn').click(function() {
+    //     var userid = $('#userid').val();
+
+    //     $.ajax({
+    //         async: true,
+    //         type:'POST',
+    //         url:'/idcheck',
+    //         success: function(data) {
+    //             console.log(data);
+    //         }
+    //     });
+    // });
+
+
+    var checkflag = false;
+
+    $('#idbtn').click(function () {
+        $('#warn').hide();
+
+        var userid = $('#userid').val();
+
+        $.ajax({
+            url: '/idcheck',
+            type: 'post',
+            // dataType: 'json',
+            data: {
+                userid: userid
+            },
+            success: function (data) {
+                console.log(data);
+                if (data[0]['count(*)'] == 1) {
+                    checkflag=false;
+                    $('#overlap').show();
+                    $('#available').hide();
+                    $('#infosubmit').attr('disabled', true);
+                }
+                else if (data[0]['count(*)'] == 0) {
+                    checkflag=true;
+                    $('#available').show();
+                    $('#overlap').hide();
+                    $('#infosubmit').attr('disabled', false);
+                }
+            }
+        });
+    });
+
+    $('#userid').change(function() {
+        var ref = /^[a-zA-Z0-9]{1,}$/;
+
+        if(checkflag==false)
+        {
+            $('#warn').show();
+        }
+        else if(checkflag==true)
+        {
+            $('#warn').hide();
+        }
+    });
 
 </script>
 

@@ -145,7 +145,7 @@ router.post('/info', (req, res) => {
 
   console.log(sql);
 
-  con.query(sql, function (err, reault) {
+  con.query(sql, function (err, result) {
     if (err) {
       throw err;
     }
@@ -156,5 +156,52 @@ router.post('/info', (req, res) => {
   });
 });
 
+router.post('/signup', (req, res) => {
+  var id = req.body.id;
+  var pw = req.body.pw;
+  var email = req.body.email;
+  var phoneNum = req.body.phoneNum;
+
+  var sql = `insert into member (id, password, email, phoneNum) values ('${id}', '${pw}', '${email}', '${phoneNum}')`;
+
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      console.log(err);
+      if (err.code = "ER_DUP_ENTRY") {
+        res.send("<script>alert('아이디가 중복됩니다.');</script>");
+        res.redirect('/signup');
+      }
+    }
+    else
+    {
+      res.redirect('/');
+    }
+  });
+});
+
+router.post('/idcheck', (req, res) => {
+  var userid = req.body.userid;
+  console.log(userid);
+
+  var sql = `select count(*) from member where id='${userid}'`;
+  var check;
+
+  console.log(userid);
+
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result);
+      res.send(result);
+    }
+  });
+});
+
+// router.post('/register', (req, res) => {
 
 module.exports = router;
