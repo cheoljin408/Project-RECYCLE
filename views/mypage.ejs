@@ -27,11 +27,16 @@
 
 <script>
     $.post('/userID', function(data){
-        if (data){
-            divObj = document.getElementById("user_id");
-            divObj.textContent = data;
+        if (data.userID){
+            userID = document.getElementById("user_id");
+            userEmail = document.getElementById("user_email");
+            userPhone = document.getElementById("user_phone");
+            userID.textContent = data.userID;
+            userEmail.textContent = data.userEmail;
+            userPhone.textContent = data.userPhone;
         } else {
             alert('session error!');
+            window.location.href="/find";
         }
     })
 </script>

@@ -35,6 +35,8 @@ con.connect(function (err) {
 
 //session check
 router.post('/sessionchecker', function (req, res){
+  //console.log('sessioncheck POST:::::::::::');
+  //console.log(req.session);
   if (req.session.userID){
     res.send(true);
   }
@@ -44,7 +46,7 @@ router.post('/sessionchecker', function (req, res){
 });
 
 router.post('/userID', function (req, res){
-  res.send(req.session.userID);
+  res.send(req.session);
 });
 
 //login
@@ -69,18 +71,32 @@ router.post('/auth', function (req, res){
     else {
       //console.log(result[0]['password']);
       if (result[0]['password'] === userPW){
-        //req.session.userID =  userID;
         res.send('OK');
       } else {
         res.send('PW');
       }
     }
-  })
+  });
 });
 
 router.post('/login', function(req, res){
-  req.session.userID = req.body.userID;
-  res.redirect('/find');
+  var userID = req.body.userID;
+  var userEmail = 'default';
+  var userPhone = 'default';
+  var sql = `SELECT * FROM member WHERE id = '${userID}'`;
+
+  con.query(sql, function(err, result, fields){
+    if (err){
+      console.log(err);
+      throw err;
+    } else {
+      //console.log(result[0]);
+      req.session.userID = userID;
+      req.session.userEmail = result[0]['email'];
+      req.session.userPhone = result[0]['phoneNum'];
+      res.redirect('/find');
+    }
+  });
 });
 
 /* GET home page. */
