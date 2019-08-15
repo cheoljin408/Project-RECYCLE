@@ -55,53 +55,63 @@
         <div class="carousel-inner">
           <div class="carousel-item active category">
             <!-- <form method="POST"> -->
-              <div class="row">
-                <div class="thema row_margin">
-                  <h5>테마</h5>
-                  <input type=button id="ill" value="일러스트"/>
-                  <button>사진</button>
-                  <button>회화</button>
-                  <button>가구</button>
-                  <button>캘리그라피</button>
-                  <button>사운드</button>
-                  <button>애니메이션</button>
-                  <button id="ridicule">조소</button>
-                </div>
+            <div class="row">
+              <div class="thema row_margin">
+                <h5>테마</h5>
+                <input type=button id="ill" value="일러스트" />
+                <button>사진</button>
+                <button>회화</button>
+                <button>가구</button>
+                <button>캘리그라피</button>
+                <button>사운드</button>
+                <button>애니메이션</button>
+                <button id="ridicule">조소</button>
               </div>
-              <div class="row">
-                <div class="region row_margin">
-                  <h5>지역</h5>
-                  <button>서울</button>
-                  <button>대구</button>
-                  <button>부산</button>
-                  <button>울산</button>
-                </div>
+            </div>
+            <div class="row">
+              <div class="region row_margin">
+                <h5>지역</h5>
+                <button>서울</button>
+                <button>대구</button>
+                <button>부산</button>
+                <button>울산</button>
               </div>
-              <div class="row">
-                <div class="buy row_margin">
+            </div>
+            <div class="row_last" style="height:25%">
+              <div class="row" style="height:100%">
+                <div class="row_margin">
                   <h5>상태</h5>
-                  <button id="rent">렌트</button>
-                  <button id="sell">구매</button>
+                  <div class="buy btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> 렌탈
+                    </label>
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> 구매
+                    </label>
+                  </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" style="height:100%">
                 <div class="price row_margin">
                   <h5>가격</h5>
-                  <button>~ 10,000</button>
-                  <button>10,000 ~ 50,000</button>
-                  <button>50,000 ~ 100,000</button>
-                  <button>100,000 ~ 150,000</button>
-                  <button>150,000 ~</button>
+                  <input class="form-control" type="text" placeholder="10,000" /> ~
+                  <input class="form-control" type="text" placeholder="50,000" />
                 </div>
               </div>
+            </div>
+            <div class="row" style="padding:0; border:none">
+              <div class="row_margin_button">
+                <input id="find" type="button" value="찾기" />
+              </div>
+            </div>
             <!-- </form> -->
-
           </div>
+          <!--
           <div class="carousel-item tag">
             <div class="title">
               <h3>오늘의 태그</h3>
             </div>
-            <div class="tag_box">
+            <div class="tag_box">cj
               <button>#여름</button>
               <button>#무더위</button>
               <button>#겨울</button>
@@ -118,7 +128,7 @@
               <button>#겨울</button>
               <button>#카페</button>
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>
@@ -157,6 +167,12 @@
 </body>
 
 <script>
+function sendRequest(){
+  $('#find').click(function(){
+    $('but')
+  })
+}
+
   var html = "";
   $.ajax({
     type: 'POST',
