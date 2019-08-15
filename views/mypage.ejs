@@ -23,7 +23,19 @@
 
   <!-- load css files -->
   <link href="/stylesheets/mypage.css" rel="stylesheet">
-  </head>
+</head>
+
+<script>
+    $.post('/userID', function(data){
+        if (data){
+            divObj = document.getElementById("user_id");
+            divObj.textContent = data;
+        } else {
+            alert('session error!');
+        }
+    })
+</script>
+
 <body>
     <div id="navbar">
         <div class="logo">
@@ -49,7 +61,7 @@
             </div>
             
             <div class="user_info">
-                <div class="user_id">userID</div>
+                <div id="user_id">userID</div>
                 <div id="user_email" class="user_sub_info">123@gmail.com</div>
                 <div id="user_phone" class="user_sub_info">000-0000-0000</div>
             </div>

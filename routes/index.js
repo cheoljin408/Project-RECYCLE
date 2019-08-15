@@ -43,6 +43,10 @@ router.post('/sessionchecker', function (req, res){
   }
 });
 
+router.post('/userID', function (req, res){
+  res.send(req.session.userID);
+});
+
 //login
 router.post('/auth', function (req, res){
   var userID = req.body.userID;

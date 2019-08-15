@@ -99,7 +99,7 @@
       padding-top: 5px;
   }
 
-  .user_id {
+  #user_id {
       font-size: 1.2rem;
       font-weight: 500;
       text-overflow: ellipsis;
