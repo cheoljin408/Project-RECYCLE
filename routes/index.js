@@ -113,6 +113,11 @@ router.get('/signup', function (req, res) {
   res.render('signup');
 });
 
+/* GET mypage page. */
+router.get('/mypage', function(req, res){
+  res.render('mypage');
+});
+
 router.post('/upload', upload.single('userFile'), function(req, res){
   //res.send('Uploaded! : '+req.file); // object를 리턴함
   console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
