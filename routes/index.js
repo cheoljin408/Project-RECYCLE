@@ -36,10 +36,12 @@ con.connect(function (err) {
 //session check
 router.post('/sessionchecker', function (req, res){
   if (req.session.userID){
+    console.log(req.session.userID);
     res.send(true);
   }
   else {
     res.send(false);
+    console.log(req.session.userID);
   }
 });
 
@@ -141,7 +143,9 @@ router.post('/info', (req, res) => {
   var price = req.body.price;
   var description = req.body.description;
 
-  var sql =`update article set category = '${category}', local = '${local}', state = '${state}', title = '${title}', price = ${price}, description = '${description}' where id = ${postId}`;
+
+
+  var sql =`update article set category = '${category}', local = '${local}', state = '${state}', title = '${title}', user = '${req.session.userID}', price = ${price}, description = '${description}' where id = ${postId}`;
 
   console.log(sql);
 
@@ -152,6 +156,32 @@ router.post('/info', (req, res) => {
     else {
       res.redirect('/register');
       console.log('1 record inserted');
+    }
+  });
+});
+
+router.post('/insertHashtag', (req, res) => {
+  console.log(req.body.postid);
+  console.log(req.body.hashtag);
+
+  var postid = req.body.postid;
+  var tagarr = req.body.hashtag;
+
+  var tags = ['null', 'null', 'null', 'null', 'null'];
+
+  for(var i=0; i<tagarr.length; i++)
+  {
+    tags[i] = tagarr[i];
+  }
+
+  var sql = `insert into hashtag (postid, tag1, tag2, tag3, tag4, tag5) values (${postid}, '${tags[0]}', '${tags[1]}', '${tags[2]}', '${tags[3]}', '${tags[4]}')`;
+
+  con.query(sql, function (err, result) {
+    if (err) {
+      throw err;
+    }
+    else {
+      console.log('tag record inserted');
     }
   });
 });
