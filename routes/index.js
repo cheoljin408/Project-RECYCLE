@@ -6,10 +6,10 @@ var router = express.Router();
 //multer setting
 var upload = multer({
   storage: multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
       cb(null, 'public/images/uploads/');
     },
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
       cb(null, new Date().valueOf() + file.originalname);
     }
   })
@@ -25,7 +25,7 @@ var con = mysql.createConnection({
   database: 'recycle'
 });
 
-con.connect(function (err) {
+con.connect(function(err) {
   if (err) {
     console.log(con.host);
     throw err;
@@ -34,47 +34,62 @@ con.connect(function (err) {
 });
 
 /* GET home page. */
-router.get('/', function (req, res) {
+router.get('/', function(req, res) {
   res.render('index');
 });
 
 /* GET register page. */
-router.get('/register', function (req, res) {
+router.get('/register', function(req, res) {
 
   res.render('register');
 });
 
 /* GET find page. */
-router.get('/find', function (req, res) {
+router.get('/find', function(req, res) {
   res.render('find');
 });
 
 /* POST find page. */
-router.post('/find', function (req, res) {
-  console.log('요청값 = ' + req.body.state);
-  //
-   var sql = "select * from article";
-   if(req.body.state)
-   {
-     sql +=  ` where state like '${req.body.state}'`;
-   }
+router.post('/find', function(req, res) {
+  console.log('테마 = ' + req.body.theme);
+  console.log('지역 = ' + req.body.region);
+  console.log('상태 = ' + req.body.buy);
+  console.log('가격 = ' + req.body.low_price);
 
+  var sql = "select * from article where 1";
+  /*
+  if (req.body.buy != 'ALL') {
+    sql += `and state like '${req.body.buy}'`;
+  }
+  if (req.body.theme != 'ALL') {
+    sql += `state like '${req.body.buy}'`;
+  }
+  if (req.body.region != 'ALL') {
+    sql += `state like '${req.body.buy}'`;
+  }
+  if (req.body.price != 'ALL') {
+    sql += `state like '${req.body.buy}'`;
+  }*/
 
   con.query(sql, function(err, result, fields) {
-    if(err) {
+    if (err) {
       throw err;
     }
     res.send(result);
   });
 });
 
+router.post('/find/category', function(req, res) {
+  console.log('요청값 = ' + req.body.buy);
+  res.redirect('/find');
+});
 
 /* GET signup page. */
-router.get('/signup', function (req, res) {
+router.get('/signup', function(req, res) {
   res.render('signup');
 });
 
-router.post('/upload', upload.single('userFile'), function(req, res){
+router.post('/upload', upload.single('userFile'), function(req, res) {
   //res.send('Uploaded! : '+req.file); // object를 리턴함
   console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
   var postId = req.body.postId;
@@ -82,13 +97,14 @@ router.post('/upload', upload.single('userFile'), function(req, res){
   var sql = `insert into article (category, img, local, state, title, user, price, description) values ('temp', '${req.file.path}', 'temp', 'temp', 'temp', 'temp', 9999, 'temp')`;
 
   con.query(sql, function(err, result) {
-    if(err) {
+    if (err) {
       throw err;
-    }
-    else {
+    } else {
       console.log('1 record inserted');
       console.log(result.insertId);
-      res.send({id:result.insertId});
+      res.send({
+        id: result.insertId
+      });
     }
   });
 });
@@ -102,15 +118,14 @@ router.post('/info', (req, res) => {
   var price = req.body.price;
   var description = req.body.description;
 
-  var sql =`update article set category = '${category}', local = '${local}', state = '${state}', title = '${title}', price = ${price}, description = '${description}' where id = ${postId}`;
+  var sql = `update article set category = '${category}', local = '${local}', state = '${state}', title = '${title}', price = ${price}, description = '${description}' where id = ${postId}`;
 
   console.log(sql);
 
-  con.query(sql, function (err, reault) {
+  con.query(sql, function(err, reault) {
     if (err) {
       throw err;
-    }
-    else {
+    } else {
       res.redirect('/register');
       console.log('1 record inserted');
     }

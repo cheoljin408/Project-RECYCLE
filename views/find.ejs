@@ -58,7 +58,7 @@
             <div class="row">
               <div class="thema row_margin">
                 <h5>테마</h5>
-                <input type=button id="ill" value="일러스트" />
+                <button>일러스트</button>
                 <button>사진</button>
                 <button>회화</button>
                 <button>가구</button>
@@ -86,7 +86,7 @@
                       <input type="radio" name="options" id="option1" autocomplete="off" checked> 렌탈
                     </label>
                     <label class="btn btn-secondary">
-                      <input type="radio" name="options" id="option2" autocomplete="off"> 구매
+                      <input type="radio" name="options" id="option2" autocomplete="off"> 판매
                     </label>
                   </div>
                 </div>
@@ -94,8 +94,8 @@
               <div class="row" style="height:100%">
                 <div class="price row_margin">
                   <h5>가격</h5>
-                  <input class="form-control" type="text" placeholder="10,000" /> ~
-                  <input class="form-control" type="text" placeholder="50,000" />
+                  <input id='low_price' class="form-control" type="text" placeholder="10,000" /> ~
+                  <input id='high_price' class="form-control" type="text" placeholder="50,000" />
                 </div>
               </div>
             </div>
@@ -167,55 +167,85 @@
 </body>
 
 <script>
-function sendRequest(){
-  $('#find').click(function(){
-    $('but')
-  })
-}
+  var find_flag = false;
+  var buy = $.trim($('.buy').find(".active").text());
+  var low_price = $('#low_price').val();
+  var high_price = $('#low_price').val();
+  var theme = new Array();
+  var region = new Array();
 
-  var html = "";
-  $.ajax({
-    type: 'POST',
-    url: '/find',
-    async: false,
-    success: function(data) {
-      if (data != null) {
-        for (var i = 3; i < 20; i++) {
-          var category = data[i]['category'];
-          var local = data[i]['local'];
-          var state = data[i]['state'];
-          var title = data[i]['title'];
-          var user = data[i]['user'];
-          var price = data[i]['price'];
-          var img = data[i]['img'];
-
-
-
-          var plus = `<div class="paper">
-                        <div class="paper-holder">
-                          <a><img width="225" src="${img}" /></a>
-                        </div>
-                        <div class="paper-description">
-                          <p id='title'>${title}</p>
-                          <p id="userId">${user}</p>
-                        </div>
-                        <div class="paper-content">
-                          <span id="price">${price}원</span>
-                          <span class="paper-state">
-                            <span id="state_${i}" style="display:none">${state}</span>
-                            <span class="state1" id="state1_${i}">렌탈</span>
-                            <span class="state2" id="state2_${i}">구매</span>
-                          </span>
-                        </div>
-                      </div>`;
-          html += plus;
-
-        }
-        document.getElementById('masonry_container').innerHTML = html;
+  var count =0;
+  for(var i=0;i<$('.thema').find('button').length ;i++)
+  {
+  	if($('.thema').find('button')[i]['style'].borderColor=='black')
+      {
+          theme[count]=$('.thema').find('button')[i].outerText;
+  		count++;
       }
-    }
+  } count=0;
+  for(var i=0;i<$('.region').find('button').length ;i++)
+  {
+  	if($('.region').find('button')[i]['style'].borderColor=='black')
+      {
+          region[count]=$('.region').find('button')[i].outerText;
+  		count++;
+      }
+  }
+  function getData(buy, theme, region, low_price, high_price) {
+    $.ajax({
+      type: 'post',
+      url: '/find',
+      data: {
+        buy : buy,
+        theme: theme,
+        region: region,
+        low_price: low_price,
+        high_price : high_price
+      },
+      async: false,
+      success: function (data) {
+        $('#masonry_container').empty();
+        var html = "";
+        if (data != null) {
+          for (var i = 3; i < 20; i++) {
+            var category = data[i]['category'];
+            var local = data[i]['local'];
+            var state = data[i]['state'];
+            var title = data[i]['title'];
+            var user = data[i]['user'];
+            var price = data[i]['price'];
+            var img = data[i]['img'];
+            var plus = `<div class="paper">
+                            <div class="paper-holder">
+                              <a><img width="225" src="${img}" /></a>
+                            </div>
+                            <div class="paper-description">
+                              <p id='title'>${title}</p>
+                              <p id="userId">${user}</p>
+                            </div>
+                            <div class="paper-content">
+                              <span id="price">${price}원</span>
+                              <span class="paper-state">
+                                <span id="state_${i}" style="display:none">${state}</span>
+                                <span class="state1" id="state1_${i}">렌탈</span>
+                                <span class="state2" id="state2_${i}">판매</span>
+                              </span>
+                            </div>
+                          </div>`;
+            html += plus;
+          }
+          document.getElementById('masonry_container').innerHTML = html;
+        }
+      }
+    });
+  }
 
-  });
+  getData('ALL', 'ALL', 'ALL', 'ALL');
+
+  $('#find').click(function() {
+      getData(buy, theme, region, low_price, high_price);
+    });
+
 </script>
 
 <!-- Load  find.js -->
