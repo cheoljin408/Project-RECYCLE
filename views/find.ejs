@@ -167,43 +167,50 @@
 </body>
 
 <script>
-  var find_flag = false;
-  var buy = $.trim($('.buy').find(".active").text());
-  var low_price = $('#low_price').val();
-  var high_price = $('#low_price').val();
-  var theme = new Array();
-  var region = new Array();
+  function category(){
+    var buy = $.trim($('.buy').find(".active").text());
+    var low_price = $('#low_price').val();
+    var high_price = $('#low_price').val();
+    var theme = new Array();
+    var region = new Array();
 
-  var count =0;
-  for(var i=0;i<$('.thema').find('button').length ;i++)
-  {
-  	if($('.thema').find('button')[i]['style'].borderColor=='black')
-      {
-          theme[count]=$('.thema').find('button')[i].outerText;
-  		count++;
+    var count = 0;
+    for (var i = 0; i < $('.thema').find('button').length; i++) {
+      if ($('.thema').find('button')[i]['style'].borderColor == 'black') {
+        theme[count] = $('.thema').find('button')[i].outerText;
+        count++;
       }
-  } count=0;
-  for(var i=0;i<$('.region').find('button').length ;i++)
-  {
-  	if($('.region').find('button')[i]['style'].borderColor=='black')
-      {
-          region[count]=$('.region').find('button')[i].outerText;
-  		count++;
+    }
+    count = 0;
+    for (var i = 0; i < $('.region').find('button').length; i++) {
+      if ($('.region').find('button')[i]['style'].borderColor == 'black') {
+        region[count] = $('.region').find('button')[i].outerText;
+        count++;
       }
+    }
   }
+
+
   function getData(buy, theme, region, low_price, high_price) {
+
+
+    console.log('client 테마 = ' + theme);
+    console.log('client 지역 = ' + region);
+    console.log('client 상태 = ' + buy);
+    console.log('client 가격 = ' + low_price);
+
     $.ajax({
       type: 'post',
       url: '/find',
+      async: false,
       data: {
-        buy : buy,
+        buy: buy,
         theme: theme,
         region: region,
         low_price: low_price,
-        high_price : high_price
+        high_price: high_price
       },
-      async: false,
-      success: function (data) {
+      success: function(data) {
         $('#masonry_container').empty();
         var html = "";
         if (data != null) {
@@ -240,12 +247,12 @@
     });
   }
 
+  category();
   getData('ALL', 'ALL', 'ALL', 'ALL');
 
   $('#find').click(function() {
-      getData(buy, theme, region, low_price, high_price);
-    });
-
+    getData(buy, theme, region, low_price, high_price);
+  });
 </script>
 
 <!-- Load  find.js -->

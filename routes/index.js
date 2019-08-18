@@ -2,7 +2,7 @@ var express = require('express');
 var multer = require('multer');
 var path = require('path');
 var router = express.Router();
-
+var mysql = require('mysql');
 //multer setting
 var upload = multer({
   storage: multer.diskStorage({
@@ -16,7 +16,6 @@ var upload = multer({
 });
 
 //MySQL
-var mysql = require('mysql');
 var con = mysql.createConnection({
   host: '54.180.112.25',
   user: 'lwj',
