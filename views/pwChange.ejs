@@ -22,18 +22,16 @@
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap&subset=korean" rel="stylesheet">
 
   <!-- load css files -->
-  <link href="/stylesheets/profileEdit.css" rel="stylesheet">
+  <link href="/stylesheets/pwChange.css" rel="stylesheet">
 </head>
 
 <script>
     $.post('/userID', function(data){
-        if (data.userID){
-            $('input[name=userID]').val(data.userID);
-            $('input[name=userEmail]').val(data.userEmail);
-            $('input[name=userPhone]').val(data.userPhone);
-        } else {
+        if (!data.userID){
             alert('session error!');
             window.location.href="/find";
+        } else {
+            $('input[name=userID]').val(data.userID);
         }
     })
 </script>
@@ -64,41 +62,48 @@
             </div>
             <div class="content rounded">
                 <!--form-->
-                <form id="profileEditForm" action="/profile/edit" method="post">
+                <form id="profileEditForm" action="/profile/password/change" method="post">
+                    <input type="text" readonly id="userID" name="userID" style="display:none;">
                     <div class="form-group row">
-                        <label for="userID" class="col-sm-3 col-form-label text-right form_label">아이디</label>
+                        <label for="userID" class="col-sm-3 col-form-label text-right form_label">이전 비밀번호</label>
                         <div class="col-sm-9">
-                            <input type="text" readonly class="form-control-plaintext" id="userID" name="userID" value="userID">
+                            <input type="text" class="form-control" id="currentPW" name="currentPW">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="userEmail" class="col-sm-3 col-form-label text-right form_label">이메일</label>
+                        <label for="userEmail" class="col-sm-3 col-form-label text-right form_label">새 비밀번호</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="userEmail" name="userEmail" value="userEmail">
+                            <input type="text" class="form-control" id="newPW" name="newPW">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="userPhone" class="col-sm-3 col-form-label text-right form_label">전화번호</label>
+                        <label for="userPhone" class="col-sm-3 col-form-label text-right form_label">새 비밀번호 확인</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="userPhone" name="userPhone" value="userPhone">
+                            <input type="text" class="form-control" id="newPW_confirm" name="newPW_confirm">
+                        </div>
+                    </div>
+                    <div id="error1" class="form-group row" style="display:none; padding: 0;">
+                        <label for="error1_content" class="col-sm-3 col-form-label form_label"></label> 
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="error1_content" name="error1" value="모든 항목을 입력해주세요!" style="color:red;">
+                        </div>
+                    </div>
+                    <div id="error2" class="form-group row" style="display:none; padding: 0;">
+                        <label for="error2_content" class="col-sm-3 col-form-label form_label"></label> 
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="error2_content" name="error2" value="두 비밀번호가 일치하지않습니다" style="color:red;">
+                        </div>
+                    </div>
+                    <div id="error3" class="form-group row" style="display:none; padding: 0;">
+                        <label for="error3_content" class="col-sm-3 col-form-label form_label"></label> 
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="error3_content" name="error3" value="올바른 비밀번호를 입력해주세요" style="color:red;">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="userAddress" class="col-sm-3 col-form-label text-right form_label">주소</label>
+                        <label for="edit_btn" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" id="userAddress" rows="2" value="userAddress"></textarea>
-                        </div>
-                    </div>
-                    <div id="error" class="form-group row" style="display:none; padding: 0;">
-                        <label for="erro1" class="col-sm-3 col-form-label form_label"></label> 
-                        <div class="col-sm-9">
-                            <input type="text" readonly class="form-control-plaintext" id="erro1" name="erro1" value="모든 항목을 입력해주세요!" style="color:red;">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="edit_btn" class="col-sm-2 col-form-label"></label>
-                        <div class="col-sm-10">
-                            <button type="button" id="edit_submit_btn" class="btn btn-primary" onclick="inputErrorCheck()">변경하기</button>
+                            <button type="button" id="pw_change_submit_btn" class="btn btn-primary" onclick="inputErrorCheck()">비밀번호 변경하기</button>
                         </div>
                     </div>
                 </form>
@@ -117,12 +122,36 @@
     </footer>
 </body>
 <script>
-    function inputErrorCheck(){
-        if ($('input[name=userEmail]').val() === '' || $('input[name=userPhone]').val() === '') {
-            $('#error').show();
+    function inputErrorCheck() {
+        if ($('input[name=currentPW').val() === '' || $('input[name=newPW]').val() === ''){
+            $('#error1').show();
+            $('#error2').hide();
+            $('#error3').hide();
+        } else if ($('input[name=newPW]').val() !== $('input[name=newPW_confirm]').val()){
+            $('#error1').hide();
+            $('#error2').show();
+            $('#error3').hide();
         } else {
-            $('#error').hide();
-            $('#profileEditForm').submit();
+            $('#error1').hide();
+            $('#error2').hide();
+            $('#error3').hide();
+            $.ajax({
+                type: 'POST',
+                url : '/auth',
+                data : {
+                    userID : $('input[name=userID]').val(),
+                    userPW : $('input[name=currentPW]').val()
+                },
+                success : function(data){
+                    if (data === 'ID') {
+                        alert('권한 없음!');
+                    } else if (data === 'PW'){
+                        $('#error3').show();
+                    } else if (data == 'OK'){
+                        alert('성공!');
+                    }
+                }
+            })
         }
     }
 </script>

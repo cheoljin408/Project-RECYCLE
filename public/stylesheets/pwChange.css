@@ -99,7 +99,7 @@
   color:rgba(0,0,0,0.6);
 }
 
-#profile_edit_btn {
+#pw_change_btn {
     font-weight: 500;
     color: #7fcacb;
     border-bottom: solid #7fcacb 2px;
@@ -108,7 +108,7 @@
 
 .content {
     background-color: white;
-    padding: 40px 100px;
+    padding: 40px 90px;
 }
 
 .form-group {
@@ -120,7 +120,7 @@
     padding-right: 35px;
 }
 
-#edit_submit_btn {
+#pw_change_submit_btn {
     background-color: rgba(127, 202, 203, 1);
     border-color: rgba(127, 202, 203, 1);
 }
