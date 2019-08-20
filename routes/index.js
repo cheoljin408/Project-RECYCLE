@@ -232,6 +232,27 @@ router.post('/idcheck', (req, res) => {
   });
 });
 
+router.post('/profile/edit', function(req, res){
+  var id = req.body.userID;
+  var email = req.body.userEmail;
+  var phone = req.body.userPhone;
+  var address = req.body.userAddress;
+
+  var sql = `UPDATE member SET email = '${email}', phoneNum = '${phone}' WHERE id= '${id}'`;
+
+  con.query(sql, function(err, result){
+    if(err){
+      throw err;
+    } else {
+      console.log('changed!!');
+      req.session.userID = id;
+      req.session.userEmail = email;
+      req.session.userPhone = phone;
+      res.redirect('/profile/edit');
+    }
+  })
+})
+
 // router.post('/register', (req, res) => {
 
 module.exports = router;
