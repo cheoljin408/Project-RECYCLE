@@ -140,7 +140,7 @@
 
   <div class="section2">
     <div class="container">
-      <div id="masonry_container">
+      <div id="masonry_container" class='masonry'>
         <!-- <div class="paper">
           <div class="paper-holder">
             <a><img width="190" src="http://placekitten.com/190/258" /></a>
@@ -167,93 +167,9 @@
 </body>
 
 <script>
-  function category(){
-    var buy = $.trim($('.buy').find(".active").text());
-    var low_price = $('#low_price').val();
-    var high_price = $('#low_price').val();
-    var theme = new Array();
-    var region = new Array();
 
-    var count = 0;
-    for (var i = 0; i < $('.thema').find('button').length; i++) {
-      if ($('.thema').find('button')[i]['style'].borderColor == 'black') {
-        theme[count] = $('.thema').find('button')[i].outerText;
-        count++;
-      }
-    }
-    count = 0;
-    for (var i = 0; i < $('.region').find('button').length; i++) {
-      if ($('.region').find('button')[i]['style'].borderColor == 'black') {
-        region[count] = $('.region').find('button')[i].outerText;
-        count++;
-      }
-    }
-  }
-
-
-  function getData(buy, theme, region, low_price, high_price) {
-
-
-    console.log('client 테마 = ' + theme);
-    console.log('client 지역 = ' + region);
-    console.log('client 상태 = ' + buy);
-    console.log('client 가격 = ' + low_price);
-
-    $.ajax({
-      type: 'post',
-      url: '/find',
-      async: false,
-      data: {
-        buy: buy,
-        theme: theme,
-        region: region,
-        low_price: low_price,
-        high_price: high_price
-      },
-      success: function(data) {
-        $('#masonry_container').empty();
-        var html = "";
-        if (data != null) {
-          for (var i = 3; i < 20; i++) {
-            var category = data[i]['category'];
-            var local = data[i]['local'];
-            var state = data[i]['state'];
-            var title = data[i]['title'];
-            var user = data[i]['user'];
-            var price = data[i]['price'];
-            var img = data[i]['img'];
-            var plus = `<div class="paper">
-                            <div class="paper-holder">
-                              <a><img width="225" src="${img}" /></a>
-                            </div>
-                            <div class="paper-description">
-                              <p id='title'>${title}</p>
-                              <p id="userId">${user}</p>
-                            </div>
-                            <div class="paper-content">
-                              <span id="price">${price}원</span>
-                              <span class="paper-state">
-                                <span id="state_${i}" style="display:none">${state}</span>
-                                <span class="state1" id="state1_${i}">렌탈</span>
-                                <span class="state2" id="state2_${i}">판매</span>
-                              </span>
-                            </div>
-                          </div>`;
-            html += plus;
-          }
-          document.getElementById('masonry_container').innerHTML = html;
-        }
-      }
-    });
-  }
-
-  category();
-  getData('ALL', 'ALL', 'ALL', 'ALL');
-
-  $('#find').click(function() {
-    getData(buy, theme, region, low_price, high_price);
-  });
 </script>
+
 
 <!-- Load  find.js -->
 <script src="/javascripts/find.js"></script>
