@@ -45,98 +45,84 @@
   </div>
 
   <div class="section1">
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
     <div class="container">
-      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active category">
-            <!-- <form method="POST"> -->
-            <div class="row">
-              <div class="thema row_margin">
-                <h5>테마</h5>
-                <button>일러스트</button>
-                <button>사진</button>
-                <button>회화</button>
-                <button>가구</button>
-                <button>캘리그라피</button>
-                <button>사운드</button>
-                <button>애니메이션</button>
-                <button id="ridicule">조소</button>
-              </div>
-            </div>
-            <div class="row">
-              <div class="region row_margin">
-                <h5>지역</h5>
-                <button>서울</button>
-                <button>대구</button>
-                <button>부산</button>
-                <button>울산</button>
-              </div>
-            </div>
-            <div class="row_last" style="height:25%">
-              <div class="row" style="height:100%">
-                <div class="row_margin">
-                  <h5>상태</h5>
-                  <div class="buy btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary active">
-                      <input type="radio" name="options" id="option1" autocomplete="off" checked> 렌탈
-                    </label>
-                    <label class="btn btn-secondary">
-                      <input type="radio" name="options" id="option2" autocomplete="off"> 판매
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="row" style="height:100%">
-                <div class="price row_margin">
-                  <h5>가격</h5>
-                  <input id='low_price' class="form-control" type="text" placeholder="10,000" /> ~
-                  <input id='high_price' class="form-control" type="text" placeholder="50,000" />
-                </div>
-              </div>
-            </div>
-            <div class="row" style="padding:0; border:none">
-              <div class="row_margin_button">
-                <input id="find" type="button" value="찾기" />
-              </div>
-            </div>
-            <!-- </form> -->
+      <div class="category">
+        <div class="row">
+          <div class="thema row_margin">
+            <h5>테마</h5>
+            <button>일러스트</button>
+            <button>사진</button>
+            <button>회화</button>
+            <button>가구</button>
+            <button>캘리그라피</button>
+            <button>사운드</button>
+            <button>애니메이션</button>
+            <button id="ridicule">조소</button>
           </div>
-          <!--
-          <div class="carousel-item tag">
-            <div class="title">
-              <h3>오늘의 태그</h3>
-            </div>
-            <div class="tag_box">cj
-              <button>#여름</button>
-              <button>#무더위</button>
-              <button>#겨울</button>
-              <button>#카페</button>
-            </div>
-            <div class="tag_box">
-              <button>#감성</button>
-              <button>#비온날</button>
-              <button>#자연</button>
-            </div>
-            <div class="tag_box">
-              <button>#여름</button>
-              <button>#무더위</button>
-              <button>#겨울</button>
-              <button>#카페</button>
-            </div>
-          </div>-->
         </div>
+        <div class="row">
+          <div class="region row_margin">
+            <h5>지역</h5>
+            <button>서울</button>
+            <button>대구</button>
+            <button>부산</button>
+            <button>울산</button>
+          </div>
+        </div>
+        <div class="row_last" style="height:25%">
+          <div class="row" style="height:100%">
+            <div class="row_margin">
+              <h5>상태</h5>
+              <div class="buy btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input type="radio" name="options" id="option1" autocomplete="off" checked> 렌탈
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option2" autocomplete="off"> 판매
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="height:100%">
+            <div class="price row_margin">
+              <h5>가격</h5>
+              <input id='low_price' class="form-control" type="text" placeholder="10,000" /> ~
+              <input id='high_price' class="form-control" type="text" placeholder="50,000" />
+            </div>
+            <div class="row_find">
+              <img id='find' style="float:right" src="/images/find.png" />
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
 
+  </div>
+  <div class="section-tag">
+    <div class="container-tag">
+      <div class="container" style="padding: 30px 0;">
+        <span class="tag_box">
+          <h5>키워드</h5>
+          <button>#여름</button>
+          <button>#무더위</button>
+          <button>#겨울</button>
+          <button>#카페</button>
+          <button>#갬성</button>
+        </span>
+        <span class="tag_button">
+          <span id="tag_left">
+            <img src="/images/right.png" />
+          </span>
+          <span id="tag_right">
+            <img src="/images/left.png" />
+          </span>
+        </span>
+      </div>
+
+    </div>
+  </div>
   <div class="section2">
     <div class="container">
 
