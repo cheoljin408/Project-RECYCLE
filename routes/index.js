@@ -50,26 +50,47 @@ router.get('/find', function(req, res) {
 
 /* POST find page. */
 router.post('/find', function(req, res) {
-  console.log('테마 = ' + req.body.theme);
-  console.log('지역 = ' + req.body.region);
-  console.log('상태 = ' + req.body.buy);
-  console.log('가격 = ' + req.body.low_price);
+  var sql = "select * from article where 1 ";
 
-  var sql = "select * from article where 1";
-  /*
+  // 판매 vs 렌탈 중 하나만 선택
   if (req.body.buy != 'ALL') {
-    sql += `and state like '${req.body.buy}'`;
+    sql += `and (state like '${req.body.buy}') `;
   }
-  if (req.body.theme != 'ALL') {
-    sql += `state like '${req.body.buy}'`;
+  if (req.body.low_price != 'ALL') {
+    sql += `and (price >= '${req.body.low_price}' and price <= '${req.body.high_price}') `;
   }
-  if (req.body.region != 'ALL') {
-    sql += `state like '${req.body.buy}'`;
-  }
-  if (req.body.price != 'ALL') {
-    sql += `state like '${req.body.buy}'`;
-  }*/
 
+  // 테마 여러개 선택 가능
+  if (req.body.theme != 'ALL') {
+    // 테마 1개 선택 했을 때
+    if(req.body.theme.length == 1){
+      sql += `and (category like '${req.body.theme[0]}') `;
+    }
+    // 테마 여러개 선택 했을 때
+    else {
+      sql += `and (category like '${req.body.theme[0]}' `;
+      for(var i=1; i<req.body.theme.length; i++)
+      {
+        sql += `or category like '${req.body.theme[i]}') `;
+      }
+    }
+  }
+  // 지역 여러개 선택가능
+  if (req.body.region != 'ALL') {
+    if(req.body.region.length == 1){
+      sql += `and (local like '${req.body.region[0]}') `;
+    }
+    else{
+      sql += `and (local like '${req.body.region[0]}' `;
+      for(var i=1; i<req.body.region.length; i++)
+      {
+        sql += `or local like '${req.body.region[i]}') `;
+      }
+    }
+
+  }
+
+  console.log(sql);
   con.query(sql, function(err, result, fields) {
     if (err) {
       throw err;

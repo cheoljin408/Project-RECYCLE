@@ -6,7 +6,7 @@ var region = new Array();
 function category(){
   buy = $.trim($('.buy').find(".active").text());
   low_price = $('#low_price').val();
-  high_price = $('#low_price').val();
+  high_price = $('#high_price').val();
 
 
   var count = 0;
@@ -44,10 +44,19 @@ function getData(buy, theme, region, low_price, high_price) {
       high_price: high_price
     },
     success: function(data) {
+      console.log(data);
+      $('.masonry').append('<script src="/javascripts/jquery.masonry.min.js"></script>');
+
       $('#masonry_container').empty();
+
       var html = "";
       if (data != null) {
-        for (var i = 3; i < 20; i++) {
+        var len = data.length;
+        if(data.length>=20)
+        {
+          len = 20;
+        }
+        for (var i = 0; i < len; i++) {
           var category = data[i]['category'];
           var local = data[i]['local'];
           var state = data[i]['state'];
@@ -55,7 +64,7 @@ function getData(buy, theme, region, low_price, high_price) {
           var user = data[i]['user'];
           var price = data[i]['price'];
           var img = data[i]['img'];
-          var plus = `<div class="paper masonry-brick">
+          var plus = `<div class="paper">
                           <div class="paper-holder">
                             <a><img width="225" src="${img}" /></a>
                           </div>
@@ -85,6 +94,7 @@ getData('ALL', 'ALL', 'ALL', 'ALL');
 
 //클릭시 카테고리 값 얻고, 서버 통신
 $('#find').click(function() {
+
   category();
   getData(buy, theme, region, low_price, high_price);
 });
@@ -103,13 +113,12 @@ $('.row button').click(function() {
 });
 
 //masonry
-$('#masonry_container').imagesLoaded(function() {
   $('#masonry_container').masonry({
     itemSelector: '.paper',
     columnWidth: 285,
     isAnimated: true
   });
-});
+
 
 //masonry rental vs buy
 for(var i=3;i<20;i++)
