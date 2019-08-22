@@ -50,6 +50,12 @@ router.get('/find', function(req, res) {
 
 /* POST find page. */
 router.post('/find', function(req, res) {
+  console.log('테마 = ' + req.body.theme);
+  console.log('지역 = ' + req.body.region);
+  console.log('상태 = ' + req.body.buy);
+  console.log('가격 = ' + req.body.low_price);
+
+
   var sql = "select * from article where 1 ";
 
   // 판매 vs 렌탈 중 하나만 선택

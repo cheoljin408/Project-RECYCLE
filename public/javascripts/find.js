@@ -4,11 +4,26 @@ var region = new Array();
 
 // 카테고리 값들을 얻어옴
 function category(){
-  buy = $.trim($('.buy').find(".active").text());
-  low_price = $('#low_price').val();
-  high_price = $('#high_price').val();
+  // 1. 상태 얻어오기
+  if($.trim($('.buy').find(".active").text())==""){
+    buy = 'ALL';
+  }
+  else{
+    buy = $.trim($('.buy').find(".active").text());
+  }
 
 
+  // 2. 가격 얻어오기
+  if($('#low_price').val() != "" && $('#high_price').val() != ""){
+    low_price = $('#low_price').val();
+    high_price = $('#high_price').val();
+  }
+  else{
+    low_price = 'ALL';
+    high_price = 'ALL';
+  }
+
+  // 3. 테마 얻어오기
   var count = 0;
   for (var i = 0; i < $('.thema').find('button').length; i++) {
     if ($('.thema').find('button')[i]['style'].borderColor == 'black') {
@@ -16,6 +31,10 @@ function category(){
       count++;
     }
   }
+
+
+
+  // 4. 지역 얻어오기
   count = 0;
   for (var i = 0; i < $('.region').find('button').length; i++) {
     if ($('.region').find('button')[i]['style'].borderColor == 'black') {
@@ -23,8 +42,8 @@ function category(){
       count++;
     }
   }
-}
 
+}
 //서버에 데이터 보내고 받음
 function getData(buy, theme, region, low_price, high_price) {
   console.log('client 테마 = ' + theme);
@@ -57,6 +76,7 @@ function getData(buy, theme, region, low_price, high_price) {
           len = 20;
         }
         for (var i = 0; i < len; i++) {
+          var id = data[i]['id'];
           var category = data[i]['category'];
           var local = data[i]['local'];
           var state = data[i]['state'];
@@ -64,7 +84,7 @@ function getData(buy, theme, region, low_price, high_price) {
           var user = data[i]['user'];
           var price = data[i]['price'];
           var img = data[i]['img'];
-          var plus = `<div class="paper masonry-brick">
+          var plus = `<div class="paper masonry-brick" id="${id}">
                           <div class="paper-holder">
                             <a><img width="225" src="${img}" /></a>
                           </div>
@@ -93,11 +113,13 @@ category();
 getData('ALL', 'ALL', 'ALL', 'ALL');
 
 //클릭시 카테고리 값 얻고, 서버 통신
-$('#find').click(function() {
 
+$('#find').click(function() {
   category();
   getData(buy, theme, region, low_price, high_price);
 });
+
+// 이미지 클릭시 상세페이지 redirect
 
 
 
