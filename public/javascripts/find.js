@@ -64,7 +64,7 @@ function getData(buy, theme, region, low_price, high_price) {
           var user = data[i]['user'];
           var price = data[i]['price'];
           var img = data[i]['img'];
-          var plus = `<div class="paper">
+          var plus = `<div class="paper masonry-brick">
                           <div class="paper-holder">
                             <a><img width="225" src="${img}" /></a>
                           </div>
@@ -116,7 +116,8 @@ $('.row button').click(function() {
   $('#masonry_container').masonry({
     itemSelector: '.paper',
     columnWidth: 285,
-    isAnimated: true
+    isAnimated: true,
+    isFitWidth: true
   });
 
 

@@ -100,24 +100,45 @@
     </div>
 
   </div>
-  <div class="section-tag">
-    <div class="container-tag">
-      <div class="container" style="padding: 30px 0;">
-        <span class="tag_box">
-          <h5>키워드</h5>
-          <button>#여름</button>
-          <button>#무더위</button>
-          <button>#겨울</button>
-          <button>#카페</button>
-          <button>#갬성</button>
-        </span>
-        <span class="tag_button">
-          <span id="tag_left">
-            <img src="/images/right.png" />
-          </span>
-          <span id="tag_right">
-            <img src="/images/left.png" />
-          </span>
+  <div class="section-tag ">
+    <div class="container-tag" style="background-color:#e3e3e3">
+      <div class="container slide" style="padding: 30px 0;">
+        <input type="radio" name="pos" id="pos1" checked>
+        <input type="radio" name="pos" id="pos2">
+        <ul>
+          <li>
+            <span class="tag_box">
+              <h5>키워드</h5>
+              <button>#여름</button>
+              <button>#무더위</button>
+              <button>#겨울</button>
+              <button>#카페</button>
+              <button>#갬성</button>
+            </span>
+          </li>
+          <li>
+            <span class="tag_box">
+              <h5>키워드</h5>
+              <button>#겨울</button>
+              <button>#추위</button>
+              <button>#스키장</button>
+              <button>#눈</button>
+              <button>#갬성</button>
+            </span>
+          </li>
+        </ul>
+        <span class="tag_button bullet">
+          <label for="pos1">
+            <span id="tag_left">
+              <img src="/images/left.png" />
+            </span>
+          </label>
+          <label for="pos2">
+            <span id="tag_right">
+              <img src="/images/right.png" />
+            </span>
+          </label>
+
         </span>
       </div>
 
@@ -126,18 +147,11 @@
   <div class="section2">
     <div class="container">
 
-      <div id="masonry_container" class='masonry'>
-        <!-- <div class="paper">
-          <div class="paper-holder">
-            <a><img width="190" src="http://placekitten.com/190/258" /></a>
-          </div>
-          <p class="paper-description">Lorem ipsum dolor sit amet</p>
-          <div class="paper-content">
-            <a class="paper-link" href="#"><img src="http://placekitten.com/30/30" /></a>
-            <p class="paper-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sem mi, egestas a facilisis eget, egestas ut magna.</p>
-          </div>
-        </div> -->
-      </div>
+        <div id="masonry_container" class='masonry' style="margin:0 auto;">
+
+        </div>
+
+
     </div>
   </div>
 
@@ -151,11 +165,6 @@
   </footer>
 
 </body>
-
-<script>
-
-</script>
-
 
 <!-- Load  find.js -->
 <script src="/javascripts/find.js"></script>
