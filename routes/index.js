@@ -96,6 +96,21 @@ router.get('/find', function (req, res) {
   res.render('find');
 });
 
+/* GET find-ex page. */
+router.get('/find-ex', function (req, res) {
+  console.log(req.query.id);
+  var sql = `select * from article where id=${req.query.id}`;
+
+  con.query(sql, function(err, result, fields) {
+    if(err) {
+      throw err;
+    }
+    console.log(result[0]);
+    res.render('find-ex', {data: result[0]});
+  });
+
+});
+
 /* POST find page. */
 router.post('/find', function (req, res) {
   var sql = "select * from article where category not like '가구'";
