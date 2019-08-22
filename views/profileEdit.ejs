@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <title>Recycle:: 버려졌던 작품을 재활용</title>
+  <!-- meta tags SEO -->
+  <meta charset="utf-8" />
+  <meta name="subject" content="작품 재활용">
+  <meta name="title" content="Secondhand:: 버려졌던 작품을 재활용">
+  <meta name="author" content="OpenYearRound">
+  <meta name="keywords" content="artwork, 예술품, 공모전, 대학생, 작품재활용, 작품렌트">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+
+  <!-- jquery cdn -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <!-- bootstrap cdn -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+  <!-- google web font Noto Sans-->
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap&subset=korean" rel="stylesheet">
+
+  <!-- load css files -->
+  <link href="/stylesheets/profileEdit.css" rel="stylesheet">
+</head>
+
+<script>
+    $.post('/userID', function(data){
+        if (data.userID){
+            $('input[name=userID]').val(data.userID);
+            $('input[name=userEmail]').val(data.userEmail);
+            $('input[name=userPhone]').val(data.userPhone);
+        } else {
+            alert('session error!');
+            window.location.href="/find";
+        }
+    })
+</script>
+
+
+<body>
+    <div id="navbar">
+        <div class="logo">
+            <img src="/images/logo2.png" />
+        </div>
+        <div class="nav-list">
+          <a href="/">Home</a>
+          <a href="/find">작품 보기</a>
+          <a href="/register">작품 등록하기</a>
+        </div>
+        <div class="log_png">
+          <a href="#"><img src="/images/cart.png" /></a>
+          <a href="#"><img src="/images/find.png" /></a>
+          <a href="/mypage"><img src="/images/profile.png" /></a>
+        </div>
+    </div>
+
+    <div id="wrapper">
+        <div id="container">
+            <div class="menu_bar">
+                <button type="button" id="profile_edit_btn" class="btn btn-link menu_btn rounded-0" onclick="location.href='/profile/edit'">프로필 수정</button>
+                <button type="button" id="pw_change_btn" class="btn btn-link menu_btn rounded-0" onclick="location.href='/profile/password/change'">비밀번호 수정</button>
+            </div>
+            <div class="content rounded">
+                <!--form-->
+                <form id="profileEditForm" action="/profile/edit" method="post">
+                    <div class="form-group row">
+                        <label for="userID" class="col-sm-3 col-form-label text-right form_label">아이디</label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="userID" name="userID" value="userID">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="userEmail" class="col-sm-3 col-form-label text-right form_label">이메일</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="userEmail" name="userEmail" value="userEmail">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="userPhone" class="col-sm-3 col-form-label text-right form_label">전화번호</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="userPhone" name="userPhone" value="userPhone">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="userAddress" class="col-sm-3 col-form-label text-right form_label">주소</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="userAddress" rows="2" value="userAddress"></textarea>
+                        </div>
+                    </div>
+                    <div id="error" class="form-group row" style="display:none; padding: 0;">
+                        <label for="erro1" class="col-sm-3 col-form-label form_label"></label> 
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="erro1" name="erro1" value="모든 항목을 입력해주세요!" style="color:red;">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit_btn" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <button type="button" id="edit_submit_btn" class="btn btn-primary" onclick="inputErrorCheck()">변경하기</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-text">
+                <span id="footer_logo"><img src="/images/logo1.png" /></span>
+                <h4>만의 서비스를 체험해보세요</h4>
+            </div>
+
+        </div>
+    </footer>
+</body>
+<script>
+    function inputErrorCheck(){
+        if ($('input[name=userEmail]').val() === '' || $('input[name=userPhone]').val() === '') {
+            $('#error').show();
+        } else {
+            $('#error').hide();
+            $('#profileEditForm').submit();
+        }
+    }
+</script>
+</html>
