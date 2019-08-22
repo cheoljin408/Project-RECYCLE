@@ -8,14 +8,6 @@
   box-sizing: border-box;
 }
 
-input::placeholder {
-  font-style: italic;
-}
-
-ul, li {
-  list-style: none;
-}
-
 /* 메뉴 바 */
 #navbar {
   padding-left: 100px;
@@ -73,42 +65,86 @@ ul, li {
   margin-right: 18px;
 }
 
-/* section1 */
+/* 섹션 1 */
 .section1 {
   margin-top: 100px;
   margin-bottom: 50px;
   width: 100%;
+  height: 350px;
 }
 
-/* section1 - category */
+.section1 .container {
+  /*
+  padding-top: 70px;
+  padding-left: 0;
+  padding-right: 0; */
+  width: 100%;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+}
+
 .category {
   width: 100%;
+  height: 350px;
   margin: 0;
-}
-
-.row {
-  margin: 0;
-  padding: 17px 30px;
-  height: 25%;
-  border-top: 0.8px #ddd solid;
-  border-right: 0.8px #ddd solid;
+  border: 0.8px #ddd solid;
   border-left: 2px black solid;
 }
 
-.row_last {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.carousel-control-prev {
+  height: 350px;
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+.carousel-control-next {
+  height: 350px;
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+.carousel-control-prev-icon {
+  background-image: url('../images/prev.png')
+}
+
+.carousel-control-next-icon {
+  background-image: url('../images/next.png')
+}
+
+.tag {
+  padding-top: 50px;
+  width: 100%;
+  height: 350px;
+  margin: 0;
+  background-color: #7fcacb;
+  border-radius: 15px;
+  color : white;
+  text-align: center;
+}
+.tag_box{
+  margin-top: 30px;
+}
+.tag_box button{
+  margin-right: 15px;
+  font-weight: 10px;
+  color : white;
+  border-radius: 30px;
+  width:90px;
+  height:45px;
+  border : 1.3px solid white;
+  background-color: #7fcacb;
+}
+.row {
+  margin: 0;
+  padding-left: 30px;
+  width: 100%;
+  height: 25%;
   border-bottom: 0.8px #ddd solid;
 }
 
 .row_margin {
   margin: auto 0;
-}
-
-.row_margin_button {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 40px;
 }
 
 .row h5 {
@@ -129,131 +165,9 @@ ul, li {
   outline: 0;
 }
 
-.price {
-  width: 70%;
-}
-
-.row_find {
-  width: 30%;
-  float: right;
-  margin: auto 0;
-}
-
-#find {
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
-}
-
-.form-control {
-  text-align: center;
-  display: inline;
-  width: 80px;
-}
-
-.form-control:focus {
-  border-color: #7fcacb;
-  box-shadow: 0 0 0 0.2rem rgba(151, 231, 232, .5);
-}
-
-/* 렌탈 vs 판매 버튼 */
-.btn-secondary:not(:disabled):not(.disabled).active,
-.btn-secondary:not(:disabled):not(.disabled):active,
-.show>.btn-secondary.dropdown-toggle {
-  color: #fff;
-  background-color: #7fcacb;
-  border-color: #7fcacb;
-}
-.btn-secondary {
-  color: #7fcacb;
-  background-color: #fff;
-  border-color: #ddd;
-}
-.btn-secondary:hover {
-  color: #7fcacb;
-  background-color: #fff;
-  border-color: #ddd;
-}
-.btn-secondary.focus,
-.btn-secondary:focus {
-  box-shadow: 0 0 0 0.2rem rgba(151, 231, 232, .5);
-}
-
-/* section1 - tag */
-.slide {
-  overflow: hidden;
-  position: relative;
-}
-
-.slide ul {
-  width: calc(100% * 2);
-  display: flex;
-  transition: 1s;
-  margin: 0;
-}
-
-.slide li {
-  margin-left: 15px;
-  width: calc(100% / 2);
-}
-
-.slide input {
-  display: none;
-}
-
-/* 슬라이드 조작 */
-#pos1:checked~ul {
-  margin-left: 0;
-}
-
-#pos2:checked~ul {
-  margin-left: -100%;
-}
-
-/* bullet 조작 */
-#pos1:checked~.bullet label:nth-child(1),
-#pos2:checked~.bullet label:nth-child(2) .container-tag {
-  margin: 0;
-}
-
-.tag_box {
-  text-align: left;
-}
-
-.tag_box h5 {
-  padding-right: 30px;
-  display: inline;
-  font-size: 23px;
-}
-
-.tag_box button {
-  margin-right: 15px;
-  font-size: 20px;
-  color: white;
-  border-radius: 30px;
-  width: 150px;
-  height: 55px;
-  border: 1.3px solid #7fcacb;
-  background-color: #7fcacb;
-}
-
-.tag_button {
-  position: absolute;
-  right: 15px;
-  top: 30px
-}
-
-.tag_button img {
-  cursor: pointer;
-  width: 60px;
-  height: 50px;
-}
-
 /* 섹션 2 */
 .section2 {
-  background-color: #f4f4f4;
-  margin: 0;
-  padding-bottom: 50px;
+  margin-bottom: 50px;
   width: 100%;
 }
 
@@ -264,10 +178,6 @@ ul, li {
   width: 100%;
 }
 
-.margin_auto {
-  margin: 0 auto;
-}
-
 #masonry_container {
   width: 100%;
   height: 100%;
@@ -276,7 +186,6 @@ ul, li {
 
 /* 섹션 2 - 종이 스타일 */
 .paper {
-  cursor: pointer;
   width: 265px;
   margin:10px 5px 0px 5px;
   padding: 20px 20px 0;
@@ -285,64 +194,27 @@ ul, li {
   box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
 }
 
-.paper-description {
-  margin: 10px 0;
-  /* font-weight: 700;
-  font-size: 15px; */
-  text-align: left;
-}
-
-.paper-description p {
-  margin: 0 0 10px;
-}
-
 .paper-content {
-  border-top: solid 0.5px #ddd;
-  margin-bottom: 10px;
+  margin: 0 -15px;
   margin-top: 10px;
-  padding-bottom: 6px;
-  padding-top: 20px;
-  /* background: #F2F0F0; */
+  padding: 10px 15px;
+  background: #F2F0F0;
   overflow: hidden;
 }
 
-.paper-state {
-  float: right;
+.paper-description {
+  margin: 10px 0;
 }
 
-#title {
-  font-weight: 700;
-  font-size: 15px;
+.paper-link {
+  display: block;
+  float: left;
 }
 
-#userId {
-  font-size: 13px;
-}
-
-#price {
-  font-size: 13px;
-}
-
-#state {
-  display: none;
-}
-
-.state1 {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  font-size: 15px;
-  padding: 5px;
-  cursor: pointer;
-  margin-right: -2px;
-}
-
-.state2 {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  font-size: 15px;
-  padding: 5px;
-  margin-left: -2px;
-  cursor: pointer;
+.paper-text {
+  float: left;
+  width: 150px;
+  margin-left: 10px;
 }
 
 /*modal*/
