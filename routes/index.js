@@ -249,14 +249,30 @@ router.post('/profile/edit', function(req, res){
     if(err){
       throw err;
     } else {
-      console.log('changed!!');
+      //console.log('changed!!');
       req.session.userID = id;
       req.session.userEmail = email;
       req.session.userPhone = phone;
       res.redirect('/profile/edit');
     }
   })
-})
+});
+
+router.post('/profile/password/change', function(req, res){
+  var id = req.body.userID;
+  var pw = req.body.newPW;
+
+  var sql = `UPDATE member SET password = '${pw}' WHERE id = '${id}'`;
+
+  con.query(sql, function(err, result){
+    if (err){
+      throw err;
+    } else  {
+      //console.log('changed!!');
+      res.redirect('/mypage');
+    }
+  })
+});
 
 // router.post('/register', (req, res) => {
 

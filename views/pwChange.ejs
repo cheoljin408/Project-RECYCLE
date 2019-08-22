@@ -62,7 +62,7 @@
             </div>
             <div class="content rounded">
                 <!--form-->
-                <form id="profileEditForm" action="/profile/password/change" method="post">
+                <form id="pwChangeForm" action="/profile/password/change" method="post">
                     <input type="text" readonly id="userID" name="userID" style="display:none;">
                     <div class="form-group row">
                         <label for="userID" class="col-sm-3 col-form-label text-right form_label">이전 비밀번호</label>
@@ -148,7 +148,7 @@
                     } else if (data === 'PW'){
                         $('#error3').show();
                     } else if (data == 'OK'){
-                        alert('성공!');
+                        $('#pwChangeForm').submit();
                     }
                 }
             })
