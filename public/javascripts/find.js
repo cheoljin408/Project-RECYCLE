@@ -62,6 +62,24 @@ function category() {
     region: region
   }
 }
+// like buttons
+function likeClick(i){
+  var image = document.getElementById(`like${i}`);
+  if (image.src.match("/images/like.png")) {
+      image.src = "/images/like-red.png";
+      image.style.animationName = "like_big";
+      image.style.animationDuration= "0.4s";
+      image.style.animationTimingFunction="linear";
+      image.style.animationDelay= "0s";
+      image.style.animationIterationCount= "1";
+      image.style.animationDirection= "normal";
+      image.style.animationFillMode= "forwards";
+      image.style.animationPlayState= "running";
+    } else {
+      image.src = "/images/like.png";
+      image.style.animation="";
+    }
+}
 
 //서버에 데이터 보내고 받음
 function getData(buy, theme, region, low_price, high_price) {
@@ -113,6 +131,10 @@ function getData(buy, theme, region, low_price, high_price) {
                                 <span class="state2" id="state2_${i}">판매</span>
                               </span>
                             </div>
+                            <div class="paper-info">
+                              <span id="like"><img id="like${i}" onclick="likeClick(${i})"src="/images/like.png">127</span>
+                              <span id="views"><img src="/images/views.png">302</span>
+                            </div>
                           </div>`;
           html += plus;
         }
@@ -127,7 +149,6 @@ function getData(buy, theme, region, low_price, high_price) {
             isFitWidth: true
           });
         }, 0);
-
 
         //masonry rental vs buy
         for (var i = 0; i < len; i++) {
