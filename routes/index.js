@@ -62,7 +62,7 @@ router.post('/find', function(req, res) {
   if (req.body.buy != 'ALL') {
     sql += `and (state like '${req.body.buy}') `;
   }
-  if (req.body.low_price != 'ALL') {
+  if (req.body.low_price != 'ALL' && req.body.high_price != 'ALL' ) {
     sql += `and (price >= '${req.body.low_price}' and price <= '${req.body.high_price}') `;
   }
 

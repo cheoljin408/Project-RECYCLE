@@ -366,3 +366,43 @@ footer {
 #footer_logo img {
   width: 300px;
 }
+
+
+/* top button */
+.top{
+  cursor: pointer;
+  z-index: 1000;
+  position: fixed;
+  bottom: -45px;
+  right: 15px;
+}
+.top img{
+  width:45px;
+  height: 45px;
+}
+@keyframes top_big {
+  0% {
+    width: 45px;
+    height: 45px;
+  }
+
+  25% {
+    width: 46px;
+    height: 46px;
+  }
+
+  50% {
+    width: 48px;
+    height: 48px;
+  }
+
+  75% {
+    width: 46px;
+    height: 46px;
+  }
+
+  100% {
+    width: 45px;
+    height: 45px;
+  }
+}
