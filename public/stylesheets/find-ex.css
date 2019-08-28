@@ -99,6 +99,17 @@
   margin: 40px 0 40px 0;
 }
 
+.tag_box button {
+  margin-right: 15px;
+  font-size: 20px;
+  color: white;
+  border-radius: 30px;
+  width: 150px;
+  height: 55px;
+  border: 1.3px solid #7fcacb;
+  background-color: #7fcacb;
+}
+
 
 /*modal*/
 .modal-width {

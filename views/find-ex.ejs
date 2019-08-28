@@ -81,8 +81,8 @@
                         <h4><%= data.title %></h4>
                     </div>
                     <div class="date_view">
-                        <div>
-                            <span>2019.08.08</span>
+                        <div id="postDate">
+
                         </div>
                         <div>
                             <span>|</span>
@@ -99,12 +99,12 @@
                 </div>
                 <div>
                     <div class="article_desc">
-                        <p>나이키 혁신의 시작을 알린 전설적인 에어 조던 1은 풋 웨어의 역사에서 독보적인 존재감을 뿜어내고 있습니다. 이번 에디션은 OG 블랙 & 화이트 컬러웨이에서 영감을 받아 여성용 실루엣으로 새롭게 재해석 되어 여러분을 찾아갑니다. 업그레이드된 윙스 로고와 메탈 애글릿은 클래식 디자인에 장식적인 디테일로 완성되었습니다.</p>
+                        <p><%= data.description %></p>
                     </div>
                 </div>
                 <div>
-                    <div class="article_hashtag">
-                         <p>#해시태그</p>
+                    <div id="hashTag" class="tag_box">
+
                     </div>
                 </div>
             </div>
@@ -204,6 +204,53 @@
             }
         });
     }
+
+    //query string에서 id값 가져오는 함수
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    var postid = getParameterByName('id');
+
+    console.log(postid);
+
+    $.ajax({
+        type: 'POST',
+        url: '/getHashtag',
+        data: {
+            postid: postid
+        },
+        success: function (data) {
+            console.log(data);
+
+            var tagArray = new Array();
+            var plus = "";
+
+            if (!data) {
+                console.log(data);
+            }
+            else
+            {
+                for (var i = 1; i < 6; i++) {
+                    if (eval("data.tag" + i) == "null")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        plus += `<button>#${eval('data.tag' + i)}</button>`;
+                    }
+                }
+
+                document.getElementById('hashTag').innerHTML = plus;
+            }
+        }
+    });
+
+
 
     // $.ajax({
     //     type:'GET',

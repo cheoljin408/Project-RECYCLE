@@ -182,8 +182,9 @@ router.post('/upload', upload.single('userFile'), function(req, res) {
   //res.send('Uploaded! : '+req.file); // object를 리턴함
   console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
   var postId = req.body.postId;
+  var filepath = req.file.path.substring(6, req.file.path.length);
 
-  var sql = `insert into article (category, img, local, state, title, user, price, description) values ('temp', '${req.file.path}', 'temp', 'temp', 'temp', 'temp', 9999, 'temp')`;
+  var sql = `insert into article (category, img, local, state, title, user, price, description) values ('temp', '${filepath}', 'temp', 'temp', 'temp', 'temp', 9999, 'temp')`;
 
   con.query(sql, function(err, result) {
     if (err) {
@@ -207,9 +208,14 @@ router.post('/info', (req, res) => {
   var price = req.body.price;
   var description = req.body.description;
 
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1;
+  var yyyy = today.getFullYear();
 
+  var ymd = yyyy+'-'+mm+'-'+dd;
 
-  var sql =`update article set category = '${category}', local = '${local}', state = '${state}', title = '${title}', user = '${req.session.userID}', price = ${price}, description = '${description}' where id = ${postId}`;
+  var sql =`update article set category = '${category}', local = '${local}', state = '${state}', title = '${title}', user = '${req.session.userID}', price = ${price}, description = '${description}', time = '${ymd}' where id = ${postId}`;
 
   console.log(sql);
 
@@ -294,6 +300,27 @@ router.post('/idcheck', (req, res) => {
     }
   });
 });
+
+router.post('/getHashtag', (req, res) => {
+  var postid = req.body.postid;
+
+  var sql = `select * from hashtag where postid='${postid}'`;
+
+  console.log(sql);
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result[0]);
+      res.send(result[0]);
+    }
+  });
+});
+
+
 
 // router.post('/register', (req, res) => {
 

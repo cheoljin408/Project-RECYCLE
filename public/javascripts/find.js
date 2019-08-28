@@ -121,6 +121,12 @@ function getData(buy, theme, region, low_price, high_price) {
         }, 0);
        
       }
+      $(".masonry-brick").click(function () {
+        console.log($(this).attr('id'));
+        var postid = $(this).attr('id');
+        console.log(postid);
+        document.location.href = `/find-ex?id=${postid}`;
+      });
     }
   });
 }
