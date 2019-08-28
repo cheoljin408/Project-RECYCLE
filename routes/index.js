@@ -320,6 +320,24 @@ router.post('/getHashtag', (req, res) => {
   });
 });
 
+router.post('/getTime', (req, res) => {
+  var postid = req.body.postid;
+
+  var sql = `select time from article where id='${postid}'`;
+
+  console.log(sql);
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result[0]);
+      res.send(result[0]);
+    }
+  });
+});
 
 
 // router.post('/register', (req, res) => {

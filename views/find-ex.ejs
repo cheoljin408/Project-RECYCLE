@@ -250,6 +250,22 @@
         }
     });
 
+    $.ajax({
+        type: 'POST',
+        url: '/getTime',
+        data: {
+            postid: postid
+        },
+        success: function(data) {
+            console.log(data);
+            console.log(data['time']);
+
+            var date = data['time'].substring(0, 10);
+            
+            document.getElementById('postDate').innerHTML = date;
+        }
+    });
+
 
 
     // $.ajax({
