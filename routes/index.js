@@ -54,9 +54,10 @@ router.post('/find', function(req, res) {
   console.log('지역 = ' + req.body.region);
   console.log('상태 = ' + req.body.buy);
   console.log('가격 = ' + req.body.low_price);
+  console.log('page = ' + req.body.page);
 
 
-  var sql = "select * from article where 1 ";
+  var sql = `select * from article where 1 `;
 
   // 판매 vs 렌탈 중 하나만 선택
   if (req.body.buy != 'ALL') {
@@ -95,6 +96,7 @@ router.post('/find', function(req, res) {
     }
 
   }
+  sql+= `limit ${req.body.page}, 10`;
 
   console.log(sql);
   con.query(sql, function(err, result, fields) {

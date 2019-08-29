@@ -1,8 +1,15 @@
-$('#masonry_container').masonry({
-  itemSelector: '.paper',
-  columnWidth: 285,
-  isAnimated: true,
-  isFitWidth: true
+var loading_html = `<div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>`;
+
+//infinite scroll
+var page = 0;
+$(window).scroll(function() {
+  if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+
+
+    getData('ALL', 'ALL', 'ALL', 'ALL', 'ALL', page += 10, $(window).scrollTop());
+  }
 });
 
 // 카테고리 값들을 얻어옴
@@ -37,7 +44,6 @@ function category() {
     }
   }
   if (count === 0) {
-    console.log('아무것도 선택 안 됨 !!');
     theme = 'ALL';
   }
 
@@ -62,27 +68,30 @@ function category() {
     region: region
   }
 }
+
 // like buttons
-function likeClick(i){
+function likeClick(i) {
   var image = document.getElementById(`like${i}`);
   if (image.src.match("/images/like.png")) {
-      image.src = "/images/like-red.png";
-      image.style.animationName = "like_big";
-      image.style.animationDuration= "0.4s";
-      image.style.animationTimingFunction="linear";
-      image.style.animationDelay= "0s";
-      image.style.animationIterationCount= "1";
-      image.style.animationDirection= "normal";
-      image.style.animationFillMode= "forwards";
-      image.style.animationPlayState= "running";
-    } else {
-      image.src = "/images/like.png";
-      image.style.animation="";
-    }
+    image.src = "/images/like-red.png";
+    image.style.animationName = "like_big";
+    image.style.animationDuration = "0.4s";
+    image.style.animationTimingFunction = "linear";
+    image.style.animationDelay = "0s";
+    image.style.animationIterationCount = "1";
+    image.style.animationDirection = "normal";
+    image.style.animationFillMode = "forwards";
+    image.style.animationPlayState = "running";
+  } else {
+    image.src = "/images/like.png";
+    image.style.animation = "";
+  }
 }
 
 //서버에 데이터 보내고 받음
-function getData(buy, theme, region, low_price, high_price) {
+var html = "";
+
+function getData(buy, theme, region, low_price, high_price, page, scroll) {
   $.ajax({
     type: 'post',
     url: '/find',
@@ -92,20 +101,20 @@ function getData(buy, theme, region, low_price, high_price) {
       theme: theme,
       region: region,
       low_price: low_price,
-      high_price: high_price
+      high_price: high_price,
+      page: page
     },
     success: function(data) {
-
-      //$('#masonry_container').empty();
       $('#masonry_container').detach();
       $('.section2 > .container').append(`<div id="masonry_container" class='masonry' style="margin:0 auto;"></div>`);
 
-      var html = "";
       if (data != null) {
         var len = data.length;
+        /*
         if (data.length >= 20) {
           len = 20;
         }
+        */
         for (var i = 0; i < len; i++) {
           var id = data[i]['id'];
           var category = data[i]['category'];
@@ -138,8 +147,12 @@ function getData(buy, theme, region, low_price, high_price) {
                           </div>`;
           html += plus;
         }
-        document.getElementById('masonry_container').innerHTML = html;
 
+        if(page!=0){
+          html += loading_html;
+        }
+
+        document.getElementById('masonry_container').innerHTML = html;
 
         setTimeout(function() {
           $('#masonry_container').masonry({
@@ -148,7 +161,7 @@ function getData(buy, theme, region, low_price, high_price) {
             isAnimated: true,
             isFitWidth: true
           });
-        }, 0);
+        }, 500);
 
         //masonry rental vs buy
         for (var i = 0; i < len; i++) {
@@ -173,24 +186,30 @@ function getData(buy, theme, region, low_price, high_price) {
           }
         }
       }
-    }
-  });
 
+
+      setTimeout(function() {
+        $('html').animate({
+          scrollTop: scroll
+        }, 0);
+      }, 500);
+
+    }
+
+  });
 }
 
 // init 작업
-getData('ALL', 'ALL', 'ALL', 'ALL', 'ALL');
-
+getData('ALL', 'ALL', 'ALL', 'ALL', 'ALL', 0, 0);
 
 //클릭시 카테고리 값 얻고, 서버 통신
 $('#find').click(function() {
+  page = 0;
   var cateObj = category();
-  getData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price);
+  getData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price, 10, 300);
 });
 
-
-
-//category
+//category - theme, region
 $('.row button').click(function() {
   if ($(this).css("color") == "rgb(215, 222, 222)") {
     $(this).css("color", "black");
@@ -200,8 +219,6 @@ $('.row button').click(function() {
     $(this).css("border", "1px #d7dede solid");
   }
 });
-
-
 
 //top buttons
 $(".top").click(function() {
@@ -219,14 +236,13 @@ $(window).scroll(function() {
   }
 });
 
-
 $('.top').find('img').hover(function() {
   $('#top_img').attr("src", "/images/top2.png");
 
-  $('.top').find('img').css("animationName","top_big");
-  $('.top').find('img').css("animationDuration","0.4s");
-  $('.top').find('img').css("animationTimingFunction","linear");
+  $('.top').find('img').css("animationName", "top_big");
+  $('.top').find('img').css("animationDuration", "0.4s");
+  $('.top').find('img').css("animationTimingFunction", "linear");
 }, function() {
   $('#top_img').attr("src", "/images/top.png");
-  $('.top').find('img').css("animation","");
+  $('.top').find('img').css("animation", "");
 });
