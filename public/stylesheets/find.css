@@ -383,6 +383,15 @@ ul, li {
     height: 15px;
   }
 }
+.innerLoading{
+  text-align: center;
+  padding: 40px;
+}
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  display: none;
+}
 
 
 /* footer */

@@ -152,7 +152,14 @@
   </div>
   <div class="section2">
     <div class="container">
+      <div id="masonry_container">
 
+      </div>
+    </div>
+    <div class="innerLoading" id="inner">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
   </div>
 
@@ -173,13 +180,10 @@
 <!-- Load  find.js -->
 <script src="/javascripts/find.js"></script>
 <script>
-// 상태 버튼 색 칠한곳 또 클릭하면 해제
-$('.buy').find(".focus").click(function(){
-  alert('중복클릭 !');
-});
-
-
-
+  // 상태 버튼 색 칠한곳 또 클릭하면 해제
+  $('.buy').find(".focus").click(function() {
+    alert('중복클릭 !');
+  });
 </script>
 
 </html>

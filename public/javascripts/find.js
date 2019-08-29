@@ -1,14 +1,20 @@
-var loading_html = `<div class="spinner-border" role="status">
-                      <span class="sr-only">Loading...</span>
-                    </div>`;
+
+function innerLoading(){
+  $('.spinner-border').css('display','inline-block');
+  setTimeout(function() {
+    $('.spinner-border').css('display','none');
+  }, 1000);
+
+}
 
 //infinite scroll
 var page = 0;
 $(window).scroll(function() {
   if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+    innerLoading();
+    var cateObj = category();
+    getData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price, page += 10, $(window).scrollTop());
 
-
-    getData('ALL', 'ALL', 'ALL', 'ALL', 'ALL', page += 10, $(window).scrollTop());
   }
 });
 
@@ -90,12 +96,11 @@ function likeClick(i) {
 
 //서버에 데이터 보내고 받음
 var html = "";
-
 function getData(buy, theme, region, low_price, high_price, page, scroll) {
   $.ajax({
     type: 'post',
     url: '/find',
-    async: false,
+    async: true,
     data: {
       buy: buy,
       theme: theme,
@@ -105,94 +110,96 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
       page: page
     },
     success: function(data) {
-      $('#masonry_container').detach();
-      $('.section2 > .container').append(`<div id="masonry_container" class='masonry' style="margin:0 auto;"></div>`);
+      var len = data.length;
 
-      if (data != null) {
-        var len = data.length;
-        /*
-        if (data.length >= 20) {
-          len = 20;
+      if(len!=0){
+        //카테고리 찾기 버튼 눌렀을 때는 html reset
+        if(scroll==0){
+          html = "";
         }
-        */
-        for (var i = 0; i < len; i++) {
-          var id = data[i]['id'];
-          var category = data[i]['category'];
-          var local = data[i]['local'];
-          var state = data[i]['state'];
-          var title = data[i]['title'];
-          var user = data[i]['user'];
-          var price = data[i]['price'];
-          var img = data[i]['img'];
-          var plus = `<div class="paper" id="${id}">
-                            <div class="paper-holder">
-                              <a><img width="225" src="${img}" /></a>
-                            </div>
-                            <div class="paper-description">
-                              <p id='title'>${title}</p>
-                              <p id="userId">${user}</p>
-                            </div>
-                            <div class="paper-content">
-                              <span id="price">${price}원</span>
-                              <span class="paper-state">
-                                <span id="state_${i}" style="display:none">${state}</span>
-                                <span class="state1" id="state1_${i}">렌탈</span>
-                                <span class="state2" id="state2_${i}">판매</span>
-                              </span>
-                            </div>
-                            <div class="paper-info">
-                              <span id="like"><img id="like${i}" onclick="likeClick(${i})"src="/images/like.png">127</span>
-                              <span id="views"><img src="/images/views.png">302</span>
-                            </div>
-                          </div>`;
-          html += plus;
-        }
+        $('#masonry_container').remove();
+        $('.section2 > .container').append(`<div id="masonry_container" class='masonry' style="margin:0 auto;"></div>`);
 
-        if(page!=0){
-          html += loading_html;
-        }
+        if (data != null) {
+          for (var i = 0; i < len; i++) {
+            var id = data[i]['id'];
+            var category = data[i]['category'];
+            var local = data[i]['local'];
+            var state = data[i]['state'];
+            var title = data[i]['title'];
+            var user = data[i]['user'];
+            var price = data[i]['price'];
+            var img = data[i]['img'];
+            var plus = `<div class="paper" id="${id}">
+                              <div class="paper-holder">
+                                <a><img width="225" src="${img}" /></a>
+                              </div>
+                              <div class="paper-description">
+                                <p id='title'>${title}</p>
+                                <p id="userId">${user}</p>
+                              </div>
+                              <div class="paper-content">
+                                <span id="price">${price}원</span>
+                                <span class="paper-state">
+                                  <span id="state_${i}" style="display:none">${state}</span>
+                                  <span class="state1" id="state1_${i}">렌탈</span>
+                                  <span class="state2" id="state2_${i}">판매</span>
+                                </span>
+                              </div>
+                              <div class="paper-info">
+                                <span id="like"><img id="like${i}" onclick="likeClick(${i})"src="/images/like.png">127</span>
+                                <span id="views"><img src="/images/views.png">302</span>
+                              </div>
+                            </div>`;
+            html += plus;
+          }
+          $('.section2 > .container').css('display','none');
+          document.getElementById('masonry_container').innerHTML = html;
 
-        document.getElementById('masonry_container').innerHTML = html;
+          // masonry input
+          setTimeout(function() {
+            $('.section2 > .container').css('display','block');
+            $('#masonry_container').masonry({
+              itemSelector: '.paper',
+              columnWidth: 285,
+              isAnimated: true,
+              isFitWidth: true
+            });
 
-        setTimeout(function() {
-          $('#masonry_container').masonry({
-            itemSelector: '.paper',
-            columnWidth: 285,
-            isAnimated: true,
-            isFitWidth: true
-          });
-        }, 500);
+          },1000);
 
-        //masonry rental vs buy
-        for (var i = 0; i < len; i++) {
-          if ($(`#state_${i}`).text() == "렌탈") {
-            $(`#state1_${i}`).css("background-color", "#7fcacb");
-            $(`#state1_${i}`).css("color", "white");
-            $(`#state1_${i}`).css("padding", "5.5px");
-            $(`#state2_${i}`).css("border-style", "solid");
-            $(`#state2_${i}`).css("border-color", "#7fcacb");
-            $(`#state2_${i}`).css("border-width", "0.5px");
-            $(`#state2_${i}`).css("background-color", "white");
-            $(`#state2_${i}`).css("color", "#7fcacb");
-          } else {
-            $(`#state1_${i}`).css("background-color", "white");
-            $(`#state1_${i}`).css("color", "#7fcacb");
-            $(`#state1_${i}`).css("border-style", "solid");
-            $(`#state1_${i}`).css("border-color", "#7fcacb");
-            $(`#state1_${i}`).css("border-width", "0.5px");
-            $(`#state2_${i}`).css("padding", "5.5px");
-            $(`#state2_${i}`).css("background-color", "#7fcacb");
-            $(`#state2_${i}`).css("color", "white");
+          //masonry rental vs buy
+          for (var i = 0; i < len; i++) {
+            if ($(`#state_${i}`).text() == "렌탈") {
+              $(`#state1_${i}`).css("background-color", "#7fcacb");
+              $(`#state1_${i}`).css("color", "white");
+              $(`#state1_${i}`).css("padding", "5.5px");
+              $(`#state2_${i}`).css("border-style", "solid");
+              $(`#state2_${i}`).css("border-color", "#7fcacb");
+              $(`#state2_${i}`).css("border-width", "0.5px");
+              $(`#state2_${i}`).css("background-color", "white");
+              $(`#state2_${i}`).css("color", "#7fcacb");
+            } else {
+              $(`#state1_${i}`).css("background-color", "white");
+              $(`#state1_${i}`).css("color", "#7fcacb");
+              $(`#state1_${i}`).css("border-style", "solid");
+              $(`#state1_${i}`).css("border-color", "#7fcacb");
+              $(`#state1_${i}`).css("border-width", "0.5px");
+              $(`#state2_${i}`).css("padding", "5.5px");
+              $(`#state2_${i}`).css("background-color", "#7fcacb");
+              $(`#state2_${i}`).css("color", "white");
+            }
           }
         }
+
+        // scroll 위치 기억
+        setTimeout(function() {
+          $('html').animate({
+            scrollTop: scroll
+          }, 0);
+        },1000);
       }
 
-
-      setTimeout(function() {
-        $('html').animate({
-          scrollTop: scroll
-        }, 0);
-      }, 500);
 
     }
 
@@ -206,7 +213,7 @@ getData('ALL', 'ALL', 'ALL', 'ALL', 'ALL', 0, 0);
 $('#find').click(function() {
   page = 0;
   var cateObj = category();
-  getData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price, 10, 300);
+  getData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price, 0, 0);
 });
 
 //category - theme, region
