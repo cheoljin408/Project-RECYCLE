@@ -32,14 +32,79 @@ con.connect(function(err) {
   console.log('Connected!');
 });
 
+//session check
+router.post('/sessionchecker', function (req, res){
+  //console.log('sessioncheck POST:::::::::::');
+  //console.log(req.session);
+  if (req.session.userID){
+    res.send(true);
+  }
+  else {
+    res.send(false);
+  }
+});
+
+router.post('/userID', function (req, res){
+  res.send(req.session);
+});
+
+//login
+router.post('/auth', function (req, res){
+  var userID = req.body.userID;
+  var userPW = req.body.userPW;
+  var sql = `SELECT password FROM member WHERE id = '${userID}'`;
+
+  //console.log('login post');
+  //console.log('**********************************');
+
+  con.query(sql, function(err, result, fields){
+    
+    if (err){
+      console.log(err);
+      throw err;
+    }
+    
+    else if (!result[0]) { // id 존재 X
+      res.send('ID');
+    } 
+    else {
+      //console.log(result[0]['password']);
+      if (result[0]['password'] === userPW){
+        res.send('OK');
+      } else {
+        res.send('PW');
+      }
+    }
+  });
+});
+
+router.post('/login', function(req, res){
+  var userID = req.body.userID;
+  var userEmail = 'default';
+  var userPhone = 'default';
+  var sql = `SELECT * FROM member WHERE id = '${userID}'`;
+
+  con.query(sql, function(err, result, fields){
+    if (err){
+      console.log(err);
+      throw err;
+    } else {
+      //console.log(result[0]);
+      req.session.userID = userID;
+      req.session.userEmail = result[0]['email'];
+      req.session.userPhone = result[0]['phoneNum'];
+      res.redirect('/find');
+    }
+  });
+});
+
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index');
 });
 
 /* GET register page. */
-router.get('/register', function(req, res) {
-
+router.get('/register', function (req, res) {
   res.render('register');
 });
 
@@ -103,6 +168,7 @@ router.post('/find', function(req, res) {
     if (err) {
       throw err;
     }
+    console.log(result);
     res.send(result);
   });
 });
@@ -117,7 +183,22 @@ router.get('/signup', function(req, res) {
   res.render('signup');
 });
 
-router.post('/upload', upload.single('userFile'), function(req, res) {
+/* GET mypage page. */
+router.get('/mypage', function(req, res){
+  res.render('mypage');
+});
+
+/* GET profileEdit page. */
+router.get('/profile/edit', function(req, res){
+  res.render('profileEdit');
+})
+
+/* GET passwordChange page */
+router.get('/profile/password/change', function(req, res){
+  res.render('pwChange');
+})
+
+router.post('/upload', upload.single('userFile'), function(req, res){
   //res.send('Uploaded! : '+req.file); // object를 리턴함
   console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
   var postId = req.body.postId;
@@ -160,5 +241,89 @@ router.post('/info', (req, res) => {
   });
 });
 
+router.post('/signup', (req, res) => {
+  var id = req.body.id;
+  var pw = req.body.pw;
+  var email = req.body.email;
+  var phoneNum = req.body.phoneNum;
+
+  var sql = `insert into member (id, password, email, phoneNum) values ('${id}', '${pw}', '${email}', '${phoneNum}')`;
+
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      console.log(err);
+      if (err.code = "ER_DUP_ENTRY") {
+        res.send("<script>alert('아이디가 중복됩니다.');</script>");
+        res.redirect('/signup');
+      }
+    }
+    else
+    {
+      res.redirect('/');
+    }
+  });
+});
+
+router.post('/idcheck', (req, res) => {
+  var userid = req.body.userid;
+  console.log(userid);
+
+  var sql = `select count(*) from member where id='${userid}'`;
+  var check;
+
+  console.log(userid);
+
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result);
+      res.send(result);
+    }
+  });
+});
+
+router.post('/profile/edit', function(req, res){
+  var id = req.body.userID;
+  var email = req.body.userEmail;
+  var phone = req.body.userPhone;
+  var address = req.body.userAddress;
+
+  var sql = `UPDATE member SET email = '${email}', phoneNum = '${phone}' WHERE id= '${id}'`;
+
+  con.query(sql, function(err, result){
+    if(err){
+      throw err;
+    } else {
+      //console.log('changed!!');
+      req.session.userID = id;
+      req.session.userEmail = email;
+      req.session.userPhone = phone;
+      res.redirect('/profile/edit');
+    }
+  })
+});
+
+router.post('/profile/password/change', function(req, res){
+  var id = req.body.userID;
+  var pw = req.body.newPW;
+
+  var sql = `UPDATE member SET password = '${pw}' WHERE id = '${id}'`;
+
+  con.query(sql, function(err, result){
+    if (err){
+      throw err;
+    } else  {
+      //console.log('changed!!');
+      res.redirect('/mypage');
+    }
+  })
+});
+
+// router.post('/register', (req, res) => {
 
 module.exports = router;

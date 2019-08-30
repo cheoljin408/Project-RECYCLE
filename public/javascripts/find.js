@@ -253,3 +253,10 @@ $('.top').find('img').hover(function() {
   $('#top_img').attr("src", "/images/top.png");
   $('.top').find('img').css("animation", "");
 });
+
+// 슬라이드가 있으면 가로로 배열하기
+if (slideCount > 0) {
+	for (var i = 0; i < slideCount; i++) {
+	slides[i].style.left = 100 * i + "%";
+	}
+}
