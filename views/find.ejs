@@ -13,6 +13,7 @@
 
   <!-- jquery cdn -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
   <!-- bootstrap cdn -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -23,9 +24,13 @@
 
   <!-- load css files -->
   <link href="/stylesheets/find.css" rel="stylesheet">
+
   <!-- pinterest -->
-  <script src="/javascripts/jquery.masonry.min.js"></script>
   <script src="/javascripts/jquery.imagesloaded.min.js"></script>
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+
+  <!-- infinite scroll -->
+  <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
 </head>
 
 <!--session check-->
@@ -42,7 +47,8 @@
 </script>
 
 <body>
-  <div id="navbar" style="cursor:pointer;">
+  <div id="top_section"></div>
+  <div id="navbar">
     <div class="logo">
       <img src="/images/logo2.png" />
     </div>
@@ -66,103 +72,113 @@
   </div>
 
   <div class="section1">
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
     <div class="container">
-      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active category">
-            <div class="row">
-              <div class="thema row_margin">
-                <h5>테마</h5>
-                <button>일러스트</button>
-                <button>사진</button>
-                <button>회화</button>
-                <button>가구</button>
-                <button>캘리그라피</button>
-                <button>사운드</button>
-                <button>애니메이션</button>
-                <button>조소/공예</button>
-              </div>
-            </div>
-            <div class="row">
-              <div class="region row_margin">
-                <h5>지역</h5>
-                <button>서울</button>
-                <button>대구</button>
-                <button>부산</button>
-                <button>울산</button>
-              </div>
-            </div>
-            <div class="row">
-              <div class="buy row_margin">
-                <h5>상태</h5>
-                <button>렌트</button>
-                <button>구매</button>
-              </div>
-            </div>
-            <div class="row">
-              <div class="price row_margin">
-                <h5>가격</h5>
-                <button>~ 10,000</button>
-                <button>10,000 ~ 50,000</button>
-                <button>50,000 ~ 100,000</button>
-                <button>100,000 ~ 150,000</button>
-                <button>150,000 ~</button>
+      <div class="category">
+        <div class="row">
+          <div class="thema row_margin">
+            <h5>테마</h5>
+            <button>일러스트</button>
+            <button>사진</button>
+            <button>회화</button>
+            <button>가구</button>
+            <button>캘리그라피</button>
+            <button>사운드</button>
+            <button>애니메이션</button>
+            <button id="ridicule">조소</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="region row_margin">
+            <h5>지역</h5>
+            <button>서울</button>
+            <button>대구</button>
+            <button>부산</button>
+            <button>울산</button>
+          </div>
+        </div>
+        <div class="row_last" style="height:25%">
+          <div class="row" style="height:100%">
+            <div class="row_margin">
+              <h5>상태</h5>
+              <div class="buy btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option1" autocomplete="off" checked> 렌탈
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option2" autocomplete="off"> 판매
+                </label>
               </div>
             </div>
           </div>
-          <div class="carousel-item tag">
-            <div class="title">
-              <h3>오늘의 태그</h3>
+          <div class="row" style="height:100%">
+            <div class="price row_margin">
+              <h5>가격</h5>
+              <input id='low_price' class="form-control" type="text" placeholder="10,000" /> ~
+              <input id='high_price' class="form-control" type="text" placeholder="50,000" />
             </div>
-            <div class="tag_box">
-              <button>#여름</button>
-              <button>#무더위</button>
-              <button>#겨울</button>
-              <button>#카페</button>
+            <div class="row_find">
+              <img id='find' style="float:right" src="/images/find.png" />
             </div>
-            <div class="tag_box">
-              <button>#감성</button>
-              <button>#비온날</button>
-              <button>#자연</button>
-            </div>
-            <div class="tag_box">
-              <button>#여름</button>
-              <button>#무더위</button>
-              <button>#겨울</button>
-              <button>#카페</button>
-            </div>
+
           </div>
         </div>
 
+      </div>
+    </div>
 
+  </div>
+  <div class="section-tag ">
+    <div class="container-tag" style="background-color:#e3e3e3">
+      <div class="container slide" style="padding: 30px 0;">
+        <input type="radio" name="pos" id="pos1" checked>
+        <input type="radio" name="pos" id="pos2">
+        <ul>
+          <li>
+            <span class="tag_box">
+              <h5>키워드</h5>
+              <button>#여름</button>
+              <button>#무더위</button>
+              <button>#겨울</button>
+              <button>#카페</button>
+              <button>#갬성</button>
+            </span>
+          </li>
+          <li>
+            <span class="tag_box">
+              <h5>키워드</h5>
+              <button>#겨울</button>
+              <button>#추위</button>
+              <button>#스키장</button>
+              <button>#눈</button>
+              <button>#갬성</button>
+            </span>
+          </li>
+        </ul>
+        <span class="tag_button bullet">
+          <label for="pos1">
+            <span id="tag_left">
+              <img src="/images/left.png" />
+            </span>
+          </label>
+          <label for="pos2">
+            <span id="tag_right">
+              <img src="/images/right.png" />
+            </span>
+          </label>
+        </span>
       </div>
 
-
-
     </div>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
   </div>
-
   <div class="section2">
     <div class="container">
       <div id="masonry_container">
-        <!-- <div class="paper">
-          <div class="paper-holder">
-            <a><img width="190" src="http://placekitten.com/190/258" /></a>
-          </div>
-          <p class="paper-description">Lorem ipsum dolor sit amet</p>
-          <div class="paper-content">
-            <a class="paper-link" href="#"><img src="http://placekitten.com/30/30" /></a>
-            <p class="paper-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sem mi, egestas a facilisis eget, egestas ut magna.</p>
-          </div>
-        </div> -->
+
+      </div>
+    </div>
+    <div class="innerLoading" id="inner">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
       </div>
     </div>
   </div>
@@ -213,42 +229,19 @@
     </div>
   </footer>
 
+
+  <!-- TOP버튼 -->
+  <a class="top"><img id="top_img" src="/images/top.png" /></a>
 </body>
 
-<script>
-  var html = "";
-  $.ajax({
-    type: 'POST',
-    url: '/find',
-    async: false,
-    success: function(data) {
-      if (data != null) {
-        for (var i = 3; i < 10; i++) {
-          var img = data[i]['img'];
-
-          var plus = `        <div class="paper">
-                        <div class="paper-holder">
-                          <a><img width="190" src="${img}" /></a>
-                        </div>
-                        <p class="paper-description">Lorem ipsum dolor sit amet</p>
-                        <div class="paper-content">
-                          <a class="paper-link" href="#"><img src="http://placekitten.com/30/30" /></a>
-                          <p class="paper-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sem mi, egestas a facilisis eget, egestas ut magna.</p>
-                        </div>
-                      </div>`;
-
-
-
-          html += plus;
-        }
-        document.getElementById('masonry_container').innerHTML = html;
-      }
-    }
-
-  });
-</script>
 <!-- Load  find.js -->
 <script src="/javascripts/find.js"></script>
+<script>
+  // 상태 버튼 색 칠한곳 또 클릭하면 해제
+  $('.buy').find(".focus").click(function() {
+    alert('중복클릭 !');
+  });
+</script>
 
 <script>
   function resetModal(){
