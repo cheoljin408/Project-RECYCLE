@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Recycle:: 버려졌던 작품을 재활용</title>
+    <!-- meta tags SEO -->
+    <meta charset="utf-8" />
+    <meta name="subject" content="작품 재활용">
+    <meta name="title" content="Secondhand:: 버려졌던 작품을 재활용">
+    <meta name="author" content="OpenYearRound">
+    <meta name="keywords" content="artwork, 예술품, 공모전, 대학생, 작품재활용, 작품렌트">
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- bootstrap cdn -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+
+    <!-- google web font Noto Sans-->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap&subset=korean"
+        rel="stylesheet">
+
+    <!-- load css files -->
+    <link href="/stylesheets/find-ex.css" rel="stylesheet">
+    <!-- pinterest -->
+    <script src="/javascripts/jquery.masonry.min.js"></script>
+    <script src="/javascripts/jquery.imagesloaded.min.js"></script>
+</head>
+
+<!--session check-->
+<script>
+    $.post('/sessionchecker', function (data) {
+        if (data) { // session 있을 때
+            $('.session-true').show();
+            $('.session-false').hide();
+        } else { // session 없을 때
+            $('.session-true').hide();
+            $('.session-false').show();
+        }
+    })
+</script>
+
+<body>
+
+    <div id="navbar" style="cursor:pointer;">
+        <div class="logo">
+            <img src="/images/logo2.png" />
+        </div>
+        <div class="nav-list">
+            <a href="/">Home</a>
+            <a href="/find">작품 보기</a>
+            <a href="/register" class="session-true">작품 등록하기</a>
+            <a class="session-false" data-toggle="modal" data-target="#loginModal" onclick="resetModal()">작품 등록하기</a>
+        </div>
+
+        <div class="log_png" style="cursor: pointer;">
+            <div class="session-true">
+                <a href="#"><img src="/images/cart.png" /></a>
+                <a href="#"><img src="/images/find.png" /></a>
+                <a href="#"><img src="/images/profile.png" /></a>
+            </div>
+            <a class="session-false" style="font-size:20px; font-weight: 700;" data-toggle="modal"
+                data-target="#loginModal" onclick="resetModal()">로그인</a>
+        </div>
+    </div>
+
+    <div class="section1">
+        <div class="container">
+            <div>
+                <div>
+                    <div class="article_title">
+                        <h4><%= data.title %></h4>
+                    </div>
+                    <div class="date_view">
+                        <div id="postDate">
+
+                        </div>
+                        <div>
+                            <span>|</span>
+                        </div>
+                        <div>
+                            <span>조회 123</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <img src='<%= data.img %>' style="width:900px">
+                    </div>
+                </div>
+                <div>
+                    <div class="article_desc">
+                        <p><%= data.description %></p>
+                    </div>
+                </div>
+                <div>
+                    <div id="hashTag" class="tag_box">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--modal-->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-width" role="document">
+            <div class="modal-content" id="loginModalContent">
+                <div class="modal-header modal-border-none">
+                    <div style="width:100%;" class="text-center">
+                        <img src="/images/logo2.png" id="loginModalIMG">
+                        <h5 class="modal-title" id="loginModalTitle">작품 재활용 시작하기</h5>
+                    </div>
+                </div>
+                <div class="modal-body" id="loginModalBody">
+                    <!--form-->
+                    <form id="loginModalForm" action="/login" method="post">
+                        <div class="form-group modal-input-space">
+                            <input type="text" name="userID" class="form-control" id="loginModalIDInput"
+                                placeholder="아이디">
+                        </div>
+                        <div class="form-group modal-input-space">
+                            <input type="text" name="userPW" class="form-control" id="loginModalPWInput"
+                                placeholder="비밀번호">
+                        </div>
+                        <div class="wrong-ID login-error">존재하지 않는 아이디입니다</div>
+                        <div class="wrong-PW login-error">잘못된 비밀번호입니다</div>
+                        <button type="button" onclick="loginCheck()" id="loginModalBtn"
+                            class="btn btn-block btn-primary font-weight-bold" style="margin-top: 0.5rem">이용하기</button>
+                    </form>
+                    <div style="width:100%;" class="text-center">
+                        <button type="button" id="findPWBtn" class="btn btn-link btn-sm">비밀번호 찾기</button>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-color:rgba(148, 233, 235, 0.5);">
+                    <div style="width:100%;" class="text-center">
+                        <span style="font-size:0.875rem;">아직 계정이 없으세요?</span>
+                        <button type="button" class="btn btn-link btn-sm" id="loginModalJoinBtn"
+                            onclick="location.href='/signup'">회원가입하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="footer-text">
+                <span id="footer_logo"><img src="/images/logo1.png" /></span>
+                <h4>만의 서비스를 체험해보세요</h4>
+            </div>
+        </div>
+    </footer>
+</body>
+
+<!-- Load  find.js -->
+<script src="/javascripts/find.js"></script>
+
+<script>
+    function resetModal() {
+        $('.wrong-ID').hide();
+        $('.wrong-PW').hide();
+        $('input[name=userID]').val('');
+        $('input[name=userPW]').val('');
+    }
+    /*
+        $(".modal").on("show.bs.modal", function(){
+          $('.worng-ID').hide();
+          $('.worng-PW').hide();
+        });
+    */
+
+    function loginCheck() {
+        $.ajax({
+            type: 'POST',
+            url: '/auth',
+            data: {
+                userID: $('input[name=userID]').val(),
+                userPW: $('input[name=userPW]').val()
+            },
+            success: function (data) {
+                if (data === 'ID') {
+                    console.log(data);
+                    $('.wrong-ID').show();
+                    $('.wrong-PW').hide();
+                } else if (data === 'PW') {
+                    console.log(data);
+                    $('.wrong-ID').hide();
+                    $('.wrong-PW').show();
+                } else if (data === 'OK') {
+                    $('.wrong-ID').hide();
+                    $('.wrong-PW').hide();
+                    $('#loginModalForm').submit();
+                }
+            }
+        });
+    }
+
+    //query string에서 id값 가져오는 함수
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    var postid = getParameterByName('id');
+
+    console.log(postid);
+
+    $.ajax({
+        type: 'POST',
+        url: '/getHashtag',
+        data: {
+            postid: postid
+        },
+        success: function (data) {
+            console.log(data);
+
+            var tagArray = new Array();
+            var plus = "";
+
+            if (!data) {
+                console.log(data);
+            }
+            else
+            {
+                for (var i = 1; i < 6; i++) {
+                    if (eval("data.tag" + i) == "null")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        plus += `<button>#${eval('data.tag' + i)}</button>`;
+                    }
+                }
+
+                document.getElementById('hashTag').innerHTML = plus;
+            }
+        }
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: '/getTime',
+        data: {
+            postid: postid
+        },
+        success: function(data) {
+            console.log(data);
+            console.log(data['time']);
+
+            var date = data['time'].substring(0, 10);
+            
+            document.getElementById('postDate').innerHTML = date;
+        }
+    });
+
+
+
+    // $.ajax({
+    //     type:'GET',
+    //     url: '/'
+    // });
+</script>
+
+</html>

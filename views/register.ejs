@@ -39,9 +39,9 @@
             <img src="/images/logo2.png" />
         </div>
         <div class="nav-list">
-          <a href="/">Home</a>
-          <a href="/find">작품 보기</a>
-          <a href="/register">작품 등록하기</a>
+            <a href="/">Home</a>
+            <a href="/find">작품 보기</a>
+            <a href="/register">작품 등록하기</a>
         </div>
         <div class="log_png">
           <a href="#"><img src="/images/cart.png" /></a>
@@ -149,7 +149,8 @@
                                     <label>설명</label>
                                 </div>
                                 <div class="rowRight">
-                                    <div class="input-group"><textarea class="txtArea form-control" placeholder="상품 설명은 2000자까지 가능합니다." name="description"></textarea></div>
+                                    <div class="input-group"><textarea class="txtArea form-control"
+                                            placeholder="상품 설명은 2000자까지 가능합니다." name="description"></textarea></div>
                                 </div>
                             </div>
                             <div class="row">
@@ -158,7 +159,8 @@
                                 </div>
                                 <!-- <input class="rowInput inputLen form-control" placeholder="연관 태그(예: 아이폰, 케이스)"> -->
                                 <div class="" id="hash">
-                                    <input type="text" class="tokenfield" id="tokenfield" placeholder="선택 사항(예: 아이폰, 케이스)">
+                                    <input type="text" class="tokenfield" id="tokenfield"
+                                        placeholder="선택 사항(예: 아이폰, 케이스) 최대 5개">
                                 </div>
                             </div>
                             <div>
@@ -191,6 +193,12 @@
     $('#btnSubmit').click(function () {
         var imgForm = document.getElementById('imgForm');
         var formdata = new FormData(imgForm);
+        var hashtag = new Array();
+
+        for (var i = 0; i < $('.token-label').length; i++) {
+            hashtag[i] = $('.token-label')[i]['textContent'];
+        }
+
         $.ajax({
             cache: false,
             processData: false,
@@ -204,6 +212,16 @@
                 var idx = data.id;
                 document.getElementById("post_id").value = idx;
                 $('#infoForm').submit();
+
+                $.ajax({
+                    url: '/insertHashtag',
+                    type: 'post',
+                    data: {
+                        postid: idx,
+                        hashtag: hashtag
+                    },
+                    traditional: true
+                });
             }
             else {
                 console.log('error');
@@ -213,13 +231,21 @@
 </script>
 
 <script>
-    $('#tokenfield').tokenfield({
-        autocomplete: {
-            source: [],
-            delay: 100
-        },
-        showAutocompleteOnFocus: true
+
+    $('.tokenfield').on('tokenfield:createtoken', function (event) {
+        var existingTokens = $(this).tokenfield('getTokens');
+        $.each(existingTokens, function (index, token) {
+            if (token.value === event.attrs.value)
+                event.preventDefault();
+        });
     });
+
+    $('.tokenfield').tokenfield({
+        showAutocompleteOnFocus: true,
+        limit: 5,
+        minLength: 0
+    });
+
 </script>
 
 

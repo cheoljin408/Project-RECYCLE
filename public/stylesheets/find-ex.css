@@ -1,0 +1,188 @@
+*, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+/* 메뉴 바 */
+#navbar {
+  padding-left: 100px;
+  padding-right: 100px;
+  z-index: 1000;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 .2rem .25rem rgba(0, 0, 0, .09);
+}
+
+.logo {
+  float: left;
+}
+
+.logo img {
+  width: 150px;
+  height: 60px;
+}
+
+.nav-list {
+  float: left;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.nav-list a {
+  padding: 15px;
+}
+
+#navbar a {
+  float: left;
+  display: block;
+  color: #495057;
+  text-align: center;
+  text-decoration: none;
+}
+
+#navbar a:hover {
+  font-weight: 700;
+  color: black;
+}
+
+.log_png {
+  float: right;
+  display: inline;
+  padding-right: 35px;
+  line-height: 60px;
+}
+
+.log_png img {
+  width: 32px;
+  height: 32px;
+  margin-right: 18px;
+}
+
+/* 섹션 1 */
+.section1 {
+  /* margin-top: 100px;
+  margin-bottom: 50px; */
+  width: 900px;
+  margin: 100px auto;
+}
+
+.section1 .container {
+  /*
+  padding-top: 70px;
+  padding-left: 0;
+  padding-right: 0; */
+  width: 900px;
+  margin: 100px auto;
+  position: relative;
+  overflow: hidden;
+  padding:0;
+}
+
+.article_title {
+  margin: 10px 0 0 0;
+}
+
+.date_view {
+  display: flex;
+  color: rgba(0,0,0,0.5);
+  margin:0 0 25px 0;
+}
+
+.article_desc {
+  margin: 40px 0 40px 0;
+}
+
+.tag_box button {
+  margin-right: 15px;
+  font-size: 20px;
+  color: white;
+  border-radius: 30px;
+  width: 150px;
+  height: 55px;
+  border: 1.3px solid #7fcacb;
+  background-color: #7fcacb;
+}
+
+
+/*modal*/
+.modal-width {
+  max-width: 400px;
+}
+
+.modal-border-none {
+  border: none;
+}
+
+#loginModalIMG {
+  width: 180px;
+  padding-top: 1.5rem;
+}
+
+#loginModalBody {
+  padding: 1.7rem 4.5rem;
+}
+
+.modal-input-space {
+  margin-bottom: 0.5rem;
+}
+
+#loginModalIDInput:focus, #loginModalPWInput:focus {
+  border-color: #94e9eb;
+  box-shadow: 0 0 0 0.2rem rgba(165, 249, 250, 0.3);
+}
+
+.login-error {
+  color: red;
+  display: none;
+  font-size: 0.875rem;
+  /*padding-bottom: 5px;*/
+}
+
+#loginModalBtn {
+  background-color:#94e9eb;
+  border-color:#94e9eb;
+}
+
+.btn-link:hover {
+  text-decoration: none;
+}
+
+#findPWBtn {
+  margin-top: 0.2rem;
+  color: #7a7a7a;
+}
+
+#loginModalJoinBtn {
+  color: #16b8ba;
+  padding-top: 0;
+  border: none;
+}
+
+/* footer */
+footer {
+  background-color: #7fcacb;
+  height: 30vh;
+  line-height: 30vh;
+}
+
+.footer-text {
+  text-align: center;
+}
+
+.footer-text h4 {
+  display: inline;
+  font-size: 50px;
+  color: white;
+  vertical-align: middle;
+}
+
+#footer_logo img {
+  width: 300px;
+}

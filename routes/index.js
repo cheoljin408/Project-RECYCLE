@@ -37,10 +37,12 @@ router.post('/sessionchecker', function (req, res){
   //console.log('sessioncheck POST:::::::::::');
   //console.log(req.session);
   if (req.session.userID){
+    console.log(req.session.userID);
     res.send(true);
   }
   else {
     res.send(false);
+    console.log(req.session.userID);
   }
 });
 
@@ -111,6 +113,21 @@ router.get('/register', function (req, res) {
 /* GET find page. */
 router.get('/find', function(req, res) {
   res.render('find');
+});
+
+/* GET find-ex page. */
+router.get('/find-ex', function (req, res) {
+  console.log(req.query.id);
+  var sql = `select * from article where id=${req.query.id}`;
+
+  con.query(sql, function(err, result, fields) {
+    if(err) {
+      throw err;
+    }
+    console.log(result[0]);
+    res.render('find-ex', {data: result[0]});
+  });
+
 });
 
 /* POST find page. */
@@ -202,8 +219,9 @@ router.post('/upload', upload.single('userFile'), function(req, res){
   //res.send('Uploaded! : '+req.file); // object를 리턴함
   console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
   var postId = req.body.postId;
+  var filepath = req.file.path.substring(6, req.file.path.length);
 
-  var sql = `insert into article (category, img, local, state, title, user, price, description) values ('temp', '${req.file.path}', 'temp', 'temp', 'temp', 'temp', 9999, 'temp')`;
+  var sql = `insert into article (category, img, local, state, title, user, price, description) values ('temp', '${filepath}', 'temp', 'temp', 'temp', 'temp', 9999, 'temp')`;
 
   con.query(sql, function(err, result) {
     if (err) {
@@ -227,7 +245,14 @@ router.post('/info', (req, res) => {
   var price = req.body.price;
   var description = req.body.description;
 
-  var sql = `update article set category = '${category}', local = '${local}', state = '${state}', title = '${title}', price = ${price}, description = '${description}' where id = ${postId}`;
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1;
+  var yyyy = today.getFullYear();
+
+  var ymd = yyyy+'-'+mm+'-'+dd;
+
+  var sql =`update article set category = '${category}', local = '${local}', state = '${state}', title = '${title}', user = '${req.session.userID}', price = ${price}, description = '${description}', time = '${ymd}' where id = ${postId}`;
 
   console.log(sql);
 
@@ -237,6 +262,32 @@ router.post('/info', (req, res) => {
     } else {
       res.redirect('/register');
       console.log('1 record inserted');
+    }
+  });
+});
+
+router.post('/insertHashtag', (req, res) => {
+  console.log(req.body.postid);
+  console.log(req.body.hashtag);
+
+  var postid = req.body.postid;
+  var tagarr = req.body.hashtag;
+
+  var tags = ['null', 'null', 'null', 'null', 'null'];
+
+  for(var i=0; i<tagarr.length; i++)
+  {
+    tags[i] = tagarr[i];
+  }
+
+  var sql = `insert into hashtag (postid, tag1, tag2, tag3, tag4, tag5) values (${postid}, '${tags[0]}', '${tags[1]}', '${tags[2]}', '${tags[3]}', '${tags[4]}')`;
+
+  con.query(sql, function (err, result) {
+    if (err) {
+      throw err;
+    }
+    else {
+      console.log('tag record inserted');
     }
   });
 });
@@ -323,6 +374,45 @@ router.post('/profile/password/change', function(req, res){
     }
   })
 });
+
+router.post('/getHashtag', (req, res) => {
+  var postid = req.body.postid;
+
+  var sql = `select * from hashtag where postid='${postid}'`;
+
+  console.log(sql);
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result[0]);
+      res.send(result[0]);
+    }
+  });
+});
+
+router.post('/getTime', (req, res) => {
+  var postid = req.body.postid;
+
+  var sql = `select time from article where id='${postid}'`;
+
+  console.log(sql);
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result[0]);
+      res.send(result[0]);
+    }
+  });
+});
+
 
 // router.post('/register', (req, res) => {
 
