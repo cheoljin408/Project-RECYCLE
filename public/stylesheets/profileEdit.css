@@ -1,0 +1,148 @@
+*, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+  
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+  
+  /* 메뉴 바 */
+#navbar {
+    padding-left: 100px;
+    padding-right: 100px;
+    z-index: 1000;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 .2rem .25rem rgba(0, 0, 0, .09);
+}
+  
+.logo {
+    float: left;
+}
+  
+.logo img {
+    width: 150px;
+    height: 60px;
+}
+  
+.nav-list {
+    float: left;
+    font-size: 20px;
+    font-weight: 500;
+}
+  
+.nav-list a {
+    padding: 15px;
+}
+  
+#navbar a {
+    float: left;
+    display: block;
+    color: #495057;
+    text-align: center;
+    text-decoration: none;
+}
+  
+#navbar a:hover {
+    font-weight: 700;
+    color: black;
+}
+  
+.log_png {
+    float: right;
+    display: inline;
+    padding-right: 35px;
+    line-height: 60px;
+}
+  
+.log_png img {
+    width: 32px;
+    height: 32px;
+    margin-right: 18px;
+}
+
+/* container */
+#wrapper {
+    min-height: 100vh;
+    background-color: rgba(0,0,0,0.04);
+    padding-top: 120px;
+}
+
+#container {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.menu_bar {
+    background-color:white;
+    margin-bottom: 20px;
+    padding: 10px 30px;
+}
+
+.menu_btn {
+    color: rgba(0,0,0,0.6);
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.menu_btn:hover {
+  text-decoration: none;
+  color:rgba(0,0,0,0.6);
+}
+
+.menu_btn:focus {
+  text-decoration: none;
+  color:rgba(0,0,0,0.6);
+}
+
+#profile_edit_btn {
+    font-weight: 500;
+    color: #7fcacb;
+    border-bottom: solid #7fcacb 2px;
+}
+
+
+.content {
+    background-color: white;
+    padding: 40px 100px;
+}
+
+.form-group {
+    padding-bottom: 5px;
+}
+
+.form_label{
+    font-weight: 500;
+    padding-right: 35px;
+}
+
+#edit_submit_btn {
+    background-color: rgba(127, 202, 203, 1);
+    border-color: rgba(127, 202, 203, 1);
+}
+
+/* footer */
+footer {
+    background-color: #7fcacb;
+    height: 30vh;
+    line-height: 30vh;
+}
+  
+.footer-text {
+    text-align: center;
+}
+  
+.footer-text h4 {
+    display: inline;
+    font-size: 50px;
+    color: white;
+    vertical-align: middle;
+}
+  
+#footer_logo img {
+    width: 300px;
+}

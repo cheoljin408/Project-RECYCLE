@@ -13,8 +13,8 @@
     content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
 
   <!-- jquery cdn -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
   <!-- bootstrap cdn -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -31,8 +31,13 @@
 
   <!-- load css files -->
   <link href="/stylesheets/find.css" rel="stylesheet">
+
   <!-- pinterest -->
   <script src="/javascripts/jquery.imagesloaded.min.js"></script>
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+
+  <!-- infinite scroll -->
+  <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
 </head>
 
 <!--session check-->
@@ -49,14 +54,15 @@
 </script>
 
 <body>
-  <div id="navbar" style="cursor:pointer;">
+  <div id="top_section"></div>
+  <div id="navbar">
     <div class="logo">
       <img src="/images/logo2.png" />
     </div>
     <div class="nav-list">
       <a href="/">Home</a>
       <a href="/find">작품 보기</a>
-      <a href="/register" class="session-true">작품 등록하기</a>
+      <a href="/register" class="session-true" style="display:none">작품 등록하기</a>
       <a class="session-false" data-toggle="modal" data-target="#loginModal" onclick="resetModal()">작품 등록하기</a>
     </div>
 
@@ -64,7 +70,7 @@
       <div class="session-true">
         <a href="#"><img src="/images/cart.png" /></a>
         <a href="#"><img src="/images/find.png" /></a>
-        <a href="#"><img src="/images/profile.png" /></a>
+        <a href="/mypage"><img src="/images/profile.png" /></a>
       </div>
       <a class="session-false" style="font-size:20px; font-weight: 700;" data-toggle="modal" data-target="#loginModal"
         onclick="resetModal()">로그인</a>
@@ -167,7 +173,6 @@
               <img src="/images/right.png" />
             </span>
           </label>
-
         </span>
       </div>
 
@@ -175,12 +180,14 @@
   </div>
   <div class="section2">
     <div class="container">
+      <div id="masonry_container">
 
-        <div id="masonry_container" class='masonry' style="margin:0 auto;">
-
-        </div>
-
-
+      </div>
+    </div>
+    <div class="innerLoading" id="inner">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
   </div>
 
@@ -233,10 +240,19 @@
     </div>
   </footer>
 
+
+  <!-- TOP버튼 -->
+  <a class="top"><img id="top_img" src="/images/top.png" /></a>
 </body>
 
 <!-- Load  find.js -->
 <script src="/javascripts/find.js"></script>
+<script>
+  // 상태 버튼 색 칠한곳 또 클릭하면 해제
+  $('.buy').find(".focus").click(function() {
+    alert('중복클릭 !');
+  });
+</script>
 
 <script>
   function resetModal() {
@@ -245,11 +261,40 @@
     $('input[name=userID]').val('');
     $('input[name=userPW]').val('');
   }
-  /*
-      $(".modal").on("show.bs.modal", function(){
-        $('.worng-ID').hide();
-        $('.worng-PW').hide();
-      });
-  */
+/*
+    $(".modal").on("show.bs.modal", function(){
+      $('.worng-ID').hide();
+      $('.worng-PW').hide();
+    });
+*/
+
+  function loginCheck(){
+    $.ajax({
+    type : 'POST',
+    url : '/auth',
+    data : {
+      userID : $('input[name=userID]').val(),
+      userPW : $('input[name=userPW]').val()
+    },
+    success : function(data){
+      if(data === 'ID') {
+        console.log(data);
+        $('.wrong-ID').show();
+        $('.wrong-PW').hide();
+      }else if (data === 'PW') {
+        console.log(data);
+        $('.wrong-ID').hide();
+        $('.wrong-PW').show();
+      }else if (data === 'OK') {
+        $('.wrong-ID').hide();
+        $('.wrong-PW').hide();
+        $('#loginModalForm').submit();
+      }
+    }
+  })
+  
+  
+}
 </script>
+
 </html>

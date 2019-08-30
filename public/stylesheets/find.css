@@ -278,8 +278,8 @@ ul, li {
 .paper {
   cursor: pointer;
   width: 265px;
-  margin:10px 5px 0px 5px;
-  padding: 20px 20px 0;
+  margin-top: 10px;
+  padding: 15px 20px 0;
   font-size: 11px;
   background: #FFFFFF;
   box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
@@ -287,32 +287,30 @@ ul, li {
 
 .paper-description {
   margin: 10px 0;
-  /* font-weight: 700;
-  font-size: 15px; */
   text-align: left;
 }
 
 .paper-description p {
-  margin: 0 0 10px;
+  margin: 0;
 }
 
 .paper-content {
-  border-top: solid 0.5px #ddd;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  padding-bottom: 6px;
-  padding-top: 20px;
-  /* background: #F2F0F0; */
   overflow: hidden;
+      margin: 10px 0;
+      padding: 9px 0;
 }
 
 .paper-state {
   float: right;
 }
-
+.paper-info{
+  border-top: solid 0.5px #ddd;
+  padding: 8px;
+  height: 35px;
+}
 #title {
   font-weight: 700;
-  font-size: 15px;
+    font-size: 17px;
 }
 
 #userId {
@@ -326,11 +324,26 @@ ul, li {
 #state {
   display: none;
 }
-
+#like{
+  float:left;
+}
+#like img{
+  margin-right: 7px;
+  width: 15px;
+  height: 15px;
+}
+#views{
+  float:right;
+}
+#views img{
+  margin-right: 7px;
+  width: 24px;
+  height: 15px;
+}
 .state1 {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  font-size: 15px;
+  font-size: 12px;
   padding: 5px;
   cursor: pointer;
   margin-right: -2px;
@@ -339,11 +352,47 @@ ul, li {
 .state2 {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  font-size: 15px;
+  font-size: 12px;
   padding: 5px;
   margin-left: -2px;
   cursor: pointer;
 }
+@keyframes like_big {
+  0% {
+    width: 15px;
+    height: 15px;
+  }
+
+  25% {
+    width: 16px;
+    height: 16px;
+  }
+
+  50% {
+    width: 18px;
+    height: 18px;
+  }
+
+  75% {
+    width: 16px;
+    height: 16px;
+  }
+
+  100% {
+    width: 15px;
+    height: 15px;
+  }
+}
+.innerLoading{
+  text-align: center;
+  padding: 40px;
+}
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  display: none;
+}
+
 
 /*modal*/
 .modal-width {
@@ -420,4 +469,44 @@ footer {
 
 #footer_logo img {
   width: 300px;
+}
+
+
+/* top button */
+.top{
+  cursor: pointer;
+  z-index: 1000;
+  position: fixed;
+  bottom: -45px;
+  right: 15px;
+}
+.top img{
+  width:45px;
+  height: 45px;
+}
+@keyframes top_big {
+  0% {
+    width: 45px;
+    height: 45px;
+  }
+
+  25% {
+    width: 46px;
+    height: 46px;
+  }
+
+  50% {
+    width: 48px;
+    height: 48px;
+  }
+
+  75% {
+    width: 46px;
+    height: 46px;
+  }
+
+  100% {
+    width: 45px;
+    height: 45px;
+  }
 }

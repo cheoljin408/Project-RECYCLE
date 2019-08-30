@@ -34,6 +34,8 @@ con.connect(function(err) {
 
 //session check
 router.post('/sessionchecker', function (req, res){
+  //console.log('sessioncheck POST:::::::::::');
+  //console.log(req.session);
   if (req.session.userID){
     console.log(req.session.userID);
     res.send(true);
@@ -42,6 +44,10 @@ router.post('/sessionchecker', function (req, res){
     res.send(false);
     console.log(req.session.userID);
   }
+});
+
+router.post('/userID', function (req, res){
+  res.send(req.session);
 });
 
 //login
@@ -66,18 +72,32 @@ router.post('/auth', function (req, res){
     else {
       //console.log(result[0]['password']);
       if (result[0]['password'] === userPW){
-        //req.session.userID =  userID;
         res.send('OK');
       } else {
         res.send('PW');
       }
     }
-  })
+  });
 });
 
 router.post('/login', function(req, res){
-  req.session.userID = req.body.userID;
-  res.redirect('/find');
+  var userID = req.body.userID;
+  var userEmail = 'default';
+  var userPhone = 'default';
+  var sql = `SELECT * FROM member WHERE id = '${userID}'`;
+
+  con.query(sql, function(err, result, fields){
+    if (err){
+      console.log(err);
+      throw err;
+    } else {
+      //console.log(result[0]);
+      req.session.userID = userID;
+      req.session.userEmail = result[0]['email'];
+      req.session.userPhone = result[0]['phoneNum'];
+      res.redirect('/find');
+    }
+  });
 });
 
 /* GET home page. */
@@ -86,8 +106,7 @@ router.get('/', function(req, res) {
 });
 
 /* GET register page. */
-router.get('/register', function(req, res) {
-
+router.get('/register', function (req, res) {
   res.render('register');
 });
 
@@ -117,15 +136,16 @@ router.post('/find', function(req, res) {
   console.log('지역 = ' + req.body.region);
   console.log('상태 = ' + req.body.buy);
   console.log('가격 = ' + req.body.low_price);
+  console.log('page = ' + req.body.page);
 
 
-  var sql = "select * from article where 1 ";
+  var sql = `select * from article where 1 `;
 
   // 판매 vs 렌탈 중 하나만 선택
   if (req.body.buy != 'ALL') {
     sql += `and (state like '${req.body.buy}') `;
   }
-  if (req.body.low_price != 'ALL') {
+  if (req.body.low_price != 'ALL' && req.body.high_price != 'ALL' ) {
     sql += `and (price >= '${req.body.low_price}' and price <= '${req.body.high_price}') `;
   }
 
@@ -158,12 +178,14 @@ router.post('/find', function(req, res) {
     }
 
   }
+  sql+= `limit ${req.body.page}, 10`;
 
   console.log(sql);
   con.query(sql, function(err, result, fields) {
     if (err) {
       throw err;
     }
+    console.log(result);
     res.send(result);
   });
 });
@@ -178,7 +200,22 @@ router.get('/signup', function(req, res) {
   res.render('signup');
 });
 
-router.post('/upload', upload.single('userFile'), function(req, res) {
+/* GET mypage page. */
+router.get('/mypage', function(req, res){
+  res.render('mypage');
+});
+
+/* GET profileEdit page. */
+router.get('/profile/edit', function(req, res){
+  res.render('profileEdit');
+})
+
+/* GET passwordChange page */
+router.get('/profile/password/change', function(req, res){
+  res.render('pwChange');
+})
+
+router.post('/upload', upload.single('userFile'), function(req, res){
   //res.send('Uploaded! : '+req.file); // object를 리턴함
   console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
   var postId = req.body.postId;
@@ -299,6 +336,43 @@ router.post('/idcheck', (req, res) => {
       res.send(result);
     }
   });
+});
+
+router.post('/profile/edit', function(req, res){
+  var id = req.body.userID;
+  var email = req.body.userEmail;
+  var phone = req.body.userPhone;
+  var address = req.body.userAddress;
+
+  var sql = `UPDATE member SET email = '${email}', phoneNum = '${phone}' WHERE id= '${id}'`;
+
+  con.query(sql, function(err, result){
+    if(err){
+      throw err;
+    } else {
+      //console.log('changed!!');
+      req.session.userID = id;
+      req.session.userEmail = email;
+      req.session.userPhone = phone;
+      res.redirect('/profile/edit');
+    }
+  })
+});
+
+router.post('/profile/password/change', function(req, res){
+  var id = req.body.userID;
+  var pw = req.body.newPW;
+
+  var sql = `UPDATE member SET password = '${pw}' WHERE id = '${id}'`;
+
+  con.query(sql, function(err, result){
+    if (err){
+      throw err;
+    } else  {
+      //console.log('changed!!');
+      res.redirect('/mypage');
+    }
+  })
 });
 
 router.post('/getHashtag', (req, res) => {
