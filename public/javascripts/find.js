@@ -34,10 +34,8 @@ function likeClick(i) {
     image.style.animation = "";
   }
 }
-
 /*
 //masonry rental vs buy
-for (var i = 0; i < len; i++) {
   if ($(`#state_${i}`).text() == "렌탈") {
     $(`#state1_${i}`).css("background-color", "#7fcacb");
     $(`#state1_${i}`).css("color", "white");
@@ -57,8 +55,8 @@ for (var i = 0; i < len; i++) {
     $(`#state2_${i}`).css("background-color", "#7fcacb");
     $(`#state2_${i}`).css("color", "white");
   }
-}
-*/
+  */
+
 
 // 카테고리 값들을 얻어옴
 function category() {
@@ -168,9 +166,9 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
                               <div class="paper-content">
                                 <span id="price">${price}원</span>
                                 <span class="paper-state">
-                                  <span id="state_${i}" style="display:none">${state}</span>
-                                  <span class="state1" id="state1_${i}">렌탈</span>
-                                  <span class="state2" id="state2_${i}">판매</span>
+                                  <span class="state" style="display:none">${state}</span>
+                                  <span>렌탈</span>
+                                  <span>판매</span>
                                 </span>
                               </div>
                               <div class="paper-info">
@@ -197,18 +195,20 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
           });
         }, 1000);
 
+        // rental vs sell
+
+
       }
-      //상품이 있을 때 ===================
+      //=========================================
 
 
       // 상품 없을 때 ===================
-
       else if(len==0 && html == "") {
         item_len = 0;
         $('#masonry_container').remove();
         $('#noneItem').css('display', 'block');
       }
-      // 상품 없을 떄 ===================
+      //=========================================
 
 
       // scroll 위치 기억
@@ -253,6 +253,10 @@ $('.row button').click(function() {
   }
 });
 
+//category - reset
+$("#reset").click(function() {
+  document.location.href = `/find`;
+});
 
 
 //top buttons

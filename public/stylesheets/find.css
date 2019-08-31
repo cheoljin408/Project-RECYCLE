@@ -144,6 +144,12 @@ ul, li {
   width: 32px;
   height: 32px;
 }
+#reset {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  margin-left: 17px;
+}
 
 .form-control {
   text-align: center;
@@ -183,7 +189,18 @@ ul, li {
 .btn-secondary:focus {
   box-shadow: 0 0 0 0.2rem rgba(151, 231, 232, .5);
 }
-
+#state_check{
+  background-color:#7fcacb;
+  color:white;
+  padding:5.5px;
+}
+#state_uncheck{
+  border-style:solid;
+  border-color:#7fcacb;
+  border-width:0.5px;
+  background-color:white;
+  color:#7fcacb;
+}
 /* section1 - tag */
 .slide {
   overflow: hidden;
@@ -308,6 +325,12 @@ ul, li {
 
 .paper-state {
   float: right;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  font-size: 12px;
+  padding: 5px;
+  cursor: pointer;
+  margin-right: -2px;
 }
 .paper-info{
   border-top: solid 0.5px #ddd;
@@ -346,23 +369,7 @@ ul, li {
   width: 24px;
   height: 15px;
 }
-.state1 {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  font-size: 12px;
-  padding: 5px;
-  cursor: pointer;
-  margin-right: -2px;
-}
 
-.state2 {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  font-size: 12px;
-  padding: 5px;
-  margin-left: -2px;
-  cursor: pointer;
-}
 @keyframes like_big {
   0% {
     width: 15px;
