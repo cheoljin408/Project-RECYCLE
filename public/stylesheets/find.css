@@ -88,7 +88,7 @@ ul, li {
 
 .row {
   margin: 0;
-  padding: 17px 30px;
+  padding: 20px 30px;
   height: 25%;
   border-top: 0.8px #ddd solid;
   border-right: 0.8px #ddd solid;
@@ -118,9 +118,9 @@ ul, li {
 
 .row button {
   display: inline;
-  height: 48px;
-  padding-left: 10px;
-  padding-right: 10px;
+  height: 55px;
+  padding-left: 15px;
+  padding-right: 15px;
   margin-right: 16px;
   background-color: white;
   border: 1px #d7dede solid;
@@ -157,6 +157,11 @@ ul, li {
 }
 
 /* 렌탈 vs 판매 버튼 */
+.btn {
+  font-size: 1rem;
+  height: 55px;
+  line-height: 2.5;
+}
 .btn-secondary:not(:disabled):not(.disabled).active,
 .btn-secondary:not(:disabled):not(.disabled):active,
 .show>.btn-secondary.dropdown-toggle {
@@ -232,7 +237,7 @@ ul, li {
   color: white;
   border-radius: 30px;
   width: 150px;
-  height: 55px;
+  height: 65px;
   border: 1.3px solid #7fcacb;
   background-color: #7fcacb;
 }
@@ -240,7 +245,7 @@ ul, li {
 .tag_button {
   position: absolute;
   right: 15px;
-  top: 30px
+  top: 43px
 }
 
 .tag_button img {
@@ -253,6 +258,7 @@ ul, li {
 .section2 {
   background-color: #f4f4f4;
   margin: 0;
+  padding-top: 50px;
   padding-bottom: 50px;
   width: 100%;
 }
@@ -382,6 +388,12 @@ ul, li {
     width: 15px;
     height: 15px;
   }
+}
+
+#noneItem{
+  height: 150px;
+  text-align: center;
+  display: none;
 }
 .innerLoading{
   text-align: center;

@@ -1,22 +1,64 @@
-
-function innerLoading(){
-  $('.spinner-border').css('display','inline-block');
+function innerLoading() {
+  $('.spinner-border').css('display', 'inline-block');
   setTimeout(function() {
-    $('.spinner-border').css('display','none');
+    $('.spinner-border').css('display', 'none');
   }, 1000);
-
 }
 
 //infinite scroll
 var page = 0;
 $(window).scroll(function() {
-  if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+  if ($(window).scrollTop() == $(document).height() - $(window).height() && item_len != 0) {
     innerLoading();
     var cateObj = category();
-    getData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price, page += 10, $(window).scrollTop());
-
+    page += 10;
+    getData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price, page, $(window).scrollTop());
   }
 });
+
+// like buttons
+function likeClick(i) {
+  var image = document.getElementById(`like${i}`);
+  if (image.src.match("/images/like.png")) {
+    image.src = "/images/like-red.png";
+    image.style.animationName = "like_big";
+    image.style.animationDuration = "0.4s";
+    image.style.animationTimingFunction = "linear";
+    image.style.animationDelay = "0s";
+    image.style.animationIterationCount = "1";
+    image.style.animationDirection = "normal";
+    image.style.animationFillMode = "forwards";
+    image.style.animationPlayState = "running";
+  } else {
+    image.src = "/images/like.png";
+    image.style.animation = "";
+  }
+}
+
+/*
+//masonry rental vs buy
+for (var i = 0; i < len; i++) {
+  if ($(`#state_${i}`).text() == "렌탈") {
+    $(`#state1_${i}`).css("background-color", "#7fcacb");
+    $(`#state1_${i}`).css("color", "white");
+    $(`#state1_${i}`).css("padding", "5.5px");
+    $(`#state2_${i}`).css("border-style", "solid");
+    $(`#state2_${i}`).css("border-color", "#7fcacb");
+    $(`#state2_${i}`).css("border-width", "0.5px");
+    $(`#state2_${i}`).css("background-color", "white");
+    $(`#state2_${i}`).css("color", "#7fcacb");
+  } else {
+    $(`#state1_${i}`).css("background-color", "white");
+    $(`#state1_${i}`).css("color", "#7fcacb");
+    $(`#state1_${i}`).css("border-style", "solid");
+    $(`#state1_${i}`).css("border-color", "#7fcacb");
+    $(`#state1_${i}`).css("border-width", "0.5px");
+    $(`#state2_${i}`).css("padding", "5.5px");
+    $(`#state2_${i}`).css("background-color", "#7fcacb");
+    $(`#state2_${i}`).css("color", "white");
+  }
+}
+*/
 
 // 카테고리 값들을 얻어옴
 function category() {
@@ -75,27 +117,9 @@ function category() {
   }
 }
 
-// like buttons
-function likeClick(i) {
-  var image = document.getElementById(`like${i}`);
-  if (image.src.match("/images/like.png")) {
-    image.src = "/images/like-red.png";
-    image.style.animationName = "like_big";
-    image.style.animationDuration = "0.4s";
-    image.style.animationTimingFunction = "linear";
-    image.style.animationDelay = "0s";
-    image.style.animationIterationCount = "1";
-    image.style.animationDirection = "normal";
-    image.style.animationFillMode = "forwards";
-    image.style.animationPlayState = "running";
-  } else {
-    image.src = "/images/like.png";
-    image.style.animation = "";
-  }
-}
-
 //서버에 데이터 보내고 받음
 var html = "";
+var item_len;
 function getData(buy, theme, region, low_price, high_price, page, scroll) {
   $.ajax({
     type: 'post',
@@ -110,27 +134,30 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
       page: page
     },
     success: function(data) {
+      //카테고리 찾기 버튼 눌렀을 때는 html reset
+      if (scroll == 0) {
+        html = "";
+      }
+
       var len = data.length;
 
-      if(len!=0){
-        //카테고리 찾기 버튼 눌렀을 때는 html reset
-        if(scroll==0){
-          html = "";
-        }
+      //상품이 있을 때 ===================
+      if (len != 0) {
+        item_len = 1;
+        $('#noneItem').css('display', 'none');
         $('#masonry_container').remove();
         $('.section2 > .container').append(`<div id="masonry_container" class='masonry' style="margin:0 auto;"></div>`);
 
-        if (data != null) {
-          for (var i = 0; i < len; i++) {
-            var id = data[i]['id'];
-            var category = data[i]['category'];
-            var local = data[i]['local'];
-            var state = data[i]['state'];
-            var title = data[i]['title'];
-            var user = data[i]['user'];
-            var price = data[i]['price'];
-            var img = data[i]['img'];
-            var plus = `<div class="paper" id="${id}">
+        for (var i = 0; i < len; i++) {
+          var id = data[i]['id'];
+          var category = data[i]['category'];
+          var local = data[i]['local'];
+          var state = data[i]['state'];
+          var title = data[i]['title'];
+          var user = data[i]['user'];
+          var price = data[i]['price'];
+          var img = data[i]['img'];
+          var plus = `<div class="paper" id="${id}">
                               <div class="paper-holder">
                                 <a><img width="225" src="${img}" /></a>
                               </div>
@@ -151,55 +178,50 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
                                 <span id="views"><img src="/images/views.png">302</span>
                               </div>
                             </div>`;
-            html += plus;
-          }
-          $('.section2 > .container').css('display','none');
-          document.getElementById('masonry_container').innerHTML = html;
-
-          // masonry input
-          setTimeout(function() {
-            $('.section2 > .container').css('display','block');
-            $('#masonry_container').masonry({
-              itemSelector: '.paper',
-              columnWidth: 285,
-              isAnimated: true,
-              isFitWidth: true
-            });
-
-          },1000);
-
-          //masonry rental vs buy
-          for (var i = 0; i < len; i++) {
-            if ($(`#state_${i}`).text() == "렌탈") {
-              $(`#state1_${i}`).css("background-color", "#7fcacb");
-              $(`#state1_${i}`).css("color", "white");
-              $(`#state1_${i}`).css("padding", "5.5px");
-              $(`#state2_${i}`).css("border-style", "solid");
-              $(`#state2_${i}`).css("border-color", "#7fcacb");
-              $(`#state2_${i}`).css("border-width", "0.5px");
-              $(`#state2_${i}`).css("background-color", "white");
-              $(`#state2_${i}`).css("color", "#7fcacb");
-            } else {
-              $(`#state1_${i}`).css("background-color", "white");
-              $(`#state1_${i}`).css("color", "#7fcacb");
-              $(`#state1_${i}`).css("border-style", "solid");
-              $(`#state1_${i}`).css("border-color", "#7fcacb");
-              $(`#state1_${i}`).css("border-width", "0.5px");
-              $(`#state2_${i}`).css("padding", "5.5px");
-              $(`#state2_${i}`).css("background-color", "#7fcacb");
-              $(`#state2_${i}`).css("color", "white");
-            }
-          }
+          html += plus;
         }
 
-        // scroll 위치 기억
+        //무한스크롤하면 container 없앴다가
+        $('.section2 > .container').css('display', 'none');
+        document.getElementById('masonry_container').innerHTML = html;
+
+        // masonry input
         setTimeout(function() {
-          $('html').animate({
-            scrollTop: scroll
-          }, 0);
-        },1000);
+          // 무한스크롤 끝나면 다시 생김
+          $('.section2 > .container').css('display', 'block');
+          $('#masonry_container').masonry({
+            itemSelector: '.paper',
+            columnWidth: 285,
+            isAnimated: true,
+            isFitWidth: true
+          });
+        }, 1000);
+
       }
-      $(".paper").click(function () {
+      //상품이 있을 때 ===================
+
+
+      // 상품 없을 때 ===================
+
+      else if(len==0 && html == "") {
+        item_len = 0;
+        $('#masonry_container').remove();
+        $('#noneItem').css('display', 'block');
+      }
+      // 상품 없을 떄 ===================
+
+
+      // scroll 위치 기억
+      setTimeout(function() {
+        $('html').animate({
+          scrollTop: scroll
+        }, 0);
+      }, 1000);
+
+
+      //상품 클릭하면 상세 페이지로 이동
+      $(".paper").click(function() {
+        item_len = 1;
         console.log($(this).attr('id'));
         var postid = $(this).attr('id');
         console.log(postid);
@@ -231,6 +253,8 @@ $('.row button').click(function() {
   }
 });
 
+
+
 //top buttons
 $(".top").click(function() {
   $('html').animate({
@@ -257,4 +281,3 @@ $('.top').find('img').hover(function() {
   $('#top_img').attr("src", "/images/top.png");
   $('.top').find('img').css("animation", "");
 });
-

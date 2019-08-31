@@ -137,7 +137,7 @@
   </div>
   <div class="section-tag ">
     <div class="container-tag" style="background-color:#e3e3e3">
-      <div class="container slide" style="padding: 30px 0;">
+      <div class="container slide" style="padding: 35px 0;">
         <input type="radio" name="pos" id="pos1" checked>
         <input type="radio" name="pos" id="pos2">
         <ul>
@@ -178,10 +178,15 @@
 
     </div>
   </div>
+
+
   <div class="section2">
     <div class="container">
       <div id="masonry_container">
 
+      </div>
+      <div id ="noneItem">
+        <h2>조회하신 결과를 찾을 수 없습니다. </h2>
       </div>
     </div>
     <div class="innerLoading" id="inner">
@@ -206,10 +211,10 @@
           <!--form-->
           <form id="loginModalForm" action="/login" method="post">
             <div class="form-group modal-input-space">
-              <input type="text" name="userID" class="form-control" id="loginModalIDInput" placeholder="아이디">
+              <input style="width:100%; text-align:left;" type="text" name="userID" class="form-control" id="loginModalIDInput" placeholder="아이디">
             </div>
             <div class="form-group modal-input-space">
-              <input type="text" name="userPW" class="form-control" id="loginModalPWInput" placeholder="비밀번호">
+              <input style="width:100%; text-align:left;" type="text" name="userPW" class="form-control" id="loginModalPWInput" placeholder="비밀번호">
             </div>
             <div class="wrong-ID login-error">존재하지 않는 아이디입니다</div>
             <div class="wrong-PW login-error">잘못된 비밀번호입니다</div>
@@ -292,8 +297,8 @@
       }
     }
   })
-  
-  
+
+
 }
 </script>
 
