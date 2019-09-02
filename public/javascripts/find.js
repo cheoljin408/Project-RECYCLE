@@ -34,6 +34,8 @@ function likeClick(i) {
     image.style.animation = "";
   }
 }
+
+
 /*
 //masonry rental vs buy
   if ($(`#state_${i}`).text() == "렌탈") {
@@ -166,9 +168,9 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
                               <div class="paper-content">
                                 <span id="price">${price}원</span>
                                 <span class="paper-state">
-                                  <span class="state" style="display:none">${state}</span>
-                                  <span>렌탈</span>
-                                  <span>판매</span>
+                                  <input class="state${i}" style="display:none" value="${state}"/>
+                                  <span class="rental">렌탈</span>
+                                  <span class="buy">판매</span>
                                 </span>
                               </div>
                               <div class="paper-info">
@@ -177,6 +179,9 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
                               </div>
                             </div>`;
           html += plus;
+
+
+
         }
 
         //무한스크롤하면 container 없앴다가
@@ -196,7 +201,22 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
         }, 1000);
 
         // rental vs sell
+        // if($('this').find('.state').text() == '렌탈'){
+        //   $('.rental').attr('id','state_check');
+        //   $('.buy').attr('id','state_uncheck');
+        // }
+        //$('.state ~ .rental').attr('id','state_check');
+        //console.log($('.state').get());
 
+
+        for(var i =0 ; i<10;i++)
+        {
+          if($('state').val() == '렌탈')
+          {
+            $('this ~ .rental').attr('id','state_check');
+            $('this ~ .buy').attr('id','state_uncheck');
+          }
+        }
 
       }
       //=========================================

@@ -189,10 +189,25 @@ ul, li {
 .btn-secondary:focus {
   box-shadow: 0 0 0 0.2rem rgba(151, 231, 232, .5);
 }
+.rental{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-right: -3px;
+}
+.buy{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 #state_check{
+  border-style:solid;
+  border-color: #7fcacb;
+  border-width:0.5px;
+
   background-color:#7fcacb;
   color:white;
   padding:5.5px;
+  font-size: 12px;
+
 }
 #state_uncheck{
   border-style:solid;
@@ -200,6 +215,8 @@ ul, li {
   border-width:0.5px;
   background-color:white;
   color:#7fcacb;
+  padding:5.5px;
+  font-size: 12px;
 }
 /* section1 - tag */
 .slide {
@@ -299,7 +316,6 @@ ul, li {
 
 /* 섹션 2 - 종이 스타일 */
 .paper {
-  cursor: pointer;
   width: 265px;
   margin-top: 10px;
   padding: 15px 20px 0;
@@ -325,12 +341,6 @@ ul, li {
 
 .paper-state {
   float: right;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  font-size: 12px;
-  padding: 5px;
-  cursor: pointer;
-  margin-right: -2px;
 }
 .paper-info{
   border-top: solid 0.5px #ddd;
