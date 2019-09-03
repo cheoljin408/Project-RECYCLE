@@ -414,6 +414,19 @@ router.post('/getTime', (req, res) => {
 });
 
 
+router.post('/myArticle', function(req, res){
+  var user = req.body.user;
+
+  var sql = `SELECT * FROM article WHERE user='${user}'`;
+
+  con.query(sql, function(err, result, fields){
+    if (err){
+      throw err;
+    }
+    res.send(result);
+  });
+});
+
 // router.post('/register', (req, res) => {
 
 module.exports = router;
