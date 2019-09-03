@@ -9,12 +9,15 @@ function innerLoading() {
 var page = 0;
 $(window).scroll(function() {
   if ($(window).scrollTop() == $(document).height() - $(window).height() && item_len != 0) {
-    innerLoading();
+    //innerLoading();
     var cateObj = category();
     page += 10;
-    getData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price, page, $(window).scrollTop());
+    getPlusData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price, page, $(window).scrollTop());
   }
 });
+
+
+
 
 // like buttons
 function likeClick(i) {
@@ -35,30 +38,16 @@ function likeClick(i) {
   }
 }
 
-
-/*
 //masonry rental vs buy
-  if ($(`#state_${i}`).text() == "렌탈") {
-    $(`#state1_${i}`).css("background-color", "#7fcacb");
-    $(`#state1_${i}`).css("color", "white");
-    $(`#state1_${i}`).css("padding", "5.5px");
-    $(`#state2_${i}`).css("border-style", "solid");
-    $(`#state2_${i}`).css("border-color", "#7fcacb");
-    $(`#state2_${i}`).css("border-width", "0.5px");
-    $(`#state2_${i}`).css("background-color", "white");
-    $(`#state2_${i}`).css("color", "#7fcacb");
+function RentalBuy(i) {
+  if ($(`.state${i}`).val() == '렌탈') {
+    $(`.rental${i}`).attr('id', 'state_check');
+    $(`.buy${i}`).attr('id', 'state_uncheck');
   } else {
-    $(`#state1_${i}`).css("background-color", "white");
-    $(`#state1_${i}`).css("color", "#7fcacb");
-    $(`#state1_${i}`).css("border-style", "solid");
-    $(`#state1_${i}`).css("border-color", "#7fcacb");
-    $(`#state1_${i}`).css("border-width", "0.5px");
-    $(`#state2_${i}`).css("padding", "5.5px");
-    $(`#state2_${i}`).css("background-color", "#7fcacb");
-    $(`#state2_${i}`).css("color", "white");
+    $(`.rental${i}`).attr('id', 'state_uncheck');
+    $(`.buy${i}`).attr('id', 'state_check');
   }
-  */
-
+}
 
 // 카테고리 값들을 얻어옴
 function category() {
@@ -118,13 +107,15 @@ function category() {
 }
 
 //서버에 데이터 보내고 받음
-var html = "";
+
 var item_len;
+var state_count = 0;
+
 function getData(buy, theme, region, low_price, high_price, page, scroll) {
   $.ajax({
     type: 'post',
     url: '/find',
-    async: true,
+    async: false,
     data: {
       buy: buy,
       theme: theme,
@@ -140,13 +131,11 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
       }
 
       var len = data.length;
-
+      var html = "";
       //상품이 있을 때 ===================
       if (len != 0) {
         item_len = 1;
         $('#noneItem').css('display', 'none');
-        $('#masonry_container').remove();
-        $('.section2 > .container').append(`<div id="masonry_container" class='masonry' style="margin:0 auto;"></div>`);
 
         for (var i = 0; i < len; i++) {
           var id = data[i]['id'];
@@ -168,9 +157,9 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
                               <div class="paper-content">
                                 <span id="price">${price}원</span>
                                 <span class="paper-state">
-                                  <input class="state${i}" style="display:none" value="${state}"/>
-                                  <span class="rental">렌탈</span>
-                                  <span class="buy">판매</span>
+                                  <input class="state${state_count}" style="display:inline" value="${state}"/>
+                                  <span class="rental${state_count}">렌탈</span>
+                                  <span class="buy${state_count}">판매</span>
                                 </span>
                               </div>
                               <div class="paper-info">
@@ -179,64 +168,29 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
                               </div>
                             </div>`;
           html += plus;
-
-
-
         }
-
-        //무한스크롤하면 container 없앴다가
-        $('.section2 > .container').css('display', 'none');
         document.getElementById('masonry_container').innerHTML = html;
 
         // masonry input
         setTimeout(function() {
-          // 무한스크롤 끝나면 다시 생김
-          $('.section2 > .container').css('display', 'block');
           $('#masonry_container').masonry({
             itemSelector: '.paper',
             columnWidth: 285,
             isAnimated: true,
             isFitWidth: true
           });
-        }, 1000);
-
-        // rental vs sell
-        // if($('this').find('.state').text() == '렌탈'){
-        //   $('.rental').attr('id','state_check');
-        //   $('.buy').attr('id','state_uncheck');
-        // }
-        //$('.state ~ .rental').attr('id','state_check');
-        //console.log($('.state').get());
-
-
-        for(var i =0 ; i<10;i++)
-        {
-          if($('state').val() == '렌탈')
-          {
-            $('this ~ .rental').attr('id','state_check');
-            $('this ~ .buy').attr('id','state_uncheck');
-          }
-        }
-
+        }, 100);
       }
       //=========================================
 
 
       // 상품 없을 때 ===================
-      else if(len==0 && html == "") {
+      else if (len == 0 && html == "") {
         item_len = 0;
         $('#masonry_container').remove();
         $('#noneItem').css('display', 'block');
       }
       //=========================================
-
-
-      // scroll 위치 기억
-      setTimeout(function() {
-        $('html').animate({
-          scrollTop: scroll
-        }, 0);
-      }, 1000);
 
 
       //상품 클릭하면 상세 페이지로 이동
@@ -251,7 +205,100 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
 
   });
 }
+function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
+  $.ajax({
+    type: 'post',
+    url: '/find',
+    async: false,
+    data: {
+      buy: buy,
+      theme: theme,
+      region: region,
+      low_price: low_price,
+      high_price: high_price,
+      page: page
+    },
+    success: function(data) {
+      //카테고리 찾기 버튼 눌렀을 때는 html reset
+      if (scroll == 0) {
+        html = "";
+      }
 
+      var len = data.length;
+      var html = "";
+      //상품이 있을 때 ===================
+      if (len != 0) {
+        item_len = 1;
+        $('#noneItem').css('display', 'none');
+
+        for (var i = 0; i < len; i++) {
+          var id = data[i]['id'];
+          var category = data[i]['category'];
+          var local = data[i]['local'];
+          var state = data[i]['state'];
+          var title = data[i]['title'];
+          var user = data[i]['user'];
+          var price = data[i]['price'];
+          var img = data[i]['img'];
+          var plus = `<div class="paper" id="${id}">
+                              <div class="paper-holder">
+                                <a><img width="225" src="${img}" /></a>
+                              </div>
+                              <div class="paper-description">
+                                <p id='title'>${title}</p>
+                                <p id="userId">${user}</p>
+                              </div>
+                              <div class="paper-content">
+                                <span id="price">${price}원</span>
+                                <span class="paper-state">
+                                  <input class="state${state_count}" style="display:inline" value="${state}"/>
+                                  <span class="rental${state_count}">렌탈</span>
+                                  <span class="buy${state_count}">판매</span>
+                                </span>
+                              </div>
+                              <div class="paper-info">
+                                <span id="like"><img id="like${i}" onclick="likeClick(${i})"src="/images/like.png">127</span>
+                                <span id="views"><img src="/images/views.png">302</span>
+                              </div>
+                            </div>`;
+                            html+=plus;
+        }
+        var $items = $(html);
+        $(`#masonry_container`).append($items).masonry('appended',$items);
+
+        // masonry input
+        setTimeout(function() {
+          $('#masonry_container').masonry({
+            itemSelector: '.paper',
+            columnWidth: 285,
+            isAnimated: true,
+            isFitWidth: true
+          });
+        }, 100);
+      }
+      //=========================================
+
+
+      // 상품 없을 때 ===================
+      else if (len == 0 && html == "") {
+        item_len = 0;
+        $('#masonry_container').remove();
+        $('#noneItem').css('display', 'block');
+      }
+      //=========================================
+
+      //상품 클릭하면 상세 페이지로 이동
+      $(".paper").click(function() {
+        item_len = 1;
+        console.log($(this).attr('id'));
+        var postid = $(this).attr('id');
+        console.log(postid);
+        document.location.href = `/find-ex?id=${postid}`;
+      });
+    }
+
+  });
+}
 // init 작업
 getData('ALL', 'ALL', 'ALL', 'ALL', 'ALL', 0, 0);
 
