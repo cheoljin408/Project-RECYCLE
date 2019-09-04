@@ -60,15 +60,15 @@ router.post('/auth', function (req, res){
   //console.log('**********************************');
 
   con.query(sql, function(err, result, fields){
-    
+
     if (err){
       console.log(err);
       throw err;
     }
-    
+
     else if (!result[0]) { // id 존재 X
       res.send('ID');
-    } 
+    }
     else {
       //console.log(result[0]['password']);
       if (result[0]['password'] === userPW){
@@ -185,7 +185,6 @@ router.post('/find', function(req, res) {
     if (err) {
       throw err;
     }
-    console.log(result);
     res.send(result);
   });
 });
