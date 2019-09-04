@@ -363,10 +363,10 @@ ul, li {
 #state {
   display: none;
 }
-#like{
+.like{
   float:left;
 }
-#like img{
+.like img{
   margin-right: 7px;
   width: 15px;
   height: 15px;
@@ -506,36 +506,36 @@ footer {
   cursor: pointer;
   z-index: 1000;
   position: fixed;
-  bottom: -45px;
-  right: 15px;
+  bottom: -70px;
+  right: 25px;
 }
 .top img{
-  width:45px;
-  height: 45px;
+  width:60px;
+  height: 60px;
 }
 @keyframes top_big {
   0% {
-    width: 45px;
-    height: 45px;
+    width: 60px;
+    height: 60px;
   }
 
   25% {
-    width: 46px;
-    height: 46px;
+    width: 61px;
+    height: 61px;
   }
 
   50% {
-    width: 48px;
-    height: 48px;
+    width: 63px;
+    height: 63px;
   }
 
   75% {
-    width: 46px;
-    height: 46px;
+    width: 61px;
+    height: 61px;
   }
 
   100% {
-    width: 45px;
-    height: 45px;
+    width: 60px;
+    height: 60px;
   }
 }

@@ -1,27 +1,16 @@
-function innerLoading() {
-  $('.spinner-border').css('display', 'inline-block');
-  setTimeout(function() {
-    $('.spinner-border').css('display', 'none');
-  }, 1000);
-}
-
 //infinite scroll
 var page = 0;
 $(window).scroll(function() {
-  if ($(window).scrollTop() == $(document).height() - $(window).height() && item_len != 0) {
-    //innerLoading();
+  if ($(window).scrollTop() == $(document).height() - $(window).height()) {
     var cateObj = category();
     page += 10;
     getPlusData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price, page, $(window).scrollTop());
   }
 });
 
-
-
-
 // like buttons
-function likeClick(i) {
-  var image = document.getElementById(`like${i}`);
+function likeClick(id) {
+  var image = document.getElementById(`like${id}`);
   if (image.src.match("/images/like.png")) {
     image.src = "/images/like-red.png";
     image.style.animationName = "like_big";
@@ -38,16 +27,6 @@ function likeClick(i) {
   }
 }
 
-//masonry rental vs buy
-function RentalBuy(i) {
-  if ($(`.state${i}`).val() == '렌탈') {
-    $(`.rental${i}`).attr('id', 'state_check');
-    $(`.buy${i}`).attr('id', 'state_uncheck');
-  } else {
-    $(`.rental${i}`).attr('id', 'state_uncheck');
-    $(`.buy${i}`).attr('id', 'state_check');
-  }
-}
 
 // 카테고리 값들을 얻어옴
 function category() {
@@ -107,10 +86,6 @@ function category() {
 }
 
 //서버에 데이터 보내고 받음
-
-var item_len;
-var state_count = 0;
-
 function getData(buy, theme, region, low_price, high_price, page, scroll) {
   $.ajax({
     type: 'post',
@@ -125,16 +100,14 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
       page: page
     },
     success: function(data) {
-      //카테고리 찾기 버튼 눌렀을 때는 html reset
-      if (scroll == 0) {
-        html = "";
-      }
-
       var len = data.length;
       var html = "";
+
+      $('#masonry_container').remove();
+      $('.section2 > .container').append(`<div id="masonry_container" class='masonry' style="margin:0 auto;"></div>`);
+
       //상품이 있을 때 ===================
       if (len != 0) {
-        item_len = 1;
         $('#noneItem').css('display', 'none');
 
         for (var i = 0; i < len; i++) {
@@ -157,18 +130,19 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
                               <div class="paper-content">
                                 <span id="price">${price}원</span>
                                 <span class="paper-state">
-                                  <input class="state${state_count}" style="display:inline" value="${state}"/>
-                                  <span class="rental${state_count}">렌탈</span>
-                                  <span class="buy${state_count}">판매</span>
+                                  <input class="state" style="display:none" value="${state}"/>
+                                  <span class="rental">렌탈</span>
+                                  <span class="buy">판매</span>
                                 </span>
                               </div>
                               <div class="paper-info">
-                                <span id="like"><img id="like${i}" onclick="likeClick(${i})"src="/images/like.png">127</span>
+                                <span class="like"><img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">127</span>
                                 <span id="views"><img src="/images/views.png">302</span>
                               </div>
                             </div>`;
           html += plus;
         }
+
         document.getElementById('masonry_container').innerHTML = html;
 
         // masonry input
@@ -179,23 +153,34 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
             isAnimated: true,
             isFitWidth: true
           });
-        }, 100);
+        }, 300);
+
+        // rental vs buy - css
+        setTimeout(function() {
+          $('.state').each(function(i, e) {
+            if ($(this).val() == '렌탈') {
+              $(this).siblings(`.rental`).attr('id', 'state_check');
+              $(this).siblings(`.buy`).attr('id', 'state_uncheck');
+            } else {
+              $(this).siblings(`.buy`).attr('id', 'state_check');
+              $(this).siblings(`.rental`).attr('id', 'state_uncheck');
+            }
+          });
+        }, 300);
+
       }
       //=========================================
 
 
       // 상품 없을 때 ===================
-      else if (len == 0 && html == "") {
-        item_len = 0;
-        $('#masonry_container').remove();
+      else if (len == 0) {
         $('#noneItem').css('display', 'block');
       }
       //=========================================
 
 
       //상품 클릭하면 상세 페이지로 이동
-      $(".paper").click(function() {
-        item_len = 1;
+      $(".paper-holder").click(function() {
         console.log($(this).attr('id'));
         var postid = $(this).attr('id');
         console.log(postid);
@@ -205,6 +190,7 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
 
   });
 }
+
 function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
   $.ajax({
     type: 'post',
@@ -228,7 +214,6 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
       var html = "";
       //상품이 있을 때 ===================
       if (len != 0) {
-        item_len = 1;
         $('#noneItem').css('display', 'none');
 
         for (var i = 0; i < len; i++) {
@@ -251,20 +236,20 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
                               <div class="paper-content">
                                 <span id="price">${price}원</span>
                                 <span class="paper-state">
-                                  <input class="state${state_count}" style="display:inline" value="${state}"/>
-                                  <span class="rental${state_count}">렌탈</span>
-                                  <span class="buy${state_count}">판매</span>
+                                  <input class="state" style="display:none" value="${state}"/>
+                                  <span class="rental">렌탈</span>
+                                  <span class="buy">판매</span>
                                 </span>
                               </div>
                               <div class="paper-info">
-                                <span id="like"><img id="like${i}" onclick="likeClick(${i})"src="/images/like.png">127</span>
+                                <span class="like"><img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">127</span>
                                 <span id="views"><img src="/images/views.png">302</span>
                               </div>
                             </div>`;
-                            html+=plus;
+          html += plus;
         }
         var $items = $(html);
-        $(`#masonry_container`).append($items).masonry('appended',$items);
+        $(`#masonry_container`).append($items).masonry('appended', $items);
 
         // masonry input
         setTimeout(function() {
@@ -274,22 +259,26 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
             isAnimated: true,
             isFitWidth: true
           });
-        }, 100);
+        }, 300);
+
+        // rental vs buy - css
+        setTimeout(function() {
+          $('.state').each(function(i, e) {
+            if ($(this).val() == '렌탈') {
+              $(this).siblings(`.rental`).attr('id', 'state_check');
+              $(this).siblings(`.buy`).attr('id', 'state_uncheck');
+            } else {
+              $(this).siblings(`.buy`).attr('id', 'state_check');
+              $(this).siblings(`.rental`).attr('id', 'state_uncheck');
+            }
+          });
+        }, 300);
       }
       //=========================================
 
-
-      // 상품 없을 때 ===================
-      else if (len == 0 && html == "") {
-        item_len = 0;
-        $('#masonry_container').remove();
-        $('#noneItem').css('display', 'block');
-      }
-      //=========================================
 
       //상품 클릭하면 상세 페이지로 이동
-      $(".paper").click(function() {
-        item_len = 1;
+      $(".paper-holder").click(function() {
         console.log($(this).attr('id'));
         var postid = $(this).attr('id');
         console.log(postid);
@@ -299,11 +288,13 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
 
   });
 }
+
 // init 작업
 getData('ALL', 'ALL', 'ALL', 'ALL', 'ALL', 0, 0);
 
-//클릭시 카테고리 값 얻고, 서버 통신
+//카테고리 찾기 클릭시 카테고리 값 얻고, 서버 통신
 $('#find').click(function() {
+  //$('#masonry_container').masonry( 'remove', $('.paper') );
   page = 0;
   var cateObj = category();
   getData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price, 0, 0);
@@ -326,7 +317,7 @@ $("#reset").click(function() {
 });
 
 
-//top buttons
+//top buttons ======================================
 $(".top").click(function() {
   $('html').animate({
     scrollTop: 0
@@ -335,10 +326,10 @@ $(".top").click(function() {
 
 $(window).scroll(function() {
   if ($(this).scrollTop() > 500) {
-    $('.top').css("bottom", "20px");
+    $('.top').css("bottom", "30px");
     $('.top').css("transition-duration", "0.5s");
   } else {
-    $('.top').css("bottom", "-45px");
+    $('.top').css("bottom", "-70px");
   }
 });
 
@@ -346,9 +337,10 @@ $('.top').find('img').hover(function() {
   $('#top_img').attr("src", "/images/top2.png");
 
   $('.top').find('img').css("animationName", "top_big");
-  $('.top').find('img').css("animationDuration", "0.4s");
+  $('.top').find('img').css("animationDuration", "0.6s");
   $('.top').find('img').css("animationTimingFunction", "linear");
 }, function() {
   $('#top_img').attr("src", "/images/top.png");
   $('.top').find('img').css("animation", "");
 });
+//=================================================================
