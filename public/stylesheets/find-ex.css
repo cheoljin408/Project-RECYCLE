@@ -165,6 +165,45 @@
   border: none;
 }
 
+/*message*/
+.msg {
+  width:280px;
+  border:1px solid rgba(0,0,0,0.2);
+  /* display:flex;
+  bottom:40px; */
+  padding:10px 10px;
+
+  z-index: 1000;
+  position: fixed;
+  bottom: -45px;
+  right: 15px;
+}
+
+.to {
+  margin-top:3px;
+}
+
+.userID {
+  margin-left:10px;
+  /* padding:3px 20px;
+  border:1px solid #7fcacb;
+  border-radius:20px;
+  background-color: #7fcacb;
+  color:white; */
+}
+
+textarea.form-control {
+  width:260px;
+  height:260px;
+}
+
+.btn-primary {
+  margin-left:200px;
+  margin-top:10px;
+  background-color: #7fcacb;
+  border-color:#7fcacb;
+}
+
 /* footer */
 footer {
   background-color: #7fcacb;

@@ -413,6 +413,36 @@ router.post('/getTime', (req, res) => {
   });
 });
 
+//메시지 보내기
+router.post('/send_msg', (req, res) => {
+  var fromID = req.session.userID;
+  var toID = req.body.toID;
+  var msg = req.body.msgText;
+
+  var date = new Date();
+
+  var yyyy = date.getFullYear();
+  var mm = date.getMonth() + 1;
+  var dd = date.getDate();
+
+  var today = `${yyyy}-${mm}-${dd}`;
+
+  var sql = `insert into notes(recv_id, sent_id, note, date_sent) values ('${toID}', '${fromID}', '${msg}', '${today}')`;
+  console.log(sql);
+
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log('success!');
+      res.send('success!');
+    }
+  })
+});
+
 
 // router.post('/register', (req, res) => {
 
