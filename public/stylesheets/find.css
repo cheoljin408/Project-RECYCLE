@@ -88,7 +88,7 @@ ul, li {
 
 .row {
   margin: 0;
-  padding: 17px 30px;
+  padding: 20px 30px;
   height: 25%;
   border-top: 0.8px #ddd solid;
   border-right: 0.8px #ddd solid;
@@ -118,9 +118,9 @@ ul, li {
 
 .row button {
   display: inline;
-  height: 48px;
-  padding-left: 10px;
-  padding-right: 10px;
+  height: 55px;
+  padding-left: 15px;
+  padding-right: 15px;
   margin-right: 16px;
   background-color: white;
   border: 1px #d7dede solid;
@@ -144,6 +144,12 @@ ul, li {
   width: 32px;
   height: 32px;
 }
+#reset {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  margin-left: 17px;
+}
 
 .form-control {
   text-align: center;
@@ -157,6 +163,12 @@ ul, li {
 }
 
 /* 렌탈 vs 판매 버튼 */
+.btn {
+  cursor: pointer;
+  font-size: 1rem;
+  height: 55px;
+  line-height: 2.5;
+}
 .btn-secondary:not(:disabled):not(.disabled).active,
 .btn-secondary:not(:disabled):not(.disabled):active,
 .show>.btn-secondary.dropdown-toggle {
@@ -178,7 +190,35 @@ ul, li {
 .btn-secondary:focus {
   box-shadow: 0 0 0 0.2rem rgba(151, 231, 232, .5);
 }
+.rental{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-right: -3px;
+}
+.buy{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+#state_check{
+  border-style:solid;
+  border-color: #7fcacb;
+  border-width:0.5px;
 
+  background-color:#7fcacb;
+  color:white;
+  padding:5.5px;
+  font-size: 12px;
+
+}
+#state_uncheck{
+  border-style:solid;
+  border-color:#7fcacb;
+  border-width:0.5px;
+  background-color:white;
+  color:#7fcacb;
+  padding:5.5px;
+  font-size: 12px;
+}
 /* section1 - tag */
 .slide {
   overflow: hidden;
@@ -232,7 +272,7 @@ ul, li {
   color: white;
   border-radius: 30px;
   width: 150px;
-  height: 55px;
+  height: 65px;
   border: 1.3px solid #7fcacb;
   background-color: #7fcacb;
 }
@@ -240,7 +280,7 @@ ul, li {
 .tag_button {
   position: absolute;
   right: 15px;
-  top: 30px
+  top: 43px
 }
 
 .tag_button img {
@@ -253,6 +293,7 @@ ul, li {
 .section2 {
   background-color: #f4f4f4;
   margin: 0;
+  padding-top: 50px;
   padding-bottom: 50px;
   width: 100%;
 }
@@ -276,7 +317,6 @@ ul, li {
 
 /* 섹션 2 - 종이 스타일 */
 .paper {
-  cursor: pointer;
   width: 265px;
   margin-top: 10px;
   padding: 15px 20px 0;
@@ -284,7 +324,9 @@ ul, li {
   background: #FFFFFF;
   box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
 }
-
+.paper-holder{
+  cursor: pointer;
+}
 .paper-description {
   margin: 10px 0;
   text-align: left;
@@ -306,7 +348,7 @@ ul, li {
 .paper-info{
   border-top: solid 0.5px #ddd;
   padding: 8px;
-  height: 35px;
+  height: 37px;
 }
 #title {
   font-weight: 700;
@@ -324,39 +366,26 @@ ul, li {
 #state {
   display: none;
 }
-#like{
+.like{
   float:left;
+  cursor: pointer;
+  font-size: 13px;
 }
-#like img{
+.like img{
   margin-right: 7px;
   width: 15px;
   height: 15px;
 }
 #views{
   float:right;
+  font-size: 13px;
 }
 #views img{
   margin-right: 7px;
   width: 24px;
   height: 15px;
 }
-.state1 {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  font-size: 12px;
-  padding: 5px;
-  cursor: pointer;
-  margin-right: -2px;
-}
 
-.state2 {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  font-size: 12px;
-  padding: 5px;
-  margin-left: -2px;
-  cursor: pointer;
-}
 @keyframes like_big {
   0% {
     width: 15px;
@@ -382,6 +411,12 @@ ul, li {
     width: 15px;
     height: 15px;
   }
+}
+
+#noneItem{
+  height: 150px;
+  text-align: center;
+  display: none;
 }
 .innerLoading{
   text-align: center;
@@ -477,36 +512,36 @@ footer {
   cursor: pointer;
   z-index: 1000;
   position: fixed;
-  bottom: -45px;
-  right: 15px;
+  bottom: -70px;
+  right: 25px;
 }
 .top img{
-  width:45px;
-  height: 45px;
+  width:60px;
+  height: 60px;
 }
 @keyframes top_big {
   0% {
-    width: 45px;
-    height: 45px;
+    width: 60px;
+    height: 60px;
   }
 
   25% {
-    width: 46px;
-    height: 46px;
+    width: 61px;
+    height: 61px;
   }
 
   50% {
-    width: 48px;
-    height: 48px;
+    width: 63px;
+    height: 63px;
   }
 
   75% {
-    width: 46px;
-    height: 46px;
+    width: 61px;
+    height: 61px;
   }
 
   100% {
-    width: 45px;
-    height: 45px;
+    width: 60px;
+    height: 60px;
   }
 }
