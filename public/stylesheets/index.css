@@ -191,7 +191,7 @@ button {
   padding-left: 0.42%;
 }
 
-#artwork_list_1>a .artwork_list_block {
+#artwork_list_1>.artwork_list_block {
   width: 49.15%;
 }
 

@@ -3,6 +3,7 @@ var multer = require('multer');
 var path = require('path');
 var router = express.Router();
 var mysql = require('mysql');
+
 //multer setting
 var upload = multer({
   storage: multer.diskStorage({
@@ -33,25 +34,24 @@ con.connect(function(err) {
 });
 
 //session check
-router.post('/sessionchecker', function (req, res){
+router.post('/sessionchecker', function(req, res) {
   //console.log('sessioncheck POST:::::::::::');
   //console.log(req.session);
-  if (req.session.userID){
+  if (req.session.userID) {
     console.log(req.session.userID);
     res.send(true);
-  }
-  else {
+  } else {
     res.send(false);
     console.log(req.session.userID);
   }
 });
 
-router.post('/userID', function (req, res){
+router.post('/userID', function(req, res) {
   res.send(req.session);
 });
 
 //login
-router.post('/auth', function (req, res){
+router.post('/auth', function(req, res) {
   var userID = req.body.userID;
   var userPW = req.body.userPW;
   var sql = `SELECT password FROM member WHERE id = '${userID}'`;
@@ -59,19 +59,16 @@ router.post('/auth', function (req, res){
   //console.log('login post');
   //console.log('**********************************');
 
-  con.query(sql, function(err, result, fields){
+  con.query(sql, function(err, result, fields) {
 
-    if (err){
+    if (err) {
       console.log(err);
       throw err;
-    }
-
-    else if (!result[0]) { // id 존재 X
+    } else if (!result[0]) { // id 존재 X
       res.send('ID');
-    }
-    else {
+    } else {
       //console.log(result[0]['password']);
-      if (result[0]['password'] === userPW){
+      if (result[0]['password'] === userPW) {
         res.send('OK');
       } else {
         res.send('PW');
@@ -80,14 +77,14 @@ router.post('/auth', function (req, res){
   });
 });
 
-router.post('/login', function(req, res){
+router.post('/login', function(req, res) {
   var userID = req.body.userID;
   var userEmail = 'default';
   var userPhone = 'default';
   var sql = `SELECT * FROM member WHERE id = '${userID}'`;
 
-  con.query(sql, function(err, result, fields){
-    if (err){
+  con.query(sql, function(err, result, fields) {
+    if (err) {
       console.log(err);
       throw err;
     } else {
@@ -105,8 +102,21 @@ router.get('/', function(req, res) {
   res.render('index');
 });
 
+/* POST home page. */
+router.post('/', function(req, res) {
+  var sql = `select * from article where time BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW() order by article_like desc limit 0 , 10`;
+
+  con.query(sql, function(err, result, fields) {
+    if (err) {
+      throw err;
+    }
+    res.send(result);
+  });
+});
+
+
 /* GET register page. */
-router.get('/register', function (req, res) {
+router.get('/register', function(req, res) {
   res.render('register');
 });
 
@@ -116,16 +126,18 @@ router.get('/find', function(req, res) {
 });
 
 /* GET find-ex page. */
-router.get('/find-ex', function (req, res) {
+router.get('/find-ex', function(req, res) {
   console.log(req.query.id);
   var sql = `select * from article where id=${req.query.id}`;
 
   con.query(sql, function(err, result, fields) {
-    if(err) {
+    if (err) {
       throw err;
     }
     console.log(result[0]);
-    res.render('find-ex', {data: result[0]});
+    res.render('find-ex', {
+      data: result[0]
+    });
   });
 
 });
@@ -145,40 +157,37 @@ router.post('/find', function(req, res) {
   if (req.body.buy != 'ALL') {
     sql += `and (state like '${req.body.buy}') `;
   }
-  if (req.body.low_price != 'ALL' && req.body.high_price != 'ALL' ) {
+  if (req.body.low_price != 'ALL' && req.body.high_price != 'ALL') {
     sql += `and (price >= '${req.body.low_price}' and price <= '${req.body.high_price}') `;
   }
 
   // 테마 여러개 선택 가능
   if (req.body.theme != 'ALL') {
     // 테마 1개 선택 했을 때
-    if(req.body.theme.length == 1){
+    if (req.body.theme.length == 1) {
       sql += `and (category like '${req.body.theme[0]}') `;
     }
     // 테마 여러개 선택 했을 때
     else {
       sql += `and (category like '${req.body.theme[0]}' `;
-      for(var i=1; i<req.body.theme.length; i++)
-      {
+      for (var i = 1; i < req.body.theme.length; i++) {
         sql += `or category like '${req.body.theme[i]}') `;
       }
     }
   }
   // 지역 여러개 선택가능
   if (req.body.region != 'ALL') {
-    if(req.body.region.length == 1){
+    if (req.body.region.length == 1) {
       sql += `and (local like '${req.body.region[0]}') `;
-    }
-    else{
+    } else {
       sql += `and (local like '${req.body.region[0]}' `;
-      for(var i=1; i<req.body.region.length; i++)
-      {
+      for (var i = 1; i < req.body.region.length; i++) {
         sql += `or local like '${req.body.region[i]}') `;
       }
     }
 
   }
-  sql+= `limit ${req.body.page}, 10`;
+  sql += `limit ${req.body.page}, 10`;
 
   console.log(sql);
   con.query(sql, function(err, result, fields) {
@@ -200,21 +209,21 @@ router.get('/signup', function(req, res) {
 });
 
 /* GET mypage page. */
-router.get('/mypage', function(req, res){
+router.get('/mypage', function(req, res) {
   res.render('mypage');
 });
 
 /* GET profileEdit page. */
-router.get('/profile/edit', function(req, res){
+router.get('/profile/edit', function(req, res) {
   res.render('profileEdit');
 })
 
 /* GET passwordChange page */
-router.get('/profile/password/change', function(req, res){
+router.get('/profile/password/change', function(req, res) {
   res.render('pwChange');
 })
 
-router.post('/upload', upload.single('userFile'), function(req, res){
+router.post('/upload', upload.single('userFile'), function(req, res) {
   //res.send('Uploaded! : '+req.file); // object를 리턴함
   console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
   var postId = req.body.postId;
@@ -246,12 +255,12 @@ router.post('/info', (req, res) => {
 
   var today = new Date();
   var dd = today.getDate();
-  var mm = today.getMonth()+1;
+  var mm = today.getMonth() + 1;
   var yyyy = today.getFullYear();
 
-  var ymd = yyyy+'-'+mm+'-'+dd;
+  var ymd = yyyy + '-' + mm + '-' + dd;
 
-  var sql =`update article set category = '${category}', local = '${local}', state = '${state}', title = '${title}', user = '${req.session.userID}', price = ${price}, description = '${description}', time = '${ymd}' where id = ${postId}`;
+  var sql = `update article set category = '${category}', local = '${local}', state = '${state}', title = '${title}', user = '${req.session.userID}', price = ${price}, description = '${description}', time = '${ymd}' where id = ${postId}`;
 
   console.log(sql);
 
@@ -274,18 +283,16 @@ router.post('/insertHashtag', (req, res) => {
 
   var tags = ['null', 'null', 'null', 'null', 'null'];
 
-  for(var i=0; i<tagarr.length; i++)
-  {
+  for (var i = 0; i < tagarr.length; i++) {
     tags[i] = tagarr[i];
   }
 
   var sql = `insert into hashtag (postid, tag1, tag2, tag3, tag4, tag5) values (${postid}, '${tags[0]}', '${tags[1]}', '${tags[2]}', '${tags[3]}', '${tags[4]}')`;
 
-  con.query(sql, function (err, result) {
+  con.query(sql, function(err, result) {
     if (err) {
       throw err;
-    }
-    else {
+    } else {
       console.log('tag record inserted');
     }
   });
@@ -300,16 +307,13 @@ router.post('/signup', (req, res) => {
   var sql = `insert into member (id, password, email, phoneNum) values ('${id}', '${pw}', '${email}', '${phoneNum}')`;
 
   con.query(sql, function(err, result) {
-    if(err)
-    {
+    if (err) {
       console.log(err);
       if (err.code = "ER_DUP_ENTRY") {
         res.send("<script>alert('아이디가 중복됩니다.');</script>");
         res.redirect('/signup');
       }
-    }
-    else
-    {
+    } else {
       res.redirect('/');
     }
   });
@@ -325,19 +329,16 @@ router.post('/idcheck', (req, res) => {
   console.log(userid);
 
   con.query(sql, function(err, result) {
-    if(err)
-    {
+    if (err) {
       throw err;
-    }
-    else
-    {
+    } else {
       console.log(result);
       res.send(result);
     }
   });
 });
 
-router.post('/profile/edit', function(req, res){
+router.post('/profile/edit', function(req, res) {
   var id = req.body.userID;
   var email = req.body.userEmail;
   var phone = req.body.userPhone;
@@ -345,8 +346,8 @@ router.post('/profile/edit', function(req, res){
 
   var sql = `UPDATE member SET email = '${email}', phoneNum = '${phone}' WHERE id= '${id}'`;
 
-  con.query(sql, function(err, result){
-    if(err){
+  con.query(sql, function(err, result) {
+    if (err) {
       throw err;
     } else {
       //console.log('changed!!');
@@ -358,16 +359,16 @@ router.post('/profile/edit', function(req, res){
   })
 });
 
-router.post('/profile/password/change', function(req, res){
+router.post('/profile/password/change', function(req, res) {
   var id = req.body.userID;
   var pw = req.body.newPW;
 
   var sql = `UPDATE member SET password = '${pw}' WHERE id = '${id}'`;
 
-  con.query(sql, function(err, result){
-    if (err){
+  con.query(sql, function(err, result) {
+    if (err) {
       throw err;
-    } else  {
+    } else {
       //console.log('changed!!');
       res.redirect('/mypage');
     }
@@ -381,12 +382,9 @@ router.post('/getHashtag', (req, res) => {
 
   console.log(sql);
   con.query(sql, function(err, result) {
-    if(err)
-    {
+    if (err) {
       throw err;
-    }
-    else
-    {
+    } else {
       console.log(result[0]);
       res.send(result[0]);
     }
@@ -400,12 +398,9 @@ router.post('/getTime', (req, res) => {
 
   console.log(sql);
   con.query(sql, function(err, result) {
-    if(err)
-    {
+    if (err) {
       throw err;
-    }
-    else
-    {
+    } else {
       console.log(result[0]);
       res.send(result[0]);
     }

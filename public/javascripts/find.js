@@ -119,8 +119,11 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
           var user = data[i]['user'];
           var price = data[i]['price'];
           var img = data[i]['img'];
-          var plus = `<div class="paper" id="${id}">
-                              <div class="paper-holder">
+          var like = data[i]['article_like'];
+          var view = data[i]['article_view'];
+
+          var plus = `<div class="paper" >
+                              <div class="paper-holder" id="${id}">
                                 <a><img width="225" src="${img}" /></a>
                               </div>
                               <div class="paper-description">
@@ -136,8 +139,8 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
                                 </span>
                               </div>
                               <div class="paper-info">
-                                <span class="like"><img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">127</span>
-                                <span id="views"><img src="/images/views.png">302</span>
+                                <span class="like"><img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">${like}</span>
+                                <span id="views"><img src="/images/views.png">${view}</span>
                               </div>
                             </div>`;
           html += plus;
@@ -225,6 +228,9 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
           var user = data[i]['user'];
           var price = data[i]['price'];
           var img = data[i]['img'];
+          var like = data[i]['article_like'];
+          var view = data[i]['article_view'];
+
           var plus = `<div class="paper" id="${id}">
                               <div class="paper-holder">
                                 <a><img width="225" src="${img}" /></a>
@@ -242,8 +248,8 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
                                 </span>
                               </div>
                               <div class="paper-info">
-                                <span class="like"><img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">127</span>
-                                <span id="views"><img src="/images/views.png">302</span>
+                                <span class="like"><img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">${like}</span>
+                                <span id="views"><img src="/images/views.png">${view}</span>
                               </div>
                             </div>`;
           html += plus;
