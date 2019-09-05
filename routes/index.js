@@ -119,6 +119,14 @@ router.get('/find', function(req, res) {
 router.get('/find-ex', function (req, res) {
   console.log(req.query.id);
   var sql = `select * from article where id=${req.query.id}`;
+  var sql2 = `update article set article_view=article_view+1 where id=${req.query.id}`;
+
+  con.query(sql2, function(err, result, fields) {
+    if(err)
+    {
+      throw err;
+    }
+  });
 
   con.query(sql, function(err, result, fields) {
     if(err) {
