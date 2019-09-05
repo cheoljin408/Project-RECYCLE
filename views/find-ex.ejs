@@ -88,7 +88,7 @@
                             <span>|</span>
                         </div>
                         <div>
-                            <span>조회 123</span>
+                            <span>조회 <%= data.article_view %></span>
                         </div>
                     </div>
                 </div>
@@ -110,6 +110,23 @@
             </div>
         </div>
     </div>
+
+    <!--메시지 보내기-->
+    <div class="input-group msg">
+        <form method="POST" action="/send_msg">
+            <h6>메시지 보내기</h6>
+            <div style="display: flex">
+                <label class="to">받는사람</label>
+                <label class="userID">@<%= data.user %></label>
+                <!-- <input type="hidden" name="toID" value="<%= data.user %>"> -->
+            </div>
+            <textarea class="form-control" name="msg_text"></textarea>
+            <div class="btn-group btn-group-sm">
+                <input type="button" id="send" class="btn btn-primary msg_send" value="보내기">
+            </div>
+        </form>
+    </div>
+
 
     <!--modal-->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -152,6 +169,21 @@
             </div>
         </div>
     </div>
+
+    <!-- <div class="input-group msg">
+        <form>
+            <h6>메시지 보내기</h6>
+            <div style="display: flex">
+                <label class="to">받는사람</label>
+                <label class="userID">@<%= data.user %></label>
+            </div>
+            <textarea class="form-control"></textarea class="msg_text">
+            <div class="btn-group btn-group-sm">
+                <input class="btn btn-primary msg_send" type="button" value="보내기">
+            </div>
+        </form>
+    </div> -->
+
     <footer>
         <div class="container">
             <div class="footer-text">
@@ -163,7 +195,7 @@
 </body>
 
 <!-- Load  find.js -->
-<script src="/javascripts/find.js"></script>
+<!-- <script src="/javascripts/find.js"></script> -->
 
 <script>
     function resetModal() {
@@ -232,15 +264,12 @@
             if (!data) {
                 console.log(data);
             }
-            else
-            {
+            else {
                 for (var i = 1; i < 6; i++) {
-                    if (eval("data.tag" + i) == "null")
-                    {
+                    if (eval("data.tag" + i) == "null") {
                         break;
                     }
-                    else
-                    {
+                    else {
                         plus += `<button>#${eval('data.tag' + i)}</button>`;
                     }
                 }
@@ -256,13 +285,38 @@
         data: {
             postid: postid
         },
-        success: function(data) {
+        success: function (data) {
             console.log(data);
             console.log(data['time']);
 
             var date = data['time'].substring(0, 10);
-            
+
             document.getElementById('postDate').innerHTML = date;
+        }
+    });
+
+    $('#send').click(function () {
+        var toID = $('.userID')[0]['innerText'].substring(1);
+        console.log(toID);
+        $.ajax({
+            type: 'POST',
+            url: '/send_msg',
+            data: {
+                toID: toID,
+                msgText: $('textarea[name="msg_text"]').val()
+            },
+            success: function (data) {
+                alert(data);
+            }
+        });
+    });
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 50) {
+            $('.msg').css("bottom", "40px");
+            $('.msg').css("transition-duration", "1s");
+        } else {
+            $('.msg').css("bottom", "-500px");
         }
     });
 
