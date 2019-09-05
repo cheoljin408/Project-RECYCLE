@@ -55,8 +55,6 @@ $.ajax({
     }
     document.getElementById('artwork_list_2').innerHTML = html2;
     document.getElementById('artwork_list_1').innerHTML = html1;
-    document.getElementById('artwork_list_1').innerHTML = html1;
-    document.getElementById('artwork_list_2').innerHTML = html2;
     //상품 클릭하면 상세 페이지로 이동
     $(".artwork_list_block").click(function() {
       console.log($(this).attr('id'));
