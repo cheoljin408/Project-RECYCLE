@@ -445,6 +445,56 @@ router.post('/send_msg', (req, res) => {
   })
 });
 
+//좋아요 더하기
+
+router.post('/like_plus', (req, res) => {
+  var postID = req.body.postID;
+
+  var sql = `update article set article_like = article_like+1 WHERE id = ${postID}`;
+  var sql2 = `select article_like from article where id = ${postID}`;
+
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log('like plus');
+    }
+  });
+  con.query(sql2, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result);
+      res.send(result);
+    }
+  });
+});
+
+//좋아요 빼기
+
+router.post('/like_minus', (req, res) => {
+  var postID = req.body.postID;
+
+  var sql = `update article set article_like = article_like-1 WHERE id = ${postID}`;
+
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log('like minus');
+    }
+  });
+});
+
 
 // router.post('/register', (req, res) => {
 
