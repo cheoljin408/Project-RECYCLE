@@ -231,8 +231,8 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
           var like = data[i]['article_like'];
           var view = data[i]['article_view'];
 
-          var plus = `<div class="paper" id="${id}">
-                              <div class="paper-holder">
+          var plus = `<div class="paper">
+                              <div class="paper-holder" id="${id}">
                                 <a><img width="225" src="${img}" /></a>
                               </div>
                               <div class="paper-description">

@@ -4,8 +4,6 @@
   font-family: 'Noto Sans KR', sans-serif;
 }
 
-
-
 body {
   font-size: 28px;
 }
@@ -15,13 +13,15 @@ a {
   text-decoration: none;
   color: inherit;
 }
-a:hover{
-  color : none!important;
-  text-decoration:none!important;
+
+a:hover {
+  color: none !important;
+  text-decoration: none !important;
 }
-button{
-  border:0!important;
-  outline:0!important;
+
+button {
+  border: 0 !important;
+  outline: 0 !important;
 }
 
 /* 메뉴 바 */
@@ -50,11 +50,12 @@ button{
   float: left;
   font-size: 20px;
   font-weight: 500;
+}
 
+.nav-list a {
+  padding: 15px;
 }
-.nav-list a{
-  padding : 15px;
-}
+
 #navbar a {
   float: left;
   display: block;
@@ -67,19 +68,19 @@ button{
   font-weight: 700;
   color: black;
 }
-.log_png{
-  float:right;
+
+.log_png {
+  float: right;
   display: inline;
   padding-right: 35px;
   line-height: 60px;
 }
-.log_png img{
+
+.log_png img {
   width: 32px;
   height: 32px;
   margin-right: 18px;
 }
-
-
 
 /* 헤더 */
 .header {
@@ -139,7 +140,7 @@ button {
   border: 0px;
   font-size: 15px;
   color: white;
-  outline: 0 ;
+  outline: 0;
 }
 
 #btn1 {
@@ -153,8 +154,8 @@ button {
 /* 섹션 1 */
 .section1 {
   margin: 0 auto;
-  height: 730px;
   padding-top: 50px;
+  padding-bottom: 50px;
   background-color: #e6e6e6;
   text-align: center;
 }
@@ -171,6 +172,7 @@ button {
 }
 
 .artwork {
+  cursor: pointer;
   width: 80%;
   margin: 0 auto;
   /* display: grid;
@@ -182,13 +184,15 @@ button {
   display: inline-block;
   width: 49.58%;
   padding-right: 0.42%;
+    padding-bottom: 25px;
 }
 
 #artwork_list_2 {
   vertical-align: top;
   display: inline-block;
   width: 49.58%;
-  padding-left: 0.42%;
+  padding-right: 0.42%;
+    padding-bottom: 25px;
 }
 
 #artwork_list_1>.artwork_list_block {
@@ -207,60 +211,80 @@ button {
   max-width: 100%;
   vertical-align: top;
 }
-.artwork_list_mask{
+
+.artwork_list_mask {
   display: none;
   background: rgba(0, 0, 0, 0.4);
-  color : white;
+  color: white;
   width: 100%;
   height: 100%;
-  padding-top: 20%;
   transition: all ease 0.4s;
 }
-.artwork_list_mask h4{
+
+.artwork_list_mask_block {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.artwork_list_mask_block h4 {
+  margin: 0 auto;
+  width: 65%;
+  font-size: 18px;
   font-weight: 900;
 }
-.artwork_list_mask span{
-  font-size: 20px;
+
+.artwork_list_mask_block span {
+  font-size: 15px;
 }
-.artwork_list_block:hover .artwork_list_mask{
-  display: block;
+
+.artwork_list_block:hover .artwork_list_mask {
+  display: table;
   position: absolute;
-  top : 0;
+  top: 0;
   transition: all ease 0.4s;
 }
 
-.artwork-button{
-  padding-top : 30px;
+.artwork-button {
+  padding-top: 30px;
 }
-
-
+.artwork-button button{
+  font-size: 18px;
+}
+#relocation{
+  display: none;
+}
 /* 섹션 2 */
 .section2 {
   height: 700px;
-  color : white;
+  color: white;
 }
-.cover{
-  width:100%;
+
+.cover {
+  width: 100%;
   height: 500px;
   background-image: url("/images/cover.png");
   background-size: cover;
 }
-.service_text{
-  padding-top : 80px;
-  padding-left : 300px;
+
+.service_text {
+  padding-top: 80px;
+  padding-left: 300px;
 }
+
 .service_text h6 {
   padding-top: 10px;
   font-size: 24px;
   font-weight: 300;
 }
-.service_rect{
+
+.service_rect {
   padding-top: 60px;
   display: flex;
 }
-.rect{
+
+.rect {
   margin-right: 20px;
-  background-color:#9da3a3;
+  background-color: #9da3a3;
   width: 220px;
   height: 220px;
   cursor: pointer;
@@ -269,31 +293,37 @@ button {
   padding-right: 20px;
   transition: 0.5s;
 }
-.rect:hover{
-  background-color:#7fcacb;
+
+.rect:hover {
+  background-color: #7fcacb;
   transform: scale(1.04);
 }
-.rect img{
+
+.rect img {
   float: right;
   width: 60px;
-  height:60px;
+  height: 60px;
 }
-.rect_mask{
+
+.rect_mask {
   float: left;
   padding-top: 20px;
 }
-#rect_title{
-  color : white;
+
+#rect_title {
+  color: white;
   transition: 0.5s;
 }
-#rect_content{
-  color : #9da3a3;
+
+#rect_content {
+  color: #9da3a3;
   transition: 0.5s;
   font-size: 15px;
   top: 0px;
 }
-.rect:hover #rect_content{
-  color : white;
+
+.rect:hover #rect_content {
+  color: white;
 }
 
 /*modal*/
@@ -331,8 +361,8 @@ button {
 }
 
 #loginModalBtn {
-  background-color:#94e9eb;
-  border-color:#94e9eb;
+  background-color: #94e9eb;
+  border-color: #94e9eb;
 }
 
 .btn-link:hover {
@@ -350,23 +380,24 @@ button {
   border: none;
 }
 
-
-
 /* footer */
 footer {
   background-color: #7fcacb;
   height: 30vh;
   line-height: 30vh;
 }
-.footer-text{
+
+.footer-text {
   text-align: center;
 }
-.footer-text h4{
+
+.footer-text h4 {
   display: inline;
   font-size: 50px;
-  color : white;
+  color: white;
   vertical-align: middle;
 }
-#footer_logo img{
-  width:300px;
+
+#footer_logo img {
+  width: 300px;
 }
