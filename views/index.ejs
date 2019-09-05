@@ -26,16 +26,16 @@
 
 <!--session check-->
 <script>
-  $.post('/sessionchecker', function(data) {
-    if (data) { // session 있을 때
-      $('.session-true').show();
-      $('.session-false').hide();
-    } else { // session 없을 때
-      $('.session-true').hide();
-      $('.session-false').show();
-    }
-  })
-</script>
+    $.post('/sessionchecker', function(data){
+      if (data){ // session 있을 때
+        $('.session-true').show();
+        $('.session-false').hide();
+      } else { // session 없을 때
+        $('.session-true').hide();
+        $('.session-false').show();
+      }
+    })
+  </script>
 
 <body>
   <div id="navbar">
@@ -43,19 +43,19 @@
       <img src="/images/logo2.png" />
     </div>
     <div class="nav-list" style="cursor:pointer;">
-      <a href="/">Home
-        <a href="/find">작품 보기
-          <a href="/register" class="session-true">작품 등록하기
-            <a class="session-false" data-toggle="modal" data-target="#loginModal" onclick="resetModa()">작품 등록하기
+      <a href="/">Home</a>
+      <a href="/find">작품 보기</a>
+      <a href="/register" class="session-true">작품 등록하기</a>
+      <a class="session-false" data-toggle="modal" data-target="#loginModal" onclick="resetModa()">작품 등록하기</a>
     </div>
     <div class="log_png" style="cursor: pointer;">
-      <div class="session-true">
-        <img src="/images/cart.png" />
-        <img src="/images/find.png" />
-        <a href="/mypage"><img src="/images/profile.png" />
+        <div class="session-true">
+          <a href="#"><img src="/images/cart.png" /></a>
+          <a href="#"><img src="/images/find.png" /></a>
+          <a href="/mypage"><img src="/images/profile.png" /></a>
+        </div>
+        <a class="session-false" style="font-size:20px; font-weight: 700;" data-toggle="modal" data-target="#loginModal" onclick="resetModal()">로그인</a>
       </div>
-      <a class="session-false" style="font-size:20px; font-weight: 700;" data-toggle="modal" data-target="#loginModal" onclick="resetModal()">로그인
-    </div>
   </div>
 
   <div class="header">
@@ -76,9 +76,9 @@
       </div>
 
       <div class="header-button">
-        <a href="/find"><button id="btn1">작품 보기</button>
-          <a href="/register" class="session-true"><button id="btn2">작품 등록</button>
-            <a class="session-false" data-toggle="modal" data-target="#loginModal" onclick="resetModal()"><button id="btn2">작품 등록</button>
+        <a href="/find"><button id="btn1">작품 보기</button></a>
+        <a href="/register" class="session-true"><button id="btn2">작품 등록</button></a>
+        <a class="session-false" data-toggle="modal" data-target="#loginModal" onclick="resetModal()"><button id="btn2">작품 등록</button></a>
       </div>
     </div>
 
@@ -100,7 +100,11 @@
         </div>
       </div>
       <div class="artwork-button">
-        <button>더 보기</button>
+        <button id="more">더 보기</button>
+      </div>
+
+      <div class="artwork-button">
+        <button style="width:165px;" id="relocation">더 많은 작품 보기</button>
       </div>
     </div>
   </div>
@@ -160,43 +164,43 @@
 
   </div>
 
-  <!--modal-->
-  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-width" role="document">
-      <div class="modal-content" id="loginModalContent">
-        <div class="modal-header modal-border-none">
-          <div style="width:100%;" class="text-center">
-            <img src="/images/logo2.png" id="loginModalIMG">
-            <h5 class="modal-title" id="loginModalTitle">작품 재활용 시작하기</h5>
-          </div>
-        </div>
-        <div class="modal-body" id="loginModalBody">
-          <!--form-->
-          <form id="loginModalForm" action="/login" method="post">
-            <div class="form-group modal-input-space">
-              <input type="text" name="userID" class="form-control" id="loginModalIDInput" placeholder="아이디">
+    <!--modal-->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-width" role="document">
+          <div class="modal-content" id="loginModalContent">
+            <div class="modal-header modal-border-none">
+              <div style="width:100%;" class="text-center">
+                <img src="/images/logo2.png" id="loginModalIMG">
+                <h5 class="modal-title" id="loginModalTitle">작품 재활용 시작하기</h5>
+              </div>
             </div>
-            <div class="form-group modal-input-space">
-              <input type="text" name="userPW" class="form-control" id="loginModalPWInput" placeholder="비밀번호">
+            <div class="modal-body" id="loginModalBody">
+              <!--form-->
+              <form id="loginModalForm" action="/login" method="post">
+                <div class="form-group modal-input-space">
+                  <input type="text" name="userID" class="form-control" id="loginModalIDInput" placeholder="아이디">
+                </div>
+                <div class="form-group modal-input-space">
+                  <input type="text" name="userPW" class="form-control" id="loginModalPWInput" placeholder="비밀번호">
+                </div>
+                <div class="wrong-ID login-error">존재하지 않는 아이디입니다</div>
+                <div class="wrong-PW login-error">잘못된 비밀번호입니다</div>
+                <button type="button" onclick="loginCheck()" id="loginModalBtn" class="btn btn-block btn-primary font-weight-bold" style="margin-top: 0.5rem">이용하기</button>
+                <div style="width:100%;" class="text-center">
+                  <button type="button" id="findPWBtn" class="btn btn-link btn-sm">비밀번호 찾기</button>
+                </div>
+                </button>
+              </form>
             </div>
-            <div class="wrong-ID login-error">존재하지 않는 아이디입니다</div>
-            <div class="wrong-PW login-error">잘못된 비밀번호입니다</div>
-            <button type="button" onclick="loginCheck()" id="loginModalBtn" class="btn btn-block btn-primary font-weight-bold" style="margin-top: 0.5rem">이용하기</button>
-            <div style="width:100%;" class="text-center">
-              <button type="button" id="findPWBtn" class="btn btn-link btn-sm">비밀번호 찾기</button>
+            <div class="modal-footer" style="border-color:rgba(148, 233, 235, 0.5);">
+              <div style="width:100%;" class="text-center">
+                <span style="font-size:0.875rem;">아직 계정이 없으세요?</span>
+                <button type="button" class="btn btn-link btn-sm" id="loginModalJoinBtn" onclick="location.href='/signup'">회원가입하기</button>
+              </div>
             </div>
-            </button>
-          </form>
-        </div>
-        <div class="modal-footer" style="border-color:rgba(148, 233, 235, 0.5);">
-          <div style="width:100%;" class="text-center">
-            <span style="font-size:0.875rem;">아직 계정이 없으세요?</span>
-            <button type="button" class="btn btn-link btn-sm" id="loginModalJoinBtn" onclick="location.href='/signup'">회원가입하기</button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
   <footer>
     <div class="container">
@@ -214,36 +218,36 @@
 <script src="/javascripts/index.js"></script>
 
 <script>
-  function resetModal() {
+  function resetModal(){
     $('.wrong-ID').hide();
     $('.wrong-PW').hide();
     $('input[name=userID]').val('');
     $('input[name=userPW]').val('');
   }
 
-  function loginCheck() {
+  function loginCheck(){
     $.ajax({
-      type: 'POST',
-      url: '/auth',
-      data: {
-        userID: $('input[name=userID]').val(),
-        userPW: $('input[name=userPW]').val()
-      },
-      success: function(data) {
-        if (data === 'ID') {
-          console.log(data);
-          $('.wrong-ID').show();
-          $('.wrong-PW').hide();
-        } else if (data === 'PW') {
-          console.log(data);
-          $('.wrong-ID').hide();
-          $('.wrong-PW').show();
-        } else if (data === 'OK') {
-          $('.wrong-ID').hide();
-          $('.wrong-PW').hide();
-          $('#loginModalForm').submit();
-        }
+    type : 'POST',
+    url : '/auth',
+    data : {
+      userID : $('input[name=userID]').val(),
+      userPW : $('input[name=userPW]').val()
+    },
+    success : function(data){
+      if(data === 'ID') {
+        console.log(data);
+        $('.wrong-ID').show();
+        $('.wrong-PW').hide();
+      }else if (data === 'PW') {
+        console.log(data);
+        $('.wrong-ID').hide();
+        $('.wrong-PW').show();
+      }else if (data === 'OK') {
+        $('.wrong-ID').hide();
+        $('.wrong-PW').hide();
+        $('#loginModalForm').submit();
       }
+    }
     })
   }
 </script>
