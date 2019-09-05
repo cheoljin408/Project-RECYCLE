@@ -129,6 +129,14 @@ router.get('/find', function(req, res) {
 router.get('/find-ex', function(req, res) {
   console.log(req.query.id);
   var sql = `select * from article where id=${req.query.id}`;
+  var sql2 = `update article set article_view=article_view+1 where id=${req.query.id}`;
+
+  con.query(sql2, function(err, result, fields) {
+    if(err)
+    {
+      throw err;
+    }
+  });
 
   con.query(sql, function(err, result, fields) {
     if (err) {
@@ -405,6 +413,36 @@ router.post('/getTime', (req, res) => {
       res.send(result[0]);
     }
   });
+});
+
+//메시지 보내기
+router.post('/send_msg', (req, res) => {
+  var fromID = req.session.userID;
+  var toID = req.body.toID;
+  var msg = req.body.msgText;
+
+  var date = new Date();
+
+  var yyyy = date.getFullYear();
+  var mm = date.getMonth() + 1;
+  var dd = date.getDate();
+
+  var today = `${yyyy}-${mm}-${dd}`;
+
+  var sql = `insert into notes(recv_id, sent_id, note, date_sent) values ('${toID}', '${fromID}', '${msg}', '${today}')`;
+  console.log(sql);
+
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log('success!');
+      res.send('success!');
+    }
+  })
 });
 
 
