@@ -25,21 +25,7 @@
   <link href="/stylesheets/mypage.css" rel="stylesheet">
 </head>
 
-<script>
-    $.post('/userID', function(data){
-        if (data.userID){
-            userID = document.getElementById("user_id");
-            userEmail = document.getElementById("user_email");
-            userPhone = document.getElementById("user_phone");
-            userID.textContent = data.userID;
-            userEmail.textContent = data.userEmail;
-            userPhone.textContent = data.userPhone;
-        } else {
-            alert('session error!');
-            window.location.href="/find";
-        }
-    })
-</script>
+
 
 <body>
     <div id="navbar">
@@ -101,7 +87,21 @@
         </div>
     </footer>
 </body>
-
+<script>
+    $.post('/userID', function(data){
+        if (data.userID){
+            userID = document.getElementById("user_id");
+            userEmail = document.getElementById("user_email");
+            userPhone = document.getElementById("user_phone");
+            userID.textContent = data.userID;
+            userEmail.textContent = data.userEmail;
+            userPhone.textContent = data.userPhone;
+        } else {
+            alert('session error!');
+            window.location.href="/find";
+        }
+    })
+</script>
 <script src="/javascripts/mypage.js"></script>
 
 </html>

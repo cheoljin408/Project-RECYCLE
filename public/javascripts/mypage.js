@@ -136,13 +136,14 @@ $.ajax({
             len = data.length;
             console.log(data);
             for (var i = 0; i < len; i++){
+                var id = data[i]['id'];
                 var title = data[i]['title'];
                 var price = data[i]['price'];
                 var img = data[i]['img'];
                 var state= data[i]['state'];
                 var local = data[i]['local'];
                 var category = data[i]['category'];
-                var plus = `<div class="card" style="margin-top: 20px;">
+                var plus = `<div class="card my_article" id="${id}" style="margin-top: 20px;">
                                 <div class="row no-gutters">
                                     <div class="text-center" style="width: 200px; height: 140px;">
                                         <img style="height: 140px;" src="${img}" class="card-img">
@@ -162,6 +163,12 @@ $.ajax({
             }
             document.getElementById("have_article").innerHTML = html;
             //console.log(user);
+            $(".my_article").click(function () {
+                console.log($(this).attr('id'));
+                var postid = $(this).attr('id');
+                console.log(postid);
+                document.location.href = `/find-ex?id=${postid}`;
+              });
         }
     }
 })
