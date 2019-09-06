@@ -11,6 +11,7 @@ $(window).scroll(function() {
 // like buttons
 function likeClick(id) {
   var image = document.getElementById(`like${id}`);
+  
   if (image.src.match("/images/like.png")) {
     image.src = "/images/like-red.png";
     image.style.animationName = "like_big";
@@ -34,12 +35,11 @@ function likeClick(id) {
       url:'/like_plus',
       data:{
         postID:id
+      },
+      success: function(data) {
+        $(`#like${id}`).siblings().remove();
+        $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
       }
-      // },
-      // success: function(data) {
-      //   console.log(data);
-      //   document.getElementById(`${id}`).innerHTML = `<img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">${data[0]['article_like']}</span>`;
-      // }
     });
   }
   else if(image.src.match("/images/like.png"))
@@ -166,7 +166,10 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
                                 </span>
                               </div>
                               <div class="paper-info">
-                                <span class="like" id="${id}"><img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">${like}</span>
+                                <span class="like" id="like_${id}">
+                                  <img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">
+                                  <span id="like-text">${like}</span>
+                                </span>
                                 <span id="views"><img src="/images/views.png">${view}</span>
                               </div>
                             </div>`;
@@ -275,7 +278,11 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
                                 </span>
                               </div>
                               <div class="paper-info">
-                                <span class="like"><img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">${like}</span>
+                                <span class="like" id="like_${id}">
+                                  <img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">
+                                  <span id="like-text">${like}</span>
+                                  
+                                </span>
                                 <span id="views"><img src="/images/views.png">${view}</span>
                               </div>
                             </div>`;
