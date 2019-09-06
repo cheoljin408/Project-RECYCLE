@@ -482,6 +482,7 @@ router.post('/like_minus', (req, res) => {
   var postID = req.body.postID;
 
   var sql = `update article set article_like = article_like-1 WHERE id = ${postID}`;
+  var sql2 = `select article_like from article where id = ${postID}`;
 
   con.query(sql, function(err, result) {
     if(err)
@@ -491,6 +492,17 @@ router.post('/like_minus', (req, res) => {
     else
     {
       console.log('like minus');
+    }
+  });
+  con.query(sql2, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result);
+      res.send(result);
     }
   });
 });

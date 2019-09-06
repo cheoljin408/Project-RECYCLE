@@ -49,6 +49,10 @@ function likeClick(id) {
       url:'/like_minus',
       data:{
         postID:id
+      },
+      success: function(data) {
+        $(`#like${id}`).siblings().remove();
+        $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
       }
     });
   }
