@@ -418,12 +418,17 @@ router.post('/myArticle', function(req, res){
   var user = req.body.user;
 
   var sql = `SELECT * FROM article WHERE user='${user}'`;
-
+  console.log(sql);
   con.query(sql, function(err, result, fields){
     if (err){
       throw err;
+    } else if (!result[0]){
+      console.log('null');
+      res.send("null");
+    } else {
+      console.log(result);
+      res.send(result);
     }
-    res.send(result);
   });
 });
 
