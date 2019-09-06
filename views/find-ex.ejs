@@ -111,21 +111,7 @@
         </div>
     </div>
 
-    <!--메시지 보내기-->
-    <div class="input-group msg">
-        <form method="POST" action="/send_msg">
-            <h6>메시지 보내기</h6>
-            <div style="display: flex">
-                <label class="to">받는사람</label>
-                <label class="userID">@<%= data.user %></label>
-                <!-- <input type="hidden" name="toID" value="<%= data.user %>"> -->
-            </div>
-            <textarea class="form-control" name="msg_text"></textarea>
-            <div class="btn-group btn-group-sm">
-                <input type="button" id="send" class="btn btn-primary msg_send" value="보내기">
-            </div>
-        </form>
-    </div>
+
 
 
     <!--modal-->
@@ -192,6 +178,22 @@
             </div>
         </div>
     </footer>
+
+    <!--메시지 보내기-->
+    <div class="input-group msg">
+        <form method="POST" action="/send_msg">
+            <h6>메시지 보내기</h6>
+            <div style="display: flex">
+                <label class="to">받는사람</label>
+                <label class="userID">@<%= data.user %></label>
+                <!-- <input type="hidden" name="toID" value="<%= data.user %>"> -->
+            </div>
+            <textarea class="form-control" name="msg_text"></textarea>
+            <div class="btn-group btn-group-sm">
+                <input type="button" id="send" class="btn btn-primary msg_send" value="보내기">
+            </div>
+        </form>
+    </div>
 </body>
 
 <!-- Load  find.js -->
@@ -312,20 +314,29 @@
     });
 
     $(window).scroll(function () {
-        if ($(this).scrollTop() > 50) {
+        if ($(this).scrollTop() > 40 && $(this).scrollTop() < $(document).height()-$(window).height()-300) {
             $('.msg').css("bottom", "40px");
+            $('.msg').css("top", `auto`);
+            $('.msg').css("position", "fixed");
             $('.msg').css("transition-duration", "1s");
-        } else {
+        }
+        else if( $(this).scrollTop() >= $(document).height()-$(window).height()-300 ){
+          var scrollBottom = $(document).height() - 300 -400;
+          $('.msg').css("position", "absolute");
+          $('.msg').css("top", `${scrollBottom}px`);
+          $('.msg').css("bottom", `auto`);
+          $('.msg').css("transition-duration", "1s");
+          console.log('고정!');
+        }
+        else {
+            $('.msg').css("top", `auto`);
             $('.msg').css("bottom", "-500px");
+            $('.msg').css("position", "fixed");
+
         }
     });
 
 
-
-    // $.ajax({
-    //     type:'GET',
-    //     url: '/'
-    // });
 </script>
 
 </html>

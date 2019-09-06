@@ -169,13 +169,8 @@
 .msg {
   width:280px;
   border:1px solid rgba(0,0,0,0.2);
-  /* display:flex;
-  bottom:40px; */
   padding:10px 10px;
-
   z-index: 1000;
-  position: fixed;
-  bottom: -45px;
   right: 15px;
   background-color: white;
 }
@@ -208,8 +203,8 @@ textarea.form-control {
 /* footer */
 footer {
   background-color: #7fcacb;
-  height: 30vh;
-  line-height: 30vh;
+  height: 300px;
+  line-height: 300px;
 }
 
 .footer-text {
