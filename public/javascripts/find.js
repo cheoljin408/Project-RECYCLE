@@ -1,6 +1,6 @@
 //infinite scroll
 var page = 0;
-$(window).scroll(function() {
+$(window).scroll(function () {
   if ($(window).scrollTop() == $(document).height() - $(window).height()) {
     var cateObj = category();
     page += 10;
@@ -8,54 +8,85 @@ $(window).scroll(function() {
   }
 });
 
+//like-session-checker
+// function likeSessionChecker() {
+//   var check;
+//   $.post('/like-session-checker', function (data) {
+//     if (data) { // session 있을 때
+//       console.log('session OK');
+//       check = 1;
+//     } else { // session 없을 때
+//       console.log('session NO');
+//       check = 0;
+//     }
+//   });
+//   return check;
+// }
+
 // like buttons
 function likeClick(id) {
-  var image = document.getElementById(`like${id}`);
-  
-  if (image.src.match("/images/like.png")) {
-    image.src = "/images/like-red.png";
-    image.style.animationName = "like_big";
-    image.style.animationDuration = "0.4s";
-    image.style.animationTimingFunction = "linear";
-    image.style.animationDelay = "0s";
-    image.style.animationIterationCount = "1";
-    image.style.animationDirection = "normal";
-    image.style.animationFillMode = "forwards";
-    image.style.animationPlayState = "running";
-  } else {
-    image.src = "/images/like.png";
-    image.style.animation = "";
-  }
+  $.post('/like-session-checker', function (data) {
+    if (data) { // session 있을 때
+      // $.ajax({
+      //   type: 'POST',
+      //   url: '/insertLike',
+      //   data: {
+      //     postID: id
+      //   },
+        // success: function (data) {
+          console.log('session OK');
+          var image = document.getElementById(`like${id}`);
+
+          if (image.src.match("/images/like.png")) {
+            image.src = "/images/like-red.png";
+            image.style.animationName = "like_big";
+            image.style.animationDuration = "0.4s";
+            image.style.animationTimingFunction = "linear";
+            image.style.animationDelay = "0s";
+            image.style.animationIterationCount = "1";
+            image.style.animationDirection = "normal";
+            image.style.animationFillMode = "forwards";
+            image.style.animationPlayState = "running";
+          } else {
+            image.src = "/images/like.png";
+            image.style.animation = "";
+          }
 
 
-  if(image.src.match("/images/like-red.png"))
-  {
-    $.ajax({
-      type:'POST',
-      url:'/like_plus',
-      data:{
-        postID:id
-      },
-      success: function(data) {
-        $(`#like${id}`).siblings().remove();
-        $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
-      }
-    });
-  }
-  else if(image.src.match("/images/like.png"))
-  {
-    $.ajax({
-      type:'POST',
-      url:'/like_minus',
-      data:{
-        postID:id
-      },
-      success: function(data) {
-        $(`#like${id}`).siblings().remove();
-        $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
-      }
-    });
-  }
+          if (image.src.match("/images/like-red.png")) {
+            $.ajax({
+              type: 'POST',
+              url: '/like_plus',
+              data: {
+                postID: id
+              },
+              success: function (data) {
+                $(`#like${id}`).siblings().remove();
+                $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
+              }
+            });
+          }
+          else if (image.src.match("/images/like.png")) {
+            $.ajax({
+              type: 'POST',
+              url: '/like_minus',
+              data: {
+                postID: id
+              },
+              success: function (data) {
+                $(`#like${id}`).siblings().remove();
+                $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
+              }
+            });
+          }
+      //   }
+      // });
+    }
+    else { // session 없을 때
+      console.log('session NO');
+    }
+  });
+  return;
 }
 
 
@@ -130,7 +161,7 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
       high_price: high_price,
       page: page
     },
-    success: function(data) {
+    success: function (data) {
       var len = data.length;
       var html = "";
 
@@ -183,7 +214,7 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
         document.getElementById('masonry_container').innerHTML = html;
 
         // masonry input
-        setTimeout(function() {
+        setTimeout(function () {
           $('#masonry_container').masonry({
             itemSelector: '.paper',
             columnWidth: 285,
@@ -193,8 +224,8 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
         }, 300);
 
         // rental vs buy - css
-        setTimeout(function() {
-          $('.state').each(function(i, e) {
+        setTimeout(function () {
+          $('.state').each(function (i, e) {
             if ($(this).val() == '렌탈') {
               $(this).siblings(`.rental`).attr('id', 'state_check');
               $(this).siblings(`.buy`).attr('id', 'state_uncheck');
@@ -217,7 +248,7 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
 
 
       //상품 클릭하면 상세 페이지로 이동
-      $(".paper-holder").click(function() {
+      $(".paper-holder").click(function () {
         console.log($(this).attr('id'));
         var postid = $(this).attr('id');
         console.log(postid);
@@ -241,7 +272,7 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
       high_price: high_price,
       page: page
     },
-    success: function(data) {
+    success: function (data) {
       //카테고리 찾기 버튼 눌렀을 때는 html reset
       if (scroll == 0) {
         html = "";
@@ -296,7 +327,7 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
         $(`#masonry_container`).append($items).masonry('appended', $items);
 
         // masonry input
-        setTimeout(function() {
+        setTimeout(function () {
           $('#masonry_container').masonry({
             itemSelector: '.paper',
             columnWidth: 285,
@@ -306,8 +337,8 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
         }, 300);
 
         // rental vs buy - css
-        setTimeout(function() {
-          $('.state').each(function(i, e) {
+        setTimeout(function () {
+          $('.state').each(function (i, e) {
             if ($(this).val() == '렌탈') {
               $(this).siblings(`.rental`).attr('id', 'state_check');
               $(this).siblings(`.buy`).attr('id', 'state_uncheck');
@@ -322,7 +353,7 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
 
 
       //상품 클릭하면 상세 페이지로 이동
-      $(".paper-holder").click(function() {
+      $(".paper-holder").click(function () {
         console.log($(this).attr('id'));
         var postid = $(this).attr('id');
         console.log(postid);
@@ -337,7 +368,7 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
 getData('ALL', 'ALL', 'ALL', 'ALL', 'ALL', 0, 0);
 
 //카테고리 찾기 클릭시 카테고리 값 얻고, 서버 통신
-$('#find').click(function() {
+$('#find').click(function () {
   //$('#masonry_container').masonry( 'remove', $('.paper') );
   page = 0;
   var cateObj = category();
@@ -345,7 +376,7 @@ $('#find').click(function() {
 });
 
 //category - theme, region
-$('.row button').click(function() {
+$('.row button').click(function () {
   if ($(this).css("color") == "rgb(215, 222, 222)") {
     $(this).css("color", "black");
     $(this).css("border", "1px black solid");
@@ -356,19 +387,19 @@ $('.row button').click(function() {
 });
 
 //category - reset
-$("#reset").click(function() {
+$("#reset").click(function () {
   document.location.href = `/find`;
 });
 
 
 //top buttons ======================================
-$(".top").click(function() {
+$(".top").click(function () {
   $('html').animate({
     scrollTop: 0
   }, 600);
 });
 
-$(window).scroll(function() {
+$(window).scroll(function () {
   if ($(this).scrollTop() > 500) {
     $('.top').css("bottom", "30px");
     $('.top').css("transition-duration", "0.5s");
@@ -377,13 +408,13 @@ $(window).scroll(function() {
   }
 });
 
-$('.top').find('img').hover(function() {
+$('.top').find('img').hover(function () {
   $('#top_img').attr("src", "/images/top2.png");
 
   $('.top').find('img').css("animationName", "top_big");
   $('.top').find('img').css("animationDuration", "0.6s");
   $('.top').find('img').css("animationTimingFunction", "linear");
-}, function() {
+}, function () {
   $('#top_img').attr("src", "/images/top.png");
   $('.top').find('img').css("animation", "");
 });

@@ -452,6 +452,7 @@ router.post('/like_plus', (req, res) => {
 
   var sql = `update article set article_like = article_like+1 WHERE id = ${postID}`;
   var sql2 = `select article_like from article where id = ${postID}`;
+  var sql3 = `select count(*) from likes where user = '${req.session.userID}' and postid = ${postID}`;
 
   con.query(sql, function(err, result) {
     if(err)
@@ -461,6 +462,35 @@ router.post('/like_plus', (req, res) => {
     else
     {
       console.log('like plus');
+    }
+  });
+  con.query(sql3, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result[0]['count(*)']);
+      if(result[0]['count(*)']!=0)
+      {
+        console.log('like is already exists!');
+      }
+      else
+      {
+        var sql4 = `insert into likes(user, postid) values ('${req.session.userID}', ${postID})`;
+
+        con.query(sql4, function(err, result) {
+          if(err)
+          {
+            throw err;
+          }
+          else
+          {
+            console.log('insert LIKE');
+          }
+        });
+      }
     }
   });
   con.query(sql2, function(err, result) {
@@ -483,6 +513,7 @@ router.post('/like_minus', (req, res) => {
 
   var sql = `update article set article_like = article_like-1 WHERE id = ${postID}`;
   var sql2 = `select article_like from article where id = ${postID}`;
+  var sql3 = `delete from likes where user = '${req.session.userID}' and postid = ${postID}`;
 
   con.query(sql, function(err, result) {
     if(err)
@@ -492,6 +523,16 @@ router.post('/like_minus', (req, res) => {
     else
     {
       console.log('like minus');
+    }
+  });
+  con.query(sql3, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log('delete LIKE');
     }
   });
   con.query(sql2, function(err, result) {
@@ -507,6 +548,37 @@ router.post('/like_minus', (req, res) => {
   });
 });
 
+//like-session-check
+router.post('/like-session-checker', (req, res) => {
+  if (req.session.userID) {
+    console.log(req.session.userID);
+
+    res.send(true);
+  } else {
+    res.send(false);
+    console.log(req.session.userID);
+  }
+});
+
+//insertLike
+router.post('/insertLike', (req, res) => {
+  var postID = req.body.postID;
+
+
+  var sql = `insert into likes(user, postid) values ('${req.session.userID}', ${postID})`;
+
+  console.log(sql);
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log('insert LIKE');
+    }
+  });
+});
 
 // router.post('/register', (req, res) => {
 
