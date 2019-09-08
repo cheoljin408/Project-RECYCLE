@@ -560,14 +560,12 @@ router.post('/like-session-checker', (req, res) => {
   }
 });
 
-//insertLike
-router.post('/insertLike', (req, res) => {
-  var postID = req.body.postID;
+//like-CSS
+router.post('/like-CSS', (req, res) => {
+  var userID = req.session.userID;
 
+  var sql = `select postid from likes where user = '${userID}'`;
 
-  var sql = `insert into likes(user, postid) values ('${req.session.userID}', ${postID})`;
-
-  console.log(sql);
   con.query(sql, function(err, result) {
     if(err)
     {
@@ -575,7 +573,8 @@ router.post('/insertLike', (req, res) => {
     }
     else
     {
-      console.log('insert LIKE');
+      console.log(result);
+      res.send(result);
     }
   });
 });

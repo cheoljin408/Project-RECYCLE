@@ -8,20 +8,16 @@ $(window).scroll(function () {
   }
 });
 
-//like-session-checker
-// function likeSessionChecker() {
-//   var check;
-//   $.post('/like-session-checker', function (data) {
-//     if (data) { // session 있을 때
-//       console.log('session OK');
-//       check = 1;
-//     } else { // session 없을 때
-//       console.log('session NO');
-//       check = 0;
-//     }
-//   });
-//   return check;
-// }
+//function likeCSS
+function likeCSS() {
+  $.post('/like-CSS', function (data) {
+    for (var i = 0; i < data.length; i++) {
+      var image = document.getElementById(`like${data[i]['postid']}`);
+
+      image.src = "/images/like-red.png";
+    }
+  });
+}
 
 // like buttons
 function likeClick(id) {
@@ -33,52 +29,52 @@ function likeClick(id) {
       //   data: {
       //     postID: id
       //   },
-        // success: function (data) {
-          console.log('session OK');
-          var image = document.getElementById(`like${id}`);
+      // success: function (data) {
+      console.log('session OK');
+      var image = document.getElementById(`like${id}`);
 
-          if (image.src.match("/images/like.png")) {
-            image.src = "/images/like-red.png";
-            image.style.animationName = "like_big";
-            image.style.animationDuration = "0.4s";
-            image.style.animationTimingFunction = "linear";
-            image.style.animationDelay = "0s";
-            image.style.animationIterationCount = "1";
-            image.style.animationDirection = "normal";
-            image.style.animationFillMode = "forwards";
-            image.style.animationPlayState = "running";
-          } else {
-            image.src = "/images/like.png";
-            image.style.animation = "";
-          }
+      if (image.src.match("/images/like.png")) {
+        image.src = "/images/like-red.png";
+        image.style.animationName = "like_big";
+        image.style.animationDuration = "0.4s";
+        image.style.animationTimingFunction = "linear";
+        image.style.animationDelay = "0s";
+        image.style.animationIterationCount = "1";
+        image.style.animationDirection = "normal";
+        image.style.animationFillMode = "forwards";
+        image.style.animationPlayState = "running";
+      } else {
+        image.src = "/images/like.png";
+        image.style.animation = "";
+      }
 
 
-          if (image.src.match("/images/like-red.png")) {
-            $.ajax({
-              type: 'POST',
-              url: '/like_plus',
-              data: {
-                postID: id
-              },
-              success: function (data) {
-                $(`#like${id}`).siblings().remove();
-                $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
-              }
-            });
+      if (image.src.match("/images/like-red.png")) {
+        $.ajax({
+          type: 'POST',
+          url: '/like_plus',
+          data: {
+            postID: id
+          },
+          success: function (data) {
+            $(`#like${id}`).siblings().remove();
+            $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
           }
-          else if (image.src.match("/images/like.png")) {
-            $.ajax({
-              type: 'POST',
-              url: '/like_minus',
-              data: {
-                postID: id
-              },
-              success: function (data) {
-                $(`#like${id}`).siblings().remove();
-                $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
-              }
-            });
+        });
+      }
+      else if (image.src.match("/images/like.png")) {
+        $.ajax({
+          type: 'POST',
+          url: '/like_minus',
+          data: {
+            postID: id
+          },
+          success: function (data) {
+            $(`#like${id}`).siblings().remove();
+            $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
           }
+        });
+      }
       //   }
       // });
     }
@@ -257,6 +253,9 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
     }
 
   });
+
+  //like css 적용
+  likeCSS();
 }
 
 function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
@@ -362,6 +361,8 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
     }
 
   });
+  //like css 적용
+  likeCSS();
 }
 
 // init 작업
