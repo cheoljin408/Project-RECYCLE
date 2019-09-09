@@ -4,54 +4,84 @@ $(window).scroll(function() {
   if ($(window).scrollTop() == $(document).height() - $(window).height()) {
     var cateObj = category();
     page += 10;
+
     getPlusData(cateObj.buy, cateObj.theme, cateObj.region, cateObj.low_price, cateObj.high_price, page, $(window).scrollTop());
   }
 });
 
+//function likeCSS
+function likeCSS() {
+  $.post('/like-CSS', function(data) {
+    for (var i = 0; i < data.length; i++) {
+      var image = document.getElementById(`like${data[i]['postid']}`);
+
+      image.src = "/images/like-red.png";
+    }
+  });
+}
+
 // like buttons
 function likeClick(id) {
-  var image = document.getElementById(`like${id}`);
+  $.post('/like-session-checker', function(data) {
+    if (data) { // session 있을 때
+      // $.ajax({
+      //   type: 'POST',
+      //   url: '/insertLike',
+      //   data: {
+      //     postID: id
+      //   },
+      // success: function (data) {
+      console.log('session OK');
+      var image = document.getElementById(`like${id}`);
 
-  if (image.src.match("/images/like.png")) {
-    image.src = "/images/like-red.png";
-    image.style.animationName = "like_big";
-    image.style.animationDuration = "0.4s";
-    image.style.animationTimingFunction = "linear";
-    image.style.animationDelay = "0s";
-    image.style.animationIterationCount = "1";
-    image.style.animationDirection = "normal";
-    image.style.animationFillMode = "forwards";
-    image.style.animationPlayState = "running";
-  } else {
-    image.src = "/images/like.png";
-    image.style.animation = "";
-  }
-
-
-  if(image.src.match("/images/like-red.png"))
-  {
-    $.ajax({
-      type:'POST',
-      url:'/like_plus',
-      data:{
-        postID:id
-      },
-      success: function(data) {
-        $(`#like${id}`).siblings().remove();
-        $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
+      if (image.src.match("/images/like.png")) {
+        image.src = "/images/like-red.png";
+        image.style.animationName = "like_big";
+        image.style.animationDuration = "0.4s";
+        image.style.animationTimingFunction = "linear";
+        image.style.animationDelay = "0s";
+        image.style.animationIterationCount = "1";
+        image.style.animationDirection = "normal";
+        image.style.animationFillMode = "forwards";
+        image.style.animationPlayState = "running";
+      } else {
+        image.src = "/images/like.png";
+        image.style.animation = "";
       }
-    });
-  }
-  else if(image.src.match("/images/like.png"))
-  {
-    $.ajax({
-      type:'POST',
-      url:'/like_minus',
-      data:{
-        postID:id
+
+
+      if (image.src.match("/images/like-red.png")) {
+        $.ajax({
+          type: 'POST',
+          url: '/like_plus',
+          data: {
+            postID: id
+          },
+          success: function(data) {
+            $(`#like${id}`).siblings().remove();
+            $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
+          }
+        });
+      } else if (image.src.match("/images/like.png")) {
+        $.ajax({
+          type: 'POST',
+          url: '/like_minus',
+          data: {
+            postID: id
+          },
+          success: function(data) {
+            $(`#like${id}`).siblings().remove();
+            $(`#like_${id}`).append(`<span id="like-text">${data[0]['article_like']}</span>`);
+          }
+        });
       }
-    });
-  }
+      //   }
+      // });
+    } else { // session 없을 때
+      console.log('session NO');
+    }
+  });
+  return;
 }
 
 
@@ -186,7 +216,7 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
             isAnimated: true,
             isFitWidth: true
           });
-        }, 300);
+        }, 400);
 
         // rental vs buy - css
         setTimeout(function() {
@@ -199,7 +229,7 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
               $(this).siblings(`.rental`).attr('id', 'state_uncheck');
             }
           });
-        }, 300);
+        }, 400);
 
       }
       //=========================================
@@ -222,6 +252,9 @@ function getData(buy, theme, region, low_price, high_price, page, scroll) {
     }
 
   });
+
+  //like css 적용
+  likeCSS();
 }
 
 function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
@@ -299,7 +332,7 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
             isAnimated: true,
             isFitWidth: true
           });
-        }, 300);
+        }, 400);
 
         // rental vs buy - css
         setTimeout(function() {
@@ -312,7 +345,7 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
               $(this).siblings(`.rental`).attr('id', 'state_uncheck');
             }
           });
-        }, 300);
+        }, 400);
       }
       //=========================================
 
@@ -327,6 +360,8 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
     }
 
   });
+  //like css 적용
+  likeCSS();
 }
 
 // init 작업
@@ -355,6 +390,109 @@ $('.row button').click(function() {
 $("#reset").click(function() {
   document.location.href = `/find`;
 });
+
+
+// keyword 찾기 ======================================
+$('.tag_box > button').click(function() {
+  var keyword = $(this).text();
+  keyword = keyword.substring(1);
+
+  $.ajax({
+    type: 'post',
+    url: '/keyword',
+    data: {
+      keyword: keyword
+    },
+    success: function(data) {
+      var len = data.length;
+      var html = "";
+
+      $('#masonry_container').remove();
+      $('.section2 > .container').append(`<div id="masonry_container" class='masonry' style="margin:0 auto;"></div>`);
+
+      //상품이 있을 때 ===================
+      if (len != 0) {
+        $('#noneItem').css('display', 'none');
+
+        for (var i = 0; i < len; i++) {
+          var id = data[i]['id'];
+          var category = data[i]['category'];
+          var local = data[i]['local'];
+          var state = data[i]['state'];
+          var title = data[i]['title'];
+          var user = data[i]['user'];
+          var price = data[i]['price'];
+          var img = data[i]['img'];
+          var like = data[i]['article_like'];
+          var view = data[i]['article_view'];
+
+          var plus = `<div class="paper" >
+                              <div class="paper-holder" id="${id}">
+                                <a><img width="225" src="${img}" /></a>
+                              </div>
+                              <div class="paper-description">
+                                <p id='title'>${title}</p>
+                                <p id="userId">${user}</p>
+                              </div>
+                              <div class="paper-content">
+                                <span id="price">${price}원</span>
+                                <span class="paper-state">
+                                  <input class="state" style="display:none" value="${state}"/>
+                                  <span class="rental">렌탈</span>
+                                  <span class="buy">판매</span>
+                                </span>
+                              </div>
+                              <div class="paper-info">
+                                <span class="like" id="like_${id}">
+                                  <img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">
+                                  <span id="like-text">${like}</span>
+                                </span>
+                                <span id="views"><img src="/images/views.png">${view}</span>
+                              </div>
+                            </div>`;
+          html += plus;
+        }
+
+        document.getElementById('masonry_container').innerHTML = html;
+
+        // masonry input
+        setTimeout(function() {
+          $('#masonry_container').masonry({
+            itemSelector: '.paper',
+            columnWidth: 285,
+            isAnimated: true,
+            isFitWidth: true
+          });
+        }, 400);
+
+        // rental vs buy - css
+        setTimeout(function() {
+          $('.state').each(function(i, e) {
+            if ($(this).val() == '렌탈') {
+              $(this).siblings(`.rental`).attr('id', 'state_check');
+              $(this).siblings(`.buy`).attr('id', 'state_uncheck');
+            } else {
+              $(this).siblings(`.buy`).attr('id', 'state_check');
+              $(this).siblings(`.rental`).attr('id', 'state_uncheck');
+            }
+          });
+        }, 400);
+      }
+
+      //상품 클릭하면 상세 페이지로 이동
+      $(".paper-holder").click(function() {
+        console.log($(this).attr('id'));
+        var postid = $(this).attr('id');
+        console.log(postid);
+        document.location.href = `/find-ex?id=${postid}`;
+      });
+    }
+  });
+  //like css 적용
+  likeCSS();
+});
+//======================================
+
 
 
 //top buttons ======================================

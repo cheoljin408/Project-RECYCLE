@@ -452,6 +452,7 @@ router.post('/like_plus', (req, res) => {
 
   var sql = `update article set article_like = article_like+1 WHERE id = ${postID}`;
   var sql2 = `select article_like from article where id = ${postID}`;
+  var sql3 = `select count(*) from likes where user = '${req.session.userID}' and postid = ${postID}`;
 
   con.query(sql, function(err, result) {
     if(err)
@@ -461,6 +462,35 @@ router.post('/like_plus', (req, res) => {
     else
     {
       console.log('like plus');
+    }
+  });
+  con.query(sql3, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result[0]['count(*)']);
+      if(result[0]['count(*)']!=0)
+      {
+        console.log('like is already exists!');
+      }
+      else
+      {
+        var sql4 = `insert into likes(user, postid) values ('${req.session.userID}', ${postID})`;
+
+        con.query(sql4, function(err, result) {
+          if(err)
+          {
+            throw err;
+          }
+          else
+          {
+            console.log('insert LIKE');
+          }
+        });
+      }
     }
   });
   con.query(sql2, function(err, result) {
@@ -482,6 +512,8 @@ router.post('/like_minus', (req, res) => {
   var postID = req.body.postID;
 
   var sql = `update article set article_like = article_like-1 WHERE id = ${postID}`;
+  var sql2 = `select article_like from article where id = ${postID}`;
+  var sql3 = `delete from likes where user = '${req.session.userID}' and postid = ${postID}`;
 
   con.query(sql, function(err, result) {
     if(err)
@@ -493,9 +525,84 @@ router.post('/like_minus', (req, res) => {
       console.log('like minus');
     }
   });
+  con.query(sql3, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log('delete LIKE');
+    }
+  });
+  con.query(sql2, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result);
+      res.send(result);
+    }
+  });
 });
 
+//like-session-check
+router.post('/like-session-checker', (req, res) => {
+  if (req.session.userID) {
+    console.log(req.session.userID);
 
-// router.post('/register', (req, res) => {
+    res.send(true);
+  } else {
+    res.send(false);
+    console.log(req.session.userID);
+  }
+});
+
+//like-CSS
+router.post('/like-CSS', (req, res) => {
+  var userID = req.session.userID;
+
+  var sql = `select postid from likes where user = '${userID}'`;
+
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result);
+      res.send(result);
+    }
+  });
+});
+
+//keyword find
+router.post('/keyword',(req,res)=>{
+  var keyword = req.body.keyword;
+  var sql = `select * from article
+             where id in (select postid from hashtag
+              			      where tag1 like '%${keyword}%'
+                    			or tag2 like '%${keyword}%'
+                    			or tag3 like '%${keyword}%'
+                    			or tag4 like '%${keyword}%'
+                    			or tag5 like '%${keyword}%')`;
+
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result);
+      res.send(result);
+    }
+  });
+
+
+});
 
 module.exports = router;

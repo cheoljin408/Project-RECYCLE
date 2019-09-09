@@ -15,7 +15,14 @@ input::placeholder {
 ul, li {
   list-style: none;
 }
-
+button{
+  outline: none;
+  border: none;
+}
+button:active{
+  outline: none;
+  border: none;
+}
 /* 메뉴 바 */
 #navbar {
   padding-left: 100px;
@@ -226,7 +233,7 @@ ul, li {
 }
 
 .slide ul {
-  width: calc(100% * 2);
+  width: calc(100% * 3);
   display: flex;
   transition: 1s;
   margin: 0;
@@ -234,7 +241,7 @@ ul, li {
 
 .slide li {
   margin-left: 15px;
-  width: calc(100% / 2);
+  width: calc(100% / 3);
 }
 
 .slide input {
@@ -249,10 +256,13 @@ ul, li {
 #pos2:checked~ul {
   margin-left: -100%;
 }
-
+#pos3:checked~ul {
+  margin-left: -200%;
+}
 /* bullet 조작 */
 #pos1:checked~.bullet label:nth-child(1),
-#pos2:checked~.bullet label:nth-child(2) .container-tag {
+#pos2:checked~.bullet label:nth-child(2),
+#pos3:checked~.bullet label:nth-child(3), .container-tag {
   margin: 0;
 }
 
