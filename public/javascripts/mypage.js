@@ -33,7 +33,7 @@ function getArticle(userID){
                 var state= data[i]['state'];
                 var local = data[i]['local'];
                 var category = data[i]['category'];
-                var plus = `<div class="card my_article" id="${id}" style="margin-top: 20px;">
+                var plus = `<div class="card my_article"  style="margin-top: 20px;">
                                 <div class="row no-gutters">
                                     <div class="text-center" style="width: 200px; height: 140px;">
                                         <img style="height: 140px;" src="${img}" class="card-img">
@@ -46,7 +46,7 @@ function getArticle(userID){
                                             <span class="card-text"><small class="text-muted">#${state}</small></span>
                                         </div>
                                     </div>
-                                    <div style="padding-top: 53px;"><button class="delete_btn btn btn-primary align-middle"  style="border-color: #7fcacb; background-color:#7fcacb;" style="float: right;">판매 완료</button></div>
+                                    <div style="padding-top: 53px;"><button id="${id}" class="delete_btn btn btn-primary align-middle"  style="border-color: #7fcacb; background-color:#7fcacb;" style="float: right;">판매 완료</button></div>
                                 </div>
                             </div>`;
                 html += plus;
@@ -54,20 +54,16 @@ function getArticle(userID){
             document.getElementById("have_article").innerHTML = html;
             //console.log(user);
             
-            $(".my_article").click(function () {
+
+            
+            $(".my_article .delete_btn").click(function () {
                 console.log($(this).attr('id'));
                 var postid = $(this).attr('id');
-                console.log(postid);
-                if (event.target === $('button')){
-                    deleteArticle(postid);
-                }
-                else{
-                    
-                    document.location.href = `/find-ex?id=${postid}`;
-                }
-              })
-        
-            
+                console.log(postid);              
+                
+                alert('삭제');
+                deleteArticle(postid);                
+            });            
         }
     }
 })

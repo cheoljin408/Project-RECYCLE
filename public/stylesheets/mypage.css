@@ -126,6 +126,17 @@
 
 
  /* section 2 */ 
+
+ .no_article {
+   padding: 20px 0;
+ }
+
+#register_btn {
+  background-color: #7fcacb;
+  border-color: #7fcacb;
+  margin-top: 20px;
+}
+
   .section2 {
       width: 66vw;
       min-height: 110vh;
