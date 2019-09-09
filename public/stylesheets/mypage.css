@@ -126,6 +126,17 @@
 
 
  /* section 2 */ 
+
+ .no_article {
+   padding: 20px 0;
+ }
+
+#register_btn {
+  background-color: #7fcacb;
+  border-color: #7fcacb;
+  margin-top: 20px;
+}
+
   .section2 {
       width: 66vw;
       min-height: 110vh;
@@ -138,6 +149,7 @@
 
   .menu_bar {
       border-bottom: solid 1px rgba(0,0,0,0.08);
+      padding: 0 20px;
   }
 
   .menu_btn {
@@ -154,6 +166,16 @@
   .menu_btn:focus {
     text-decoration: none;
     color:rgba(0,0,0,0.6);
+  }
+
+  #my_article_btn {
+    font-weight: 500;
+    color: black;
+    border-bottom: solid #7fcacb 2px;
+  }
+
+  #have_article {
+    padding: 0 10px;
   }
 
 /* footer */

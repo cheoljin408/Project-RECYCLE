@@ -25,21 +25,7 @@
   <link href="/stylesheets/mypage.css" rel="stylesheet">
 </head>
 
-<script>
-    $.post('/userID', function(data){
-        if (data.userID){
-            userID = document.getElementById("user_id");
-            userEmail = document.getElementById("user_email");
-            userPhone = document.getElementById("user_phone");
-            userID.textContent = data.userID;
-            userEmail.textContent = data.userEmail;
-            userPhone.textContent = data.userPhone;
-        } else {
-            alert('session error!');
-            window.location.href="/find";
-        }
-    })
-</script>
+
 
 <body>
     <div id="navbar">
@@ -81,7 +67,15 @@
             <button type="button" id="my_purchase_btn" class="btn btn-link menu_btn rounded-0">구매</button>
             <button type="button" id="my_message_btn" class="btn btn-link menu_btn rounded-0">쪽지</button>
         </div>
-        <div class="content_area"></div>
+        <div class="content_area">
+            <div class="no_article text-center" style="display:none;">
+                <div class="text-center">아직 등록한 작품이 없습니다! 작품을 등록해 보세요!</div>
+                <button type="button" onclick="location.href='/register'" id="register_btn" class="btn btn-primary">작품 등록하기</button>
+            </div>
+            <div id="have_article" class="have_article">
+            
+            </div>
+        </div>
     </div>
     <footer>
         <div class="container">
@@ -93,4 +87,7 @@
         </div>
     </footer>
 </body>
+
+<script src="/javascripts/mypage.js"></script>
+
 </html>

@@ -508,6 +508,39 @@ router.post('/like_plus', (req, res) => {
 
 //좋아요 빼기
 
+router.post('/myArticle', function(req, res){
+  var user = req.body.user;
+
+  var sql = `SELECT * FROM article WHERE user='${user}'`;
+  console.log(sql);
+  con.query(sql, function(err, result, fields){
+    if (err){
+      throw err;
+    } else if (!result[0]){
+      console.log('null');
+      res.send("null");
+    } else {
+      console.log(result);
+      res.send(result);
+    }
+  });
+});
+
+router.post('/deleteArticle', function(req,res){
+  var articleID = req.body.articleID;
+
+  var sql = `DELETE FROM article WHERE id='${articleID}'`;
+  console.log(sql);
+  con.query(sql, function(err, result, fields){
+    if (err){
+      throw err;
+    } else {
+      res.redirect('/mypage');
+    }
+  })
+});
+
+// router.post('/register', (req, res) => {
 router.post('/like_minus', (req, res) => {
   var postID = req.body.postID;
 
