@@ -11,7 +11,7 @@ $(window).scroll(function() {
 // like buttons
 function likeClick(id) {
   var image = document.getElementById(`like${id}`);
-  
+
   if (image.src.match("/images/like.png")) {
     image.src = "/images/like-red.png";
     image.style.animationName = "like_big";
@@ -281,7 +281,7 @@ function getPlusData(buy, theme, region, low_price, high_price, page, scroll) {
                                 <span class="like" id="like_${id}">
                                   <img id="like${id}" onclick="likeClick(${id})" src="/images/like.png">
                                   <span id="like-text">${like}</span>
-                                  
+
                                 </span>
                                 <span id="views"><img src="/images/views.png">${view}</span>
                               </div>
