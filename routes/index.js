@@ -579,6 +579,30 @@ router.post('/like-CSS', (req, res) => {
   });
 });
 
-// router.post('/register', (req, res) => {
+//keyword find
+router.post('/keyword',(req,res)=>{
+  var keyword = req.body.keyword;
+  var sql = `select * from article
+             where id in (select postid from hashtag
+              			      where tag1 like '%${keyword}%'
+                    			or tag2 like '%${keyword}%'
+                    			or tag3 like '%${keyword}%'
+                    			or tag4 like '%${keyword}%'
+                    			or tag5 like '%${keyword}%')`;
+
+  con.query(sql, function(err, result) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+      console.log(result);
+      res.send(result);
+    }
+  });
+
+
+});
 
 module.exports = router;
