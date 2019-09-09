@@ -195,6 +195,7 @@ router.post('/find', function(req, res) {
     }
 
   }
+  sql += `order by time desc `;
   sql += `limit ${req.body.page}, 10`;
 
   console.log(sql);
