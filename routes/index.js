@@ -432,6 +432,20 @@ router.post('/myArticle', function(req, res){
   });
 });
 
+router.post('/deleteArticle', function(req,res){
+  var articleID = req.body.articleID;
+
+  var sql = `DELETE FROM article WHERE id='${articleID}'`;
+  console.log(sql);
+  con.query(sql, function(err, result, fields){
+    if (err){
+      throw err;
+    } else {
+      res.redirect('/mypage');
+    }
+  })
+});
+
 // router.post('/register', (req, res) => {
 
 module.exports = router;
