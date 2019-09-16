@@ -104,8 +104,8 @@ router.get('/', function(req, res) {
 
 /* POST home page. */
 router.post('/', function(req, res) {
-  var sql = `select * from article where time BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW() order by article_like desc limit 0 , 10`;
-
+  //var sql = `select * from article where time BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW() order by article_like desc limit 0 , 10`;
+  var sql = `select * from article where time BETWEEN DATE_ADD('2019-09-05',INTERVAL -1 WEEK ) AND '2019-09-05' order by article_like desc limit 0 , 10`;
   con.query(sql, function(err, result, fields) {
     if (err) {
       throw err;
