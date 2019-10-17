@@ -35,7 +35,7 @@ utility
 hot to use
 =====================
 1. npm install --save
->> package.json에 있는 npm을 모두 설치해줍니다.
+> package.json에 있는 npm을 모두 설치해줍니다.
 
 2. node ./bin/www
 
