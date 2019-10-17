@@ -32,7 +32,7 @@ utility
 프로필 수정, 등록한 작품, 구매한 작품, 쪽지함 보기가 가능합니다. 
 
 
-hot to use
+How to use
 =====================
 1. npm install --save
 > package.json에 있는 npm을 모두 설치해줍니다.
