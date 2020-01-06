@@ -18,11 +18,15 @@ var upload = multer({
 
 //MySQL
 var con = mysql.createConnection({
-  host: '54.180.112.25',
-  user: 'lwj',
-  password: '12345678Oyr!',
-  port: 3306,
-  database: 'recycle'
+  // host: '54.180.112.25',
+  // user: 'lwj',
+  // password: '12345678Oyr!',
+  // port: 3306,
+  // database: 'recycle'
+  host     : 'localhost',
+  user     : 'root',
+  password : '0000',
+  database : 'price'
 });
 
 con.connect(function(err) {
@@ -30,8 +34,10 @@ con.connect(function(err) {
     console.log(con.host);
     throw err;
   }
-  console.log('Connected!');
+
+  console.log('Connected!!!!!!!!!!!!!!!');
 });
+
 
 //session check
 router.post('/sessionchecker', function(req, res) {
@@ -49,6 +55,7 @@ router.post('/sessionchecker', function(req, res) {
 router.post('/userID', function(req, res) {
   res.send(req.session);
 });
+
 
 //login
 router.post('/auth', function(req, res) {
